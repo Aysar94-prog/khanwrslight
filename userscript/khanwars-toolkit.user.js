@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KhanWars Toolkit — الإرساليات والمباني والقلاع
 // @namespace    khanwrslight
-// @version      1.7.14
+// @version      1.7.23
 // @description  إدارة الإرساليات والمباني والحداد والقلاع والأمير عبر طلبات خلفية دون التنقل بين الصفحات.
 // @author       khanwrslight
 // @match        https://*.game.khanwars.ae/*
@@ -25,8 +25,8 @@
  *   KW.instantFinishQueue(function (r) { console.log(r); }); // إنهاء فوري مجاني إن تبقّى ≤60ث
  *   KW.checkQueueNow(function (freeSlot) { console.log(freeSlot); });
  *   KW.autoBuildStart(); KW.autoBuildStop();
- *   KW.autoBuildStatus();            // includes verifyMode:'strict' + pending[]
- *   KW.pendingBuilds();              // ترقيات أُرسلت وتنتظر تأكيد المستوى
+ *   KW.autoBuildStatus();            // includes verifyMode:'preview' + pending[]
+ *   KW.pendingBuilds();              // طلبات أُرسلت ولم يُحسم قبولها
  *   KW.buildingLevel(1, cb);         // { level, name } من ajax_buildings.php
  *   KW.quests(cb);                   // المهام الأربعة + isClaimable
  *   KW.claimQuests(cb);              // استلام المهام الجاهزة فقط
@@ -46,7 +46,7 @@
 	if (window.__KW_TOOLKIT_LOADED__) return;
 	window.__KW_TOOLKIT_LOADED__ = true;
 
-	var VERSION = '1.7.14';
+	var VERSION = '1.7.23';
 
 	/* ============================================================
 	 * 1) Helpers (منقولة من analysis/*.js)
@@ -574,6 +574,38 @@
 		});
 	}
 
+	/* معاينة فقط: نفس فتح نافذة التطوير، دون استدعاء طلب البناء أو زر التأكيد.
+	 * نقرأ المستوى المقترح من الزر/عنوان المستوى التالي، ولا نقرأ .buildingLevel.
+	 * لا كاش هنا: يجب أن تكون المعاينة قبل الأمر وبعده من السيرفر مباشرة. */
+	function previewTargetLevel(doc) {
+		var button = doc.querySelector('#attendBtn, input[name="buy"]');
+		var text = button ? String(button.value || button.textContent || '') : '';
+		var match = text.match(/المستوى[^\d]{0,12}(\d+)/);
+		if (match) return toInt(match[1]);
+		var headers = doc.querySelectorAll('th, td, h3, h4, .headline, .nextLevel');
+		for (var i = 0; i < headers.length; i++) {
+			match = headers[i].textContent.match(/المستوى التالي\s*[:：]?\s*(\d+)/);
+			if (match) return toInt(match[1]);
+		}
+		return null;
+	}
+
+	function getBuildingUpgradePreview(id, cb) {
+		if (!hasAjax()) { cb({ error: 'no-ajax', nextLevel: null }); return; }
+		new window.Ajax.Request('ajax_buildings.php', {
+			evalJS: false, method: 'post',
+			parameters: { b_id: toInt(id), backto: 'overview.php' },
+			onSuccess: function (response) {
+				try {
+					var doc = new DOMParser().parseFromString(response.responseText || '', 'text/html');
+					var target = previewTargetLevel(doc);
+					cb({ nextLevel: target, error: target == null ? 'no-preview-target' : null });
+				} catch (e) { cb({ nextLevel: null, error: e.message }); }
+			},
+			onFailure: function (r) { cb({ nextLevel: null, error: 'http-' + r.status }); }
+		});
+	}
+
 	/* يقرأ تقدير اللعبة للوقت اللازم لتأمين موارد ترقية مبنى. */
 	function getBuildingResourceWait(buildingId, callback) {
 		if (!hasAjax()) { callback({ error: 'no-ajax' }); return; }
@@ -807,6 +839,7 @@
 		cycle: 'kw.cycle',
 		cycleInterval: 'kw.cycle.interval',
 		autoBuild: 'kw.autoBuild',
+		startCommand: 'kw.autoBuild.startCommand',
 		autoBuildAll: 'kw.autoBuild.all',
 		autoBuildSleep: 'kw.autoBuildSleep',
 		instantFinish: 'kw.instantFinish',
@@ -852,6 +885,7 @@
 		cycleInterval: Math.max(5, toInt(lsGet(LS.cycleInterval, '20'), 20)),
 		cycleTimer: null,
 		autoBuild: lsGet(LS.autoBuild, '0') === '1',
+		startCommand: lsGet(LS.autoBuild, '0') === '1' && lsGet(LS.startCommand, '1') === '1',
 		autoBuildAll: lsGet(LS.autoBuildAll, '0') === '1',
 		instantFinish: lsGet(LS.instantFinish, '1') !== '0',
 		buildRunning: false,
@@ -860,6 +894,7 @@
 		ifBusyAt: 0,
 		autoBuildBusy: false,
 		autoBuildNextAt: 0,
+		abEmptyWaiting: false,
 		autoBuildTimer: null,
 		buildingLevelCache: {},
 		abStatus: 'idle',
@@ -2263,7 +2298,7 @@
 		return info ? info.items : null;
 	}
 
-	/* يُستدعى فقط بعد التحقق من نجاح الترقية (بمقارنة المستوى)
+	/* يُستدعى بعد تأكيد قبول الترقية من السيرفر
 	   أو بعد استلام مكافأة المهمة. key اختياري لتثبيت الطابور الذي أُرسل منه. */
 	function consumeQueueItem(id, key) {
 		var info = (key != null) ? { key: String(key) } : queueInfo();
@@ -2281,9 +2316,9 @@
 		renderBuildQueue();
 	}
 
-	/* ---------- ترقية مُرسلة تنتظر تأكيد المستوى ----------
+	/* ---------- طلب ترقية ينتظر تأكيد القبول ----------
 	 * نحفظها في localStorage حتى لا تضيع عند إعادة تحميل الصفحة،
-	 * هي الدليل الوحيد على أن الترقية فعلاً تمّت (مقارنة المستوى قبل/بعد).
+	 * تحفظ فقط الطلبات التي لم يُحسم قبولها، ولا تنتظر اكتمال البناء.
 	 */
 	var PENDING_KEY = 'kw.pendingBuilds';
 
@@ -2305,6 +2340,8 @@
 				key: p.key != null ? String(p.key) : null,
 				tries: toInt(p.tries, 0) || 0,
 				levelFails: toInt(p.levelFails, 0) || 0,
+				targetLevel: p.targetLevel != null ? toInt(p.targetLevel) : (before > 0 ? before + 1 : null),
+				startCommand: !!p.startCommand,
 				uncertain: !!p.uncertain
 			});
 		}
@@ -2342,7 +2379,7 @@
 	}
 
 	function addPendingBuild(p) {
-		state.pendingBuilds.push(p);
+		if (state.pendingBuilds.indexOf(p) < 0) state.pendingBuilds.push(p);
 		savePendingBuilds();
 	}
 
@@ -2366,6 +2403,18 @@
 		}
 		var b = findBuilding(id);
 		return b ? b.name : ('مبنى #' + id);
+	}
+
+	/* عدد الأوامر المرسلة لكل مبنى في طابور القلعة الحالية فقط. */
+	function pendingBuildCounts(key) {
+		var counts = {};
+		state.pendingBuilds.forEach(function (p) {
+			if (p.key != null && String(p.key) !== String(key)) return;
+			if (!pendingCastleOk(p)) return;
+			var id = toInt(p.id);
+			counts[id] = (counts[id] || 0) + 1;
+		});
+		return counts;
 	}
 
 	function renderBuildQueue() {
@@ -2396,23 +2445,21 @@
 			return;
 		}
 		var blocked = state.abBlocked || {};
-		var pendingIds = {};
-		for (var pi = 0; pi < state.pendingBuilds.length; pi++) {
-			pendingIds[toInt(state.pendingBuilds[pi].id)] = true;
-		}
+		var pendingCounts = pendingBuildCounts(info.key);
 		el.buildQueue.innerHTML = head + info.items.map(function (id, i) {
 			var v = toInt(id);
 			var isQuest = v >= QUEST_STEP_MIN && v <= QUEST_STEP_MAX;
 			var isSkill = v === SKILL_ITEM_ID;
 			var unsupported = v > QUEST_STEP_MAX && !isSkill;
 			var isBlocked = !!blocked[v];
-			var isPending = !!pendingIds[v];
+			var isPending = pendingCounts[v] > 0;
+			if (isPending) pendingCounts[v]--;
 			var cls = isQuest ? ' quest' : (isSkill ? ' skill' : (unsupported ? ' unsupported' : (isBlocked ? ' blocked' : (isPending ? ' pending' : ''))));
 			var what = isQuest ? 'مهمة/مكافأة — تُنفَّذ في مكانها' :
 				(isSkill ? 'مهارة الموارد — تُنفَّذ مرة واحدة وتُحذف بعد تأكيد ارتفاع المستوى' :
 				(unsupported ? 'عنصر غير مدعوم — يُتخطّى دون حذف' :
 				(isBlocked ? 'محجوب بشرط مسبق في هذه الجلسة' :
-				(isPending ? 'أُرسلت — بانتظار تأكيد المستوى' : ''))));
+				(isPending ? 'أُرسلت — بانتظار تأكيد قبول الأمر' : ''))));
 			var title = 'khanBuildQueues[' + info.key + '] — العنصر ' + (i + 1) +
 				(what ? ' — ' + what : '');
 			return '<span class="kw-chip' + cls + '" title="' + esc(title) + '">' +
@@ -2453,9 +2500,10 @@
 
 		if (el.abStatus) {
 			var txt = state.abStatusText || 'متوقف';
+			if (on && state.startCommand && !state.pendingBuilds.length) txt += ' — أمر البداية';
 			if (on && state.pendingBuilds.length) {
 				var p = state.pendingBuilds[0];
-				txt = 'بانتظار تأكيد مستوى ' + (p.name || ('#' + p.id)) + ' (' + p.before + ' → ' + (p.before + 1) + ')';
+				txt = 'بانتظار تأكيد قبول أمر ' + (p.name || ('#' + p.id));
 			}
 			if (on && state.autoBuildNextAt > Date.now()) {
 				txt += ' — بعد ' + Math.ceil((state.autoBuildNextAt - Date.now()) / 1000) + 'ث';
@@ -2478,10 +2526,25 @@
 		renderAbStatus();
 	}
 
+	/* أمر البداية يخص دورة التشغيل، وليس موضع العنصر داخل الكيو.
+	 * يبقى مفعلاً حتى تأكيد أول بناء بالمعاينة، ويعاد تفعيله بعد فراغ الكيو بالكامل. */
+	function setStartCommand(on) {
+		state.startCommand = !!on;
+		lsSet(LS.startCommand, state.startCommand ? '1' : '0');
+	}
+
+	function rearmStartCommandIfEmpty(info) {
+		if (!state.autoBuild || state.startCommand || !info || info.items.length || state.pendingBuilds.length) return;
+		setStartCommand(true);
+		abLog('↻ الكيو فارغ — تفعيل أمر البداية للإضافات القادمة', 'ok');
+	}
+
 	function autoBuildSet(on, quiet) {
 		on = !!on;
 		if (on && !hasAjax()) { toast('لا اتصال باللعبة', 'err'); return; }
 
+		if (on && !state.autoBuild) setStartCommand(true);
+		if (!on) setStartCommand(false);
 		state.autoBuild = on;
 		lsSet(LS.autoBuild, on ? '1' : '0');
 		state.autoBuildBusy = false;
@@ -2547,10 +2610,11 @@
 	 *   مهارة (150)           → {type:'skill'} مثل السكربت القديم (مهارة الموارد)
 	 *   غير ذلك               → يُتخطّى دون حذف
 	 * لا نُعيد ترتيب الطابور ولا نحذف العناصر غير المنفّذة. */
-	function nextAction(items) {
+	function nextAction(items, key) {
 		var blocked = state.abBlocked || {};
+		var pendingCounts = pendingBuildCounts(key);
 		var pendingIds = {};
-		for (var pi = 0; pi < state.pendingBuilds.length; pi++) pendingIds[toInt(state.pendingBuilds[pi].id)] = true;
+		for (var pendingId in pendingCounts) pendingIds[pendingId] = true;
 		for (var i = 0; i < items.length; i++) {
 			var id = toInt(items[i]);
 			if (!id || id < 1) continue;
@@ -2562,7 +2626,11 @@
 				return { type: 'skill', id: id, skillId: SKILL_ID };
 			}
 			if (id <= 100) {
-				if (blocked[id] || pendingIds[id]) continue;
+				/* تجاوز نسخة الأمر المرسلة فقط؛ التكرار التالي حاجز ترتيب.
+				 * لا نرسل ما بعده قبل تأكيد الترقية السابقة لنفس المبنى. */
+				if (pendingCounts[id] > 0) { pendingCounts[id]--; continue; }
+				if (pendingIds[id]) return null;
+				if (blocked[id]) continue;
 				return { type: 'build', id: id };
 			}
 			/* >135 غير 150 (عنصر غير مدعوم): يُتخطّى في هذه الدورة */
@@ -2606,13 +2674,13 @@
 	var FREE_FINISH_SEC = 60;
 	var MAX_SLEEP_SEC = 300;
 	/* التشغيل الآلي لا يتوقف تلقائياً أبداً — ينتظر ويعيد المحاولة */
-	var EMPTY_QUEUE_RECHECK_MS = 15000;    /* طابور فاضي: فحص محلي سريع (بدون طلبات) */
+	var EMPTY_QUEUE_RECHECK_MS = 600000;   /* فحص السيرفر الاحتياطي عند الفراغ: كل 10 دقائق */
 	var ALL_BLOCKED_RECHECK_MS = 90000;    /* كل المباني محجوبة: محاولة دورية */
 	var ALL_SPECIAL_RECHECK_MS = 120000;   /* كل العناصر غير قابلة للتنفيذ الآن (مهام/مهارات مؤجلة) */
 	var UNKNOWN_ERROR_BASE_MS = 60000;     /* خطأ غير معروف: تباعد تصاعدي */
 	var UNKNOWN_ERROR_MAX_MS = 300000;
 
-	/* التحقق من نجاح الترقية بمقارنة المستوى قبل/بعد */
+	/* إعدادات انتظار الطلبات القديمة؛ قبول الأوامر لا يعتمد على المستوى. */
 	var PENDING_LEVEL_RETRY_MS = 3000;     /* قراءة ثانية عند تأخر تحديث المستوى */
 	var PENDING_LEVEL_MAX_TRIES = 2;       /* محاولتان ثم نعتبرها فشلاً ونعيدها */
 	var PENDING_LEVEL_FAIL_MAX = 5;        /* تعذّر قراءة المستوى 5 مرات → تخلَّ عن الانتظار */
@@ -2886,7 +2954,7 @@
 		});
 	}
 
-	/* القلعة الحالية تطابق قلعة الترقية المنتظرة؟ (التحقق يقرأ مستوى القلعة النشطة) */
+	/* القلعة الحالية تطابق قلعة الترقية المنتظرة؟ (المعاينة تخص القلعة النشطة) */
 	function pendingCastleOk(p) {
 		if (!p.castleId) return true;
 		var ci = currentCastleInfo();
@@ -2895,99 +2963,42 @@
 		return String(cur) === String(p.castleId);
 	}
 
-	/* تحقق من الترقيات المُرسلة: الجدول صار فاضياً ⇒ اقرأ مستوى المبنى.
-	 *   level > before  → نجاح مؤكد ⇒ احذف العنصر من الطابور
-	 *   level == before → فشل (بعد قراءتين) ⇒ أبقِ العنصر ليُعاد إرساله
-	 * هذا هو مصدر الحقيقة 100% بدل الاعتماد على ردّ الطلب وحده. */
-	function verifyPendingBuilds(cb) {
-		if (!state.pendingBuilds.length) { cb(true); return; }
+	/* ارتفاع المستوى المقترح في معاينة التطوير يؤكد الإرسال دون انتظار اكتماله. */
+	function verifyPendingBuilds(cb, liveItems) {
 		var list = state.pendingBuilds.slice();
 		var at = 0;
 		var waiting = false;
-
 		function next() {
-			if (at >= list.length) {
-				savePendingBuilds();
-				cb(!waiting);
-				return;
-			}
+			if (at >= list.length) { rearmStartCommandIfEmpty(queueInfo()); cb(!waiting); return; }
 			var p = list[at++];
-
-			if (!pendingCastleOk(p)) {
-				waiting = true;
-				state.ifCheckAt = Date.now() + 30000;
-				setAbStatus('waiting', 'بانتظار قلعة ' + p.name + ' للتحقق');
-				next();
-				return;
-			}
-
-			if (Date.now() - p.sentAt < PENDING_MIN_AGE_MS) {
-				waiting = true;
-				state.ifCheckAt = Date.now() + 2500;
-				setAbStatus('waiting', 'بانتظار استقرار جدول البناء…');
-				next();
-				return;
-			}
-
-			getBuildingLevelAjax(p.id, function (r) {
-				if (!state.autoBuild) { cb(false); return; }
-
-				if (r.level == null) {
-					p.levelFails = toInt(p.levelFails, 0) + 1;
-					savePendingBuilds();
-					if (p.levelFails >= PENDING_LEVEL_FAIL_MAX) {
-						removePendingBuild(p);
-						abLog('✕ تعذّر قراءة مستوى ' + p.name + ' — إعادة الترقية', 'err');
-						state.autoBuildNextAt = Date.now() + 60000;
-						setAbStatus('waiting', 'تعذّر قراءة المستوى');
-					} else {
-						waiting = true;
-						state.ifCheckAt = Date.now() + 15000;
-						setAbStatus('waiting', 'تعذّر قراءة مستوى ' + p.name);
-					}
-					next();
-					return;
-				}
-
-				if (r.level > p.before) {
-					removePendingBuild(p);
+			if (!pendingCastleOk(p)) { waiting = true; next(); return; }
+			confirmAcceptedBuild(p, function (ok, nextTarget) {
+				if (ok) {
 					consumeQueueItem(p.id, p.key);
-					state.abBlocked = {};
-					state.abBlockedResetAt = 0;
-					state.abErrorCount = 0;
-					state.abQuestFails = 0;
-					abLog('✓ تحقق المستوى: ' + p.name + ' ' + p.before + ' → ' + r.level + ' — حُذف من الطابور', 'ok');
-					setAbStatus('running', 'تم تأكيد ترقية ' + p.name);
-					if (state.open && state.tab === 'buildings') {
-						setTimeout(function () { loadBuildings(true); }, 500);
-					}
-					next();
-					return;
-				}
-
-				/* المستوى لم يرتفع بعد — قد يكون تحديث السيرفر متأخراً */
-				p.tries = toInt(p.tries, 0) + 1;
-				savePendingBuilds();
-				if (p.tries < PENDING_LEVEL_MAX_TRIES) {
-					waiting = true;
-					state.ifCheckAt = Date.now() + PENDING_LEVEL_RETRY_MS;
-					setAbStatus('waiting', 'تحقق ثانٍ من مستوى ' + p.name);
-				} else {
 					removePendingBuild(p);
-					/* لا نستهلك العنصر: يبقى ليُعاد إرساله */
-					state.autoBuildNextAt = Date.now() + 5000;
-					state.ifCheckAt = 0;
-					abLog('✕ لم يرتفع مستوى ' + p.name + ' (بقي ' + r.level + ') — سأعيد الترقية', 'err');
-					setAbStatus('waiting', 'إعادة محاولة ' + p.name);
+					if (p.startCommand && state.startCommand) {
+						setStartCommand(false);
+						abLog('✓ تأكد أمر البداية — أُطفئ الفلاغ', 'ok');
+					}
+					abLog('✓ تأكد قبول ' + p.name + ' إلى ' + p.targetLevel + ' — المعاينة تعرض التطوير إلى ' + nextTarget + ' — حُذف أمر واحد', 'ok');
+				} else if (Array.isArray(liveItems) && !liveItems.length && nextTarget != null &&
+					(p.targetLevel == null || nextTarget === p.targetLevel) && Date.now() - p.sentAt >= 30000) {
+					/* لا عمليات على السيرفر والمعاينة لم تتقدم: الطلب القديم لم يسجل.
+					 * نفك التعليق فقط؛ يبقى أمر المستخدم في الطابور ليُرسل من جديد. */
+					removePendingBuild(p);
+					abLog('↻ جدول اللعبة فارغ ومعاينة ' + p.name + ' ما زالت إلى ' + nextTarget + ' — فك تعليق الطلب وإعادة نفس الأمر دون حذفه', 'warn');
+				} else {
+					waiting = true;
+					state.ifCheckAt = Date.now() + 15000;
+					setAbStatus('waiting', 'رد غير مؤكد لـ ' + p.name + ' — لم أكرر الطلب');
 				}
 				next();
 			});
 		}
-
 		next();
 	}
 
-	/* يقرأ جدول البناء؛ يسمح بملء الخانتين، ويتحقق من الترقيات المعلقة بعد فراغه. */
+	/* يقرأ جدول البناء؛ يحسم قبول الطلبات المعلقة ويسمح بملء الخانتين. */
 	function checkBuildQueue(cb) {
 		if (state.ifBusy) return;
 		state.ifBusy = true;
@@ -3005,19 +3016,13 @@
 			var items = res.items || [];
 			state.buildRunning = items.length > 0;
 
-			/* ترقية سابقة تنتظر تأكيد المستوى والجدول صار فاضياً → تحقق الآن */
-			if (state.pendingBuilds.length && !items.length) {
-				state.ifCheckAt = 0;
+
+			if (!items.length && state.pendingBuilds.length) {
 				verifyPendingBuilds(function (done) {
 					state.ifBusy = false;
-					if (!state.autoBuild) return;
-					if (done) {
-						state.ifCheckAt = 0;
-						if (cb) cb(true);
-					} else {
-						if (cb) cb(false);
-					}
-				});
+					if (done) state.ifCheckAt = 0;
+					if (cb) cb(done);
+				}, items);
 				return;
 			}
 
@@ -3030,17 +3035,9 @@
 				return;
 			}
 
-			/* إذا بقيت خانة من الحد الأقصى، أرسل لها عملاً دون انتظار انتهاء الحالي. */
-			if (items.length < MAX_BUILD_QUEUE) {
-				state.ifBusy = false;
-				state.ifCheckAt = 0;
-				if (cb) cb(true);
-				return;
-			}
-
 			var head = items[0];
 
-			/* اللعبة: 60 ثانية أو أقل ⇒ إنهاء فوري مجاني */
+			/* الإنهاء المجاني يسبق انتظار تأكيد الأوامر المعلقة. */
 			if (state.instantFinish && head.remain <= FREE_FINISH_SEC) {
 				finishHeadIfFree(head, function (out) {
 					state.ifBusy = false;
@@ -3063,6 +3060,40 @@
 
 			state.ifBusy = false;
 
+			/* الطلبات غير المحسومة تُفحص حتى عندما يوجد بناء جارٍ. */
+			if (state.pendingBuilds.length) {
+				state.ifCheckAt = 0;
+				verifyPendingBuilds(function (done) {
+					state.ifBusy = false;
+					if (!state.autoBuild) return;
+					if (done) {
+						state.ifCheckAt = 0;
+						checkBuildQueue(cb);
+					} else {
+						if (cb) cb(false);
+					}
+				}, items);
+				return;
+			}
+
+			/* فراغ الكيو المحلي مع وجود بناء: نستيقظ عند موعد الإنهاء المجاني،
+			 * ولا ندخل انتظار الفراغ الطويل الذي يؤخر إنهاء آخر أمر. */
+			var localQueue = queueInfo();
+			if (localQueue && !localQueue.items.length) {
+				sleepUntilHead(head.remain);
+				setAbStatus('waiting', 'الكيو المحلي فارغ — متابعة البناء الجاري عند موعده');
+				if (cb) cb(false);
+				return;
+			}
+
+			/* إذا بقيت خانة من الحد الأقصى، أرسل لها عملاً دون انتظار انتهاء الحالي. */
+			if (items.length < MAX_BUILD_QUEUE) {
+				state.ifBusy = false;
+				state.ifCheckAt = 0;
+				if (cb) cb(true);
+				return;
+			}
+
 			/* بناء جارٍ: نم حتى آخر 60 ثانية أو 5 دقائق (ودقيقة واحدة أثناء التحقق) */
 			sleepUntilHead(head.remain);
 			setAbStatus('waiting', 'البناء جارٍ — متبقٍ ' + formatSeconds(head.remain) +
@@ -3071,8 +3102,29 @@
 		});
 	}
 
+	/* قراءة localStorage محلية في كل دورة، حتى أثناء انتظار فحص السيرفر.
+	 * حدث storage لا يصل لنفس الصفحة، لذلك لا نعتمد عليه لاكتشاف الإضافات. */
+	function wakeOnLocalBuildCommands() {
+		var info = queueInfo();
+		if (!info) return;
+		var hasCommands = info.items.length > 0 ||
+			(state.autoBuildAll && nextCastleWithQueue() != null);
+		if (!hasCommands && !state.pendingBuilds.length) {
+			state.abEmptyWaiting = true;
+			return;
+		}
+		if (!state.abEmptyWaiting || !hasCommands) return;
+		state.abEmptyWaiting = false;
+		state.autoBuildNextAt = 0;
+		state.ifCheckAt = 0;
+		state.abWaitKey = null;
+		clearAutoBuildSleep(state.currentCastleId);
+		abLog('▶ أضيفت أوامر للكيو المحلي — استئناف البناء', 'ok');
+	}
+
 	function autoBuildTick() {
 		if (!state.autoBuild || state.autoBuildBusy || state.confirmBusy) return;
+		wakeOnLocalBuildCommands();
 		/* حماية: طلب جدول البناء لا يعلّق التشغيل للأبد */
 		if (state.ifBusy && Date.now() - state.ifBusyAt > 25000) state.ifBusy = false;
 		/* per-castle sleep: قلعة без ресурсов (أو نائمة) لا تُطلب — castles أخرى могут строить */
@@ -3133,6 +3185,8 @@
 			return;
 		}
 
+		rearmStartCommandIfEmpty(info);
+
 		/* «كل القلاع»: إن كانت الترقية المنتظرة في قلعة أخرى، ارجع إليها للتحقق
 		   (وإلا يبقى التحقق معلّقاً لأن قراءة المستوى تخص القلعة النشطة). */
 		if (state.pendingBuilds.length && state.autoBuildAll && state.castles.length > 1) {
@@ -3149,13 +3203,6 @@
 				});
 				return;
 			}
-		}
-
-		/* طابور فاضي بلا ترقية منتظرة: لا نطلب جدول البناء ولا نوقف التشغيل —
-		   ننتظر عناصر جديدة (يضيفها مدير الطابور أو أنت). */
-		if (!info.items.length && !state.pendingBuilds.length) {
-			sendNextBuild(info);
-			return;
 		}
 
 		/* افحص الجدول الحقيقي: التحقق من الترقية السابقة + الإنهاء الفوري */
@@ -3179,6 +3226,7 @@
 		if (Date.now() < state.autoBuildNextAt) return;
 
 		if (!info.items.length) {
+			rearmStartCommandIfEmpty(info);
 			/* «كل القلاع»: انتقل لقلعة أخرى عندها طابور */
 			if (state.autoBuildAll) {
 				var next = nextCastleWithQueue();
@@ -3221,7 +3269,7 @@
 		}
 		state.abWaitKey = null;
 
-		var action = nextAction(info.items);
+		var action = nextAction(info.items, info.key);
 
 		/* لا عنصر قابل للتنفيذ: إما كله مهارات/عناصر غير مدعومة أو كله محجوب —
 		   لا نوقف التشغيل، بل نعيد المحاولة دورياً. */
@@ -3275,42 +3323,40 @@
 		}
 
 		state.autoBuildBusy = true;
-		setAbStatus('running', 'التحقق من القلعة وقراءة مستوى ' + name + '…');
+		setAbStatus('running', 'التحقق من القلعة وخانات البناء لـ ' + name + '…');
 
-		/* القفل يغطي التحقق والقراءة والإرسال حتى لا يبدّل الحداد/الأمير
-		 * القلعة بين قراءة المستوى وطلب البناء. */
+		/* القفل يثبت القلعة أثناء قراءة خانات البناء والإرسال. */
 		withVerifiedCastle(actionCastle.id, function (releaseCastleLock) {
-			getBuildingLevelAjax(head, function (lv) {
-				if (!state.autoBuild) { state.autoBuildBusy = false; releaseCastleLock(); return; }
-				if (lv.level == null) {
+			getBuildQueue(function (snapshot) {
+				if (!state.autoBuild || !snapshot || snapshot.error || snapshot.items.length >= MAX_BUILD_QUEUE) {
 					state.autoBuildBusy = false;
 					releaseCastleLock();
-					abWait('level-read', 'تعذّر قراءة مستوى ' + name + ' — إعادة المحاولة',
-						30000, '… تعذّر قراءة مستوى ' + name + ' — سأعيد المحاولة', 'warn');
+					state.ifCheckAt = 0;
+					state.autoBuildNextAt = Date.now() + 3000;
 					return;
 				}
-
-			/* اسم المبنى من ردّ القراءة الخفيف إن لم تكن القائمة محمّلة */
-			name = b ? b.name : (lv.name || ('#' + head));
-			abLog('→ ترقية ' + name + ' (' + lv.level + ' → ' + (lv.level + 1) + ')', '');
-
-			var pending = {
-				id: head,
-				name: name,
-				before: lv.level,
-				sentAt: Date.now(),
-				castleId: String(actionCastle.id),
-				key: info.key,
-				tries: 0,
-				levelFails: 0,
-				uncertain: false
-			};
-
-				setAbStatus('running', 'إرسال ترقية ' + name + ' (' + lv.level + ' → ' + (lv.level + 1) + ')');
-				upgradeBuilding(head, function (res) {
-					state.autoBuildBusy = false;
-					releaseCastleLock();
-					handleBuildResult(head, b, res, pending);
+				getBuildingUpgradePreview(head, function (preview) {
+					if (!state.autoBuild || !preview || preview.nextLevel == null) {
+						state.autoBuildBusy = false;
+						releaseCastleLock();
+						state.autoBuildNextAt = Date.now() + 15000;
+						setAbStatus('waiting', 'تعذّر قراءة معاينة ' + name + ' — لم أرسل البناء');
+						return;
+					}
+					var pending = {
+						id: head, name: name, before: preview.nextLevel - 1,
+						targetLevel: preview.nextLevel, startCommand: !!state.startCommand, sentAt: Date.now(),
+						castleId: String(actionCastle.id), key: info.key,
+						tries: 0, levelFails: 0, uncertain: true
+					};
+					addPendingBuild(pending);
+					abLog((pending.startCommand ? '▶ أمر البداية: ' : '→ ') + 'ترقية ' + name + ' إلى ' + pending.targetLevel + ' حسب المعاينة', '');
+					setAbStatus('running', 'إرسال ترقية ' + name + ' إلى ' + pending.targetLevel);
+					upgradeBuilding(head, function (res) {
+						state.autoBuildBusy = false;
+						releaseCastleLock();
+						handleBuildResult(head, b, res, pending);
+					});
 				});
 			});
 		}, function () {
@@ -3524,51 +3570,38 @@
 		sendSkillAction(itemId, info, skillId, skillName);
 	}
 
-	/* بعد قبول الترقية: في هذه النسخة من اللعبة قد يظهر «المستوى التالي» في الصفحة
-	 * فور القبول (قبل انتهاء المؤقّت)، وقد لا يظهر إلا بعد الاكتمال. نجرب القراءة
-	 * الآن أولاً؛ فإن ارتفع المستوى نعتبرها ناجحة فوراً، وإلا نُبقيها pending
-	 * ونعود للتحقق عند فراغ جدول البناء (كما كان). لا نستهلك العنصر قبل ارتفاع المستوى. */
+	/* معاينة التطوير التالية تؤكد دخول الأمر السابق إلى جدول اللعبة. */
 	function confirmAcceptedBuild(pending, cb) {
-		var attempts = 0;
-		var maxAttempts = 3;
-		var done = false;
-		var safety = null;
+		if (pending.targetLevel == null) {
+			getBuildingUpgradePreview(pending.id, function (r) { cb(false, r ? r.nextLevel : null); });
+			return;
+		}
 		state.confirmBusy = true;
-
-		function finish(ok, level) {
-			if (done) return;
-			done = true;
-			if (safety) { clearTimeout(safety); safety = null; }
-			state.confirmBusy = false;
-			cb(ok, level);
-		}
-
-		safety = setTimeout(function () { finish(false, null); }, 15000);
-
-		function attempt() {
-			attempts++;
-			getBuildingLevelAjax(pending.id, function (r) {
-				var lv = (r && r.level != null) ? r.level : null;
-				if (lv != null && lv > pending.before) {
-					if (r.name) pending.name = r.name;
-					finish(true, lv);
-					return;
-				}
-				if (attempts < maxAttempts) {
-					setTimeout(attempt, 1500);
-					return;
-				}
-				finish(false, lv);
-			});
-		}
-
-		setTimeout(attempt, 150);
+		withVerifiedCastle(pending.castleId, function (release) {
+			var attempts = 0;
+			function finish(ok, target) {
+				release();
+				state.confirmBusy = false;
+				cb(ok, target);
+			}
+			function attempt() {
+				attempts++;
+				getBuildingUpgradePreview(pending.id, function (preview) {
+					if (preview && preview.nextLevel != null && preview.nextLevel > pending.targetLevel) {
+						finish(true, preview.nextLevel);
+					} else if (attempts < 3 && state.autoBuild) {
+						setTimeout(attempt, 1500);
+					} else { finish(false, preview ? preview.nextLevel : null); }
+				});
+			}
+			attempt();
+		}, function () { state.confirmBusy = false; cb(false, null); });
 	}
 
 	function handleBuildResult(id, b, res, pending) {
 		var name = (pending && pending.name) ? pending.name : (b ? b.name : ('#' + id));
 
-		/* لا ردّ إطلاقاً: قد يكون الطلب وصل السيرفر — نتحقق من المستوى قبل الإعادة */
+		/* لا ردّ إطلاقاً: قد يكون الطلب وصل السيرفر — نفحص معاينة التطوير التالية. */
 		if (!res) {
 			if (pending) {
 				pending.uncertain = true;
@@ -3576,7 +3609,7 @@
 				state.buildRunning = true;
 				state.ifCheckAt = 0;
 				state.autoBuildNextAt = Date.now() + 3000;
-				abLog('… لا ردّ واضح من السيرفر — سأتحقق من مستوى ' + name + ' قبل الإعادة', 'warn');
+				abLog('… لا ردّ واضح من السيرفر — سأتحقق من قبول ' + name + ' من معاينة التطوير قبل أي إعادة', 'warn');
 				setAbStatus('running', 'بانتظار التحقق من ' + name);
 				return;
 			}
@@ -3586,45 +3619,29 @@
 
 		var raw = String(res.error_txt || res.raw || res.parseError || '');
 
-		/* نجاح الإرسال: نسجّل pending فوراً (حتى لو أُعيد تحميل الصفحة)، ثم نجرّب
-		   قراءة المستوى الآن. إن ارتفع فوراً ⇒ نجاح مؤكد واستهلاك مباشر.
-		   إن لم يظهر بعد ⇒ يبقى pending ويُتحقق منه عند فراغ جدول البناء. */
+		/* رد القبول يبدأ التحقق بالمعاينة؛ لا نستهلك الأمر من الرد وحده. */
 		if (String(res.error) === '0') {
 			state.abBlocked = {};
 			state.abBlockedResetAt = 0;
 			state.abErrorCount = 0;
 			state.abWaitKey = null;
 			state.buildRunning = true;
-			state.ifCheckAt = 0;
-			state.autoBuildNextAt = Date.now() + 6000;
-			clearAutoBuildSleep(pending ? pending.castleId : state.currentCastleId);
-			if (state.buildingLevelCache && pending) delete state.buildingLevelCache[toInt(pending.id)];
-
 			if (pending) {
+				pending.uncertain = false;
 				addPendingBuild(pending);
-				setAbStatus('running', 'أتحقق من مستوى ' + name + '…');
-				confirmAcceptedBuild(pending, function (ok, level) {
-					if (ok) {
-						removePendingBuild(pending);
-						consumeQueueItem(pending.id, pending.key);
-						abLog('✓ تحقق المستوى: ' + name + ' ' + pending.before + ' → ' + level +
-							' — حُذف من الطابور', 'ok');
-						state.autoBuildNextAt = Date.now() + 1200;
-					} else {
-						abLog('… أُرسلت ترقية ' + name + ' (' + pending.before + ' → ' + (pending.before + 1) +
-							') — لم يظهر المستوى بعد، سأتحقق عند اكتمالها', 'warn');
-						setAbStatus('running', 'بانتظار اكتمال ' + name);
-						state.autoBuildNextAt = Date.now() + 3000;
-					}
-					state.ifCheckAt = 0;
-					renderBuildQueue();
-					renderAbStatus();
-				});
 			}
+			clearAutoBuildSleep(pending ? pending.castleId : state.currentCastleId);
+			abLog('… قُبل الطلب؛ أتحقق بمعاينة التطوير التالية لـ ' + name, '');
+			verifyPendingBuilds(function (done) {
+				state.autoBuildNextAt = Date.now() + (done ? 1200 : 3000);
+				if (done) { state.ifCheckAt = 0; setAbStatus('running', 'تأكد قبول ' + name + ' من المعاينة'); }
+				renderBuildQueue();
+				renderAbStatus();
+			});
 			return;
 		}
 
-		/* خطأ شبكة/ردّ غير JSON: قد يكون الطلب نُفّذ — تحقق من المستوى */
+		/* رد غير واضح: افحص معاينة التطوير قبل أي إرسال آخر. */
 		if (res.httpError || res.parseError || res.raw != null) {
 			if (pending) {
 				pending.uncertain = true;
@@ -3633,13 +3650,15 @@
 				state.ifCheckAt = 0;
 				state.autoBuildNextAt = Date.now() + 3000;
 				abLog('… ردّ غير واضح (' + String(res.httpError || res.parseError || '').slice(0, 60) +
-					') — سأتحقق من مستوى ' + name + ' قبل الإعادة', 'warn');
+					') — سأتحقق من قبول ' + name + ' من معاينة التطوير قبل أي إعادة', 'warn');
 				setAbStatus('running', 'بانتظار التحقق من ' + name);
 				return;
 			}
 			failAutoBuild('ردّ غير واضح');
 			return;
 		}
+
+		if (pending) removePendingBuild(pending);
 
 		/* شرط مسبق: «يجب عمل بعض التطويرات اولاً» → احجبه في هذه الجلسة وجرّب التالي
 		   (يُفحص قبل «أعلى مستوى» لأن رسالته تحتوي كلمة التطويرات)
@@ -4629,7 +4648,7 @@
 	function init() {
 		/* قائمة القلاع من الكاش أولاً (اسم + معرّف) → أول رسم بدون أي طلب */
 		hydrateCastlesCache();
-		/* ترقيات أُرسلت قبل إعادة التحميل وتنتظر تأكيد المستوى */
+		/* طلبات لم يُحسم قبولها قبل إعادة التحميل. */
 		loadPendingBuilds();
 		/* مهارة أُرسلت قبل إعادة التحميل وتنتظر تأكيد ارتفاع المستوى */
 		state.pendingSkill = loadPendingSkill();
@@ -4693,13 +4712,14 @@
 		autoBuildStatus: function () {
 			return {
 				on: state.autoBuild,
+				startCommand: state.startCommand,
 				status: state.abStatus,
 				text: state.abStatusText,
 				nextInMs: Math.max(0, state.autoBuildNextAt - Date.now()),
 				queueCheckInMs: Math.max(0, state.ifCheckAt - Date.now()),
 				buildRunning: state.buildRunning,
 				instantFinish: state.instantFinish,
-				verifyMode: 'strict',
+				verifyMode: 'preview',
 				pending: state.pendingBuilds.map(function (p) {
 					return { id: p.id, name: p.name, before: p.before, tries: p.tries, uncertain: !!p.uncertain };
 				}),
