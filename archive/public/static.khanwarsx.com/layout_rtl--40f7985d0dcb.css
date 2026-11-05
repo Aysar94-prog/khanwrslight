@@ -1,0 +1,4210 @@
+/*
+Theme Name: KhanWars v7 RTL
+Description: RTL CSS Style for KW
+Version: v7 RTL
+Website: http: //www.xs-software.com/
+*/
+
+/* Common elements */
+
+body,
+.formbox .row .right input,
+.formbox .row .right textarea,
+.formbox .row .right select,
+#pagebody .container .content h2 .marchesFilter form select,
+#pagebody.mapContent #inner .worldMap .coordinates input,
+#pagebody .container .towerPage input,
+#pagebody .container #npcTrader input.input,
+#overlayContent input,
+#clan_chat_msg input,
+#clan_chat_topic input,
+form#category_box input.text,
+.paging .row input[type=text] {
+font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif!important;
+}
+
+#topBar {
+right: auto;
+left: 0;
+}
+
+#topBar ul.topMenu {
+right: auto;
+left: 0;
+}
+
+#topBar ul.topMenu li {
+float: left;
+}
+
+#header #player {
+left: auto;
+right: 0;
+}
+
+#header #fortress {
+left: auto;
+right: 130px;
+}
+
+#header #fortress #title {
+left: auto;
+right: 11px;
+}
+
+#header ul#navigation {
+left: auto;
+right: 290px;
+direction: ltr;
+/* padding: 17px 18px; */
+}
+
+#header ul#resources {
+right: auto;
+left: 34px;
+}
+
+
+#header ul#resources li {
+border-color: #502e0d;
+}
+
+#header ul#resources li .icon {
+left: auto;
+right: 7px;
+}
+
+#header ul#resources li .bar {
+background: url(../img/rtl/h_resources_bar.png) left bottom no-repeat;
+left: 0;
+right: 0px;
+}
+
+#header ul#resources li .count {
+left: auto;
+right: 40px;
+text-align: right;
+}
+
+#header ul#resources li .storage {
+right: auto;
+left: 18px;
+text-align: left;
+}
+
+#header ul#resources li:hover .bar {
+background: url("../img/rtl/h_resources_bar-h.png") no-repeat scroll left bottom transparent;
+}
+
+#header #center {
+left: auto;
+right: 308px;
+}
+
+#header #center #actionButton {
+float: right;
+margin-left:4px;
+}
+
+#header #center #vipButton {
+float: right;
+margin: 0 5px 0 0;
+}
+
+#header #center #vipButton .vip {
+float: right;
+margin-left:3px;
+}
+
+
+
+#vipMenuBox {
+background-position: 0 -5px;
+left: auto;
+right: 3px;
+border-top-left-radius: 10px;
+-webkit-border-top-left-radius: 10px;
+-moz-border-radius-topleft: 10px;
+border-top-right-radius: 0px;
+-webkit-border-top-right-radius: 0px;
+-moz-border-radius-topright: 0px;
+box-shadow: 0px 3px 10px #000;
+-moz-box-shadow: 0px 3px 10px #000;
+-webkit-box-shadow: 0px 3px 10px #000;
+}
+
+#topBar .serverTime {
+margin: 9px 10px 0 10px;
+}
+
+#topBar .serverTime a {
+margin:-9px 10px 0 0 !important;
+
+}
+
+#topBar ul.topMenu li a.username {
+text-align:left;
+}
+
+#userDetails {
+right: auto;
+left: 10px;
+z-index:6;
+}
+
+#header #fortress #title .castlesHolder {
+left: auto;
+right: 9px;
+background-position:490px -476px;
+}
+
+#header #fortress #title .castlesHolder dl#castlesList dd {
+float: right;
+}
+
+#header #fortress #title .castlesHolder dl#castlesList dd a img {
+float: right;
+margin: 0 0 0 10px;
+}
+
+#header ul#navigation li {
+float: right;
+}
+
+#footer #changeLanguage {
+right: auto;
+left: 20px;
+text-align: right;
+}
+
+#footer .copyright {
+/*float: right;*/
+}
+
+#pagebody .leftMenu {
+float: right;
+}
+
+#pagebody .container {
+float: right;
+}
+
+.formbox .row .left,
+.formbox .row label {
+float: right;
+text-align: left;
+font-size: 12px;
+}
+
+.formbox .row .right {
+margin-left: 0;
+margin-right: 205px;
+}
+
+#systemAvatars {
+margin:0 205px 10px 0;
+}
+
+#mainWrapper #pagebody #inner .container .content.oldBrowser {
+background: url("../img/layout-v5/oldBrowserBg-rtl.jpg") center 20px no-repeat;
+padding: 100px 50px 0 50px;
+cursor: default;
+}
+
+#pagebody .container .content h2 {
+padding:10px 30px 18px 55px;
+}
+
+#pagebody .container .content h2.filter {
+background: url('../img/layout-v5/h2_bknd_filter.png') 4px 0 no-repeat;
+}
+
+#pagebody .container.wide .content h2 {
+margin:0 -17px 0 0;
+padding:10px 49px 18px 30px;
+}
+
+#pagebody .container.wide .content h2.filter {
+margin:0 -20px 0 0;
+}
+
+#hotlinksMenu .topLinks {
+
+}
+
+#hotlinksMenu {
+left: auto;
+right: -156px;
+top: 460px;
+}
+
+#hotlinksMenu ul li {
+text-align: right;
+}
+
+.hotLink div a,
+.addToHotlinks div a,
+.manageHotlinks div a {
+text-align: right;
+padding: 0 10px 0 0 !important;
+}
+
+body.overview a.showMenu,
+body.royalcourt a.showMenu {
+background: url('../img/rtl/hotlinks_show_leather.png') no-repeat;
+}
+
+#hotlinksMenu .topLinks {
+
+}
+
+a.showMenu {
+left: auto;
+right: 119px !important;
+}
+
+body.overview #hotlinksMenu .topLinks,
+body.royalcourt #hotlinksMenu .topLinks {
+
+}
+
+/*
+#hotlinksMenu .wrapper {
+background: url('../img/rtl/hotlinks_middle.png') 0 0 repeat-y;
+padding: 0 10px 0 18px !important;
+}
+*/
+
+body.overview #hotlinksMenu .wrapper,
+body.royalcourt #hotlinksMenu .wrapper {
+
+}
+
+#hotlinksMenu .bottomLinks {
+
+}
+
+body.overview .bottomLinks,
+body.royalcourt .bottomLinks {
+
+}
+
+
+#hotlinksMenu a.hideMenu {
+left:auto;
+right:162px;
+}
+
+ul.tabsNavigation li {
+float: right;
+}
+
+#rightBanner {
+right: auto !important;
+left: -185px;
+}
+
+/* Page specific elements */
+
+#pagebody .leftMenu ul li a {
+padding: 0px 20px 9px 10px;
+}
+
+#pagebody .leftMenu ul li a small {
+right: auto;
+left: -4px;
+}
+
+#switchInterfaceBtn {
+right: auto;
+left: -17px;
+}
+
+h2 a.chatHistory {
+float: left;
+}
+
+h2 a.fromUser {
+float: right;
+}
+
+.messageWrapper .userDetails {
+float: right;
+}
+
+#pagebody .container .content .messageWrapper .box.message {
+margin-left: 0;
+margin-right: 115px;
+}
+
+.message p.options a {
+padding-right: 18px;
+padding-left: 1px;
+background-position: right top;
+}
+
+ul.royalNav li {
+float: right;
+}
+
+ul.royalNav li#btnClose {
+float: left;
+}
+
+ul.royalNav li a span {
+padding: 0 45px 0 0;
+}
+
+ul.royalNav li a span .icon {
+left: auto;
+right: 18px;
+}
+
+#selectedHero .person {
+/*float: right;*/
+}
+
+#selectedHero > .details {
+margin: 25px 260px 25px 0px;
+}
+
+#selectedHero .details .line > big {
+float: right;
+}
+
+ul.royalOffsprings {
+position: absolute;
+top: 45px;
+left:auto;
+right: 736px;
+}
+
+ul.royalOffsprings li a {
+background: url(../img/rtl/royal_offspring_bknd.png) 0px 0px no-repeat;
+}
+
+.progressBar.royalStats {
+padding-right: 0;
+padding-left: 42px;
+}
+
+.progressBar a.royalStatsRespec {
+background: url('../img/rtl/royal_stats_respec.png') top left no-repeat;
+left: auto;
+right: -22px;
+}
+
+.progressBar.royalStats a.royalStatsAdd {
+right: auto;
+left: 0px;
+}
+
+.worldMap .coordinates input#coordinatesGo {
+float: left;
+}
+
+.worldMap .moveTo.top,
+.worldMap .moveTo.bottom {
+left: 479px;
+}
+
+#heroRow {
+margin: 0 66px 0 0;
+}
+
+#heroRow .thumb {
+float: right;
+}
+
+#heroRow #heroDetails {
+margin: 5px 144px 0 0;
+}
+
+.logoPosition {
+float: right;
+}
+
+#playerDetails .playerItem .title a.playerAvatar {
+float: right;
+}
+
+#playerDetails .playerItem .title .details {
+margin: 0 60px 0 0;
+}
+
+#playerDetails .playerItem .heroInfo .thumb {
+float: right;
+}
+
+#playerDetails .playerItem .heroInfo .details {
+margin: 5px 142px 0 0;
+text-align: right;
+}
+
+#playerDetails .playerItem .heroInfo .details .row .item {
+float: right;
+}
+
+#playerCups .cup {
+background-position: top right;
+padding: 10px 120px 12px 20px;
+}
+
+
+#playerCups .cup.clan {
+background-image: url(../img/rtl/player_profile_clancup.png);
+}
+
+#playerCups .cup.exp {
+background-image: url(../img/rtl/player_profile_expcup.png);
+}
+
+#playerCups .count {
+left: auto;
+right: 0px;
+}
+
+.guide.guide10 {
+top: -103px;
+left: auto;
+right: 885px;
+}
+
+
+/* VIP PAGES */
+
+.promoBtns dd {
+float:right!important;
+}
+
+ul.vipBonuses li {
+background-position:center right!important;
+padding: 0 42px 0 0!important;
+}
+
+.premiumDescription {
+margin-left:0!important;
+margin-right:230px;
+padding:0 0 0 20px;
+}
+
+#premiumLoyalty .premiumDescription {
+margin-right:0;
+/*margin-right:250px;*/
+padding:5px 0 0 10px;
+margin-left:auto !important
+}
+
+/*
+.priestList dd {
+float: right;
+}
+*/
+
+#loyaltyBar .level-1,
+#loyaltyBar .level-2,
+#loyaltyBar .level-3,
+#loyaltyBar .level-4 {
+padding: 40px 5px 0 0;
+border-left: none;
+border-right: 1px dashed #321e04;
+}
+
+#loyaltyBar .level-1 {
+left:auto;
+right: 10px;
+}
+
+#loyaltyBar .level-2 {
+left:auto;
+right: 212px;
+}
+
+#loyaltyBar .level-3 {
+left:auto;
+right: 414px;
+}
+
+#loyaltyBar .level-4 {
+right:auto;
+left: 10px;
+border-right: none;
+border-left: 1px dashed #321e04;
+padding: 40px 0 0 6px;;
+text-align: left;
+}
+
+#loyalContent .progressBar .bar .count {
+right: auto;
+left: 9px;
+}
+
+span.loyalVip,
+span.loyalStars {
+padding: 3px 25px 3px 0;
+background-position: right -2px;
+}
+
+#profileCastle .otherCastles {
+margin: 0 145px 0 0;
+}
+
+#profileCastle #castle_carousel .inner img {
+float: right;
+}
+
+#awardsList .awardItem {
+float: right;
+}
+
+ul#achievementItems li {
+float: right;
+}
+
+#selectedHero .details > big {
+text-align: right;
+}
+
+.progressBar .bar .count {
+right: auto;
+left: 5px;
+}
+
+.progressBar .bar .count.left {
+left: auto;
+right: 5px;
+}
+
+#selectedHero .details ul#itemsNav {
+float: right;
+}
+
+#selectedHero .details ul#itemsNav li {
+float: right;
+margin: 0 0 0 9px;
+}
+
+#selectedHero .details #itemsListNext {
+float: left;
+}
+
+#selectedHero .details #itemsListPrev {
+float: right;
+}
+
+#royalMissions .missionTitle {
+background: url(../img/rtl/royal_mission_title.png) top left no-repeat;
+}
+
+#royalMissions .missionTitle .duration {
+float: left;
+}
+
+#heroPoints .details {
+margin: 0 95px 0 0;
+}
+
+#heroPoints .avatar {
+float: right;
+}
+
+#heroPoints .details .skillPoints big {
+right: 164px;
+}
+
+#heroPoints .details .skillPoints {
+padding-left: 35px;
+text-align: right;
+}
+
+#royalMissions .missionContent .description {
+background: url(../img/rtl/royal_mission_details_bknd.png) top left no-repeat;
+}
+
+#royalMissions .missionContent .resources {
+background: url(../img/rtl/royal_mission_details_bknd.png) top left no-repeat;
+}
+
+#royalMissions .missionContent a.mission {
+background-image: url(../img/rtl/royal_mission_btn.png);
+float: left;
+}
+
+#royalMissions .missionContent .resources span {
+float: right;
+}
+
+#royalMissions .missionContent .resources span .icon {
+float: right;
+}
+
+#header a#questerLink {
+right:auto;
+left: -10px;
+}
+
+.overview #header a#questerLink {
+right:auto;
+left: -10px;
+top: 192px;
+}
+
+#buildingsList .activeBuilding .title,
+#unitsList .activeUnit .title,
+#skillsList .activeSkill .title {
+background: url("../img/layout-v5/building_active_title-long-ar.jpg") no-repeat scroll left top transparent
+}
+
+#unitsList .activeUnit .title {
+background: url("../img/layout-v5/building_active_title-long-ar.jpg") no-repeat scroll left top transparent
+}
+
+#buildingsList .buildingItem .title span.buildingLevel,
+#unitsList .unitItem .title span.unitLevel,
+#skillsList .skillItem .title span.skillLevel {
+float: left;
+}
+
+#buildingsList .buildingItem .title a,
+#unitsList .unitItem .title a,
+#skillsList .skillItem .title a {
+margin: 0 10px 0 33px;
+}
+
+#buildingsList .buildingItem .buildingImage span.buildingTime,
+#unitsList .unitItem .unitPreview span.unitTime,
+#skillsList .skillItem .skillPreview span.skillLevel {
+left: auto;
+background: #652A0C url(../img/layout/building_time.gif) 7px 6px no-repeat;
+right: 0px !important;
+}
+
+#buildingsList .buildingItem.inactiveBuilding .buildingImage span.buildingTime,
+#unitsList .unitItem.inactiveUnit .unitPreview span.unitTime,
+#skillsList .skillItem.inactiveSkill .skillPreview span.skillLevel {
+background-position:93% 4px;
+}
+
+#buildingsList .buildingItem ul.neededResources li,
+#unitsList .unitItem ul.neededResources li {
+float:right;
+padding:4px 26px 0 0;
+background-position:100% 0;
+}
+
+#buildingsList .buildingItem,
+#unitsList .unitItem,
+#skillsList .skillItem {
+float:right;
+}
+
+#topBar ul.topMenu li a.logout {
+margin:1px 7px 0 -2px;
+left:auto !important;
+right:143px
+}
+
+#heroPoints {
+float: right;
+}
+
+#skillsRevertInfo .text .inner {
+background: url(../img/rtl/skills_revert.png) 0px 2px no-repeat;
+padding-right: 0px;
+padding-left: 60px;
+}
+
+.errorsmall .text,
+.infosmall .text,
+.infovip .text {
+
+}
+
+.container.wide .errorsmall .icon,
+.container.wide .infosmall .icon,
+.container.wide .infovip .icon {
+/*left: auto;*/
+}
+
+.errorsmall .icon,
+.infosmall .icon,
+.infovip .icon {
+left: auto;
+right: -24px;
+}
+
+/*
+.dialogWrapper .dialogBody.message p {
+padding: 10px 200px 0 0;
+}
+
+.dialogWrapper .dialogBody.message input {
+margin: 10px 200px 0 0;
+}
+
+.dialogWrapper .dialogBody.message.info {
+background-position: right top;
+}
+*/
+
+.dialogWrapper .dialogBody.message.info {
+background-position: 500px center;
+}
+
+.dialogWrapper .dialogBody.message p {
+padding: 10px 90px 0 20px;
+}
+
+.dialogWrapper .dialogBody.message input:nth-of-type(1) {
+margin: 10px 90px 0 0;
+}
+
+.dialogWrapper .dialogBody.message.error {
+background-image: url(../img/layout-v5/newpopup_icon_infoboxError.png);
+background-position: center right;
+}
+
+.dialogWrapper .dialogBody.message.error span.resourcesList span {
+text-align: center!important;
+padding: 0 20px 0 0!important;
+}
+
+.dialogWrapper .dialogBody.message.error span.resourcesList span.gold {
+background-position: 42px 0;
+}
+
+.dialogWrapper .dialogBody.message.error span.resourcesList span.iron {
+background-position: 42px -30px;
+}
+.dialogWrapper .dialogBody.message.error span.resourcesList span.wood {
+background-position: 42px -60px;
+}
+.dialogWrapper .dialogBody.message.error span.resourcesList span.food {
+background-position: 42px -90px;
+}
+
+.dialogWrapper .dialogBody.message.error span.population {
+padding: 0 22px 0 0;
+background-position: 60px -122px;
+}
+
+.dialogWrapper .dialogBody.message.error span.coins {
+padding: 0 22px 0 0!important;
+background: url(../img/layout/res_ico_coins_new.png) right top no-repeat!important;
+}
+
+.dialogWrapper .dialogBody.message {
+margin-left: 0;
+margin-right: 0px;
+}
+
+#dailyActWrap #actWrapper .act {
+float: right;
+}
+
+#dailyActWrap .dailyInfo, #dailyRewWrap .dailyInfo {
+right :0px;
+}
+
+#dailyActWrap #actWrapper .act.active .thumb .count {
+left: auto;
+right: 30px;
+}
+
+#dialogMessage #dialogBox .promotions .promoImageHolder {
+float: right;
+margin: 0 0 0 10px;
+}
+
+#dialogMessage #dialogBox .promotions .promo {
+text-align: right;
+}
+
+#dialogMessage #dialogBox .promotions .promo .promoText {
+background-position: bottom right;
+}
+
+#dialogMessage #dialogBox .promotions .promo a {
+float: left;
+}
+
+#buyCoinsTeaser a {
+
+
+}
+
+.worldMap .mapContents {
+right:30px;
+}
+
+.worldMap .mapContents .boxMap {
+direction: ltr;
+}
+
+#playerMessage ul li a {
+background: url(../img/map-v5/castle_dialog_button-ar.png) no-repeat;
+padding: 0 70px 0 0;
+}
+
+#playerMessage ul li a small {
+left: auto;
+right: 21px;
+}
+
+#pagebody .container .content h2 .marchesFilter {
+float: left;
+}
+
+.box table#units_to_send tbody tr td {
+text-align: right;
+}
+
+.buildings .buildingDialog .details .name small {
+float: left;
+}
+
+.buildings .buildingDialog .thumbnail {
+float: right;
+}
+
+.buildings .buildingDialog .details {
+margin: 10px 210px 0 14px;
+}
+
+#questerWrapper a.questClose,
+.buildings .buildingDialog a.close,
+#playerMessage a.close,
+#mapLegendWindow a.close,
+#globalNewsWrapper a.close,
+.dialogWrapper a.close {
+right: auto;
+left: -13px;
+}
+
+ul.recruitBonuses li {
+padding-left: 45px;
+padding-right: 0;
+}
+
+ul.recruitBonuses li.resource {
+background-position: right -120px;
+}
+
+ul.recruitBonuses li.credits {
+background-position: right center;
+}
+
+#header #fortress #title .castlesHolder dl#castlesList {
+float: right;
+text-align: right;
+margin:2px 0 10px 10px !important
+}
+
+#header #player #title {
+left:auto !important;
+right:-2px;
+text-align:right;
+padding:0 29px 0 0 !important
+}
+
+ul.recruitBonuses li {
+padding-left:45px;
+padding-right:0;
+}
+
+ul.recruitBonuses li.resource {
+background-position:right -120px;
+}
+
+ul.recruitBonuses li.credits {
+background-position:right center;
+}
+
+#userDetails .details {
+margin: 0 60px 0 0;
+}
+
+#userDetails .avatar {
+float: right;
+}
+
+#buildingsList .inactiveBuilding .title, #unitsList .inactiveUnit .title, #skillsList .inactiveSkill .title {
+background: url(../img/rtl/building_inactive_title.gif) no-repeat;
+}
+
+.textformbox .row .right {
+margin: 0 210px 0 0;
+}
+
+ul.recruitBonuses li {
+padding-left: 0;
+padding-right: 45px;
+}
+
+#profileCastle .capital {
+float: right;
+}
+
+#profileOffsprings .thumb {
+float: right;
+}
+
+#overview ul#bottomMenu {
+margin-left:0;
+position:relative;
+left:27px;
+}
+
+.buildings {
+left:-33px;
+}
+
+.box.information .textformbox .row .right {
+margin: 0 110px 0 0;
+}
+
+.box.information .infoPic {
+float: right;
+margin: 0 0 20px 20px;
+}
+
+.tavernHeroes,
+.tavernHeroReplace .thumb {
+float: right;
+}
+
+.buildings .buildingDialog .details .name a .info {
+margin: 0 5px 0 0;
+}
+
+a.gotoBuilding,
+.workersSlider .stats a.saveButton {
+float: left;
+}
+
+a.gotoBuilding {
+font-size: 11px;
+}
+
+/* Map tooltips */
+
+.mapTooltipCapital {
+float: right;
+margin: 0 0 0 5px;
+}
+
+ul.mapTooltip li {
+padding: 0 30px 0 0;
+}
+
+ul.mapTooltip li.player {
+background-position:98% 2px;
+}
+
+ul.mapTooltip li.exp {
+background-position:98% 2px;
+}
+
+ul.mapTooltip li.dwellings {
+background-position:98% 2px;
+}
+
+ul.mapTooltip li.clock {
+margin:2px -2px 2px 0;
+background-position:98% -2px;
+}
+
+ul.mapTooltip li.clan {
+background-position:98% 2px;
+}
+
+ul.mapTooltip li.gold {
+float:right;
+margin-top:5px;
+width:40px;
+background-position:98% -1px;
+}
+
+ul.mapTooltip li.iron {
+margin:5px 70px 0 0;
+background-position:98% -1px;
+}
+
+ul.mapTooltip li.wood {
+float:right;
+margin-top:5px;
+width:40px;
+background-position:98% -1px;
+}
+
+ul.mapTooltip li.food {
+margin:5px 70px 0 0;
+background-position:98% -1px;
+}
+
+ul.mapTooltip li.pop {
+background-position:98% -2px;
+}
+
+#overview ul#resourceStats li {
+float: right;
+background:url('../img/rtl/resources_stats_bknd.png') top left no-repeat;
+padding: 22px 15px 30px 17px;
+}
+
+#overview ul#resourceStats li .icon {
+float: right;
+margin: 3px 0 0 6px;
+}
+
+#overview ul#bottomMenu li {
+float: right;
+margin-right: 0;
+margin-left: 10px;
+}
+
+#overview ul#bottomMenu li.onlineTime {
+float: left;
+background: url(../img/layout/icon_time.png) right 0 no-repeat;
+padding: 5px 23px 5px 0;
+}
+
+#overview ul#bottomMenu li a {
+padding: 5px 28px 5px 10px;
+background: url(../img/layout/icon_bullet.gif) 95% 4px no-repeat;
+}
+
+#overview ul#bottomMenu li.vipItem a {
+background: url(../img/layout/icon_crown.gif) no-repeat scroll 94% 6px transparent;
+}
+
+.twitter-follow-button {
+/*width:150px !important;*/
+}
+
+#npcTrader .traderContainer .resources {
+float: right;
+padding: 0 45px 0 0;
+background-image: url(../img/layout/h_resources_icons.png);
+}
+
+#npcTrader .traderContainer .resSliderBox {
+float: right;
+width: 350px;
+}
+
+#npcTrader input#submitResources{
+float: left;
+}
+
+#npcTrader .traderContainer .resources.food {
+background-position: 62px -90px;
+}
+
+#npcTrader .traderContainer .resources.wood {
+background-position: 62px -60px;
+}
+
+#npcTrader .traderContainer .resources.iron {
+background-position: 62px -30px;
+}
+
+#npcTrader .traderContainer .resources.gold {
+background-position: 62px 0;
+}
+
+#npcTrader .bottom .resSliderBox {
+background: url("../img/layout-v5/coin-icon.png") right 7px no-repeat;
+padding-right: 25px;
+padding-left: 0;
+}
+
+#upgradesList .upgradeItem .unitPreview {
+float: right;
+margin: 8px 8px 0 0;
+}
+
+#upgradesList .upgradeDetails {
+margin: 0 218px 0 0;
+}
+
+#upgradesList .upgradeDetails .title span.unitAmount {
+float: left;
+
+}
+
+#upgradesList .upgradeItem {
+background-position: top right;
+}
+
+#upgradesList .upgradeDetails .upgradeAttack {
+background:url("../img/layout-v5/upgrade_attack-ar.jpg") no-repeat scroll right top transparent
+}
+
+#upgradesList .upgradeDetails .title a {
+margin: 0;
+padding-left:auto;
+}
+
+#upgradesList .upgradeDetails .upgradeType .typeTitle {
+padding: 0 38px 0 0;
+}
+
+#upgradesList .upgradeDetails .upgradeType .typeTitle span.typeLevel {
+float: left;
+margin:0 10px 0 0
+}
+
+#upgradesList .upgradeDetails .title{
+right:auto;
+left:9px;
+background: url("../img/layout-v5/upgrade-title-ar.png") no-repeat scroll right top transparent;
+padding:0 25px 0 0
+}
+
+#upgradesList .upgradeDetails .upgradeType .typeInfo {
+float: left;
+margin: 4px 0 0 7px;
+}
+
+#upgradesList .upgradeDetails .upgradeType .typeStatus span.time {
+background-position:98% 4px;
+padding:0 16px 0 0;
+}
+
+#upgradesList .upgradeDetails .upgradeType ul.upgradeResources li {
+float: right;
+background-position: right top;
+padding: 0 24px 3px 0;
+}
+
+#upgradesList .upgradeDetails .upgradeDefence {
+background: url('../img/layout-v5/upgrade_defence-ar.jpg') top left no-repeat;
+}
+
+#upgradesList .upgradeDetails .upgradeType .typeStatus {
+margin:4px 177px 0 10px
+}
+
+#createCastleMap a {
+text-indent: 0;
+}
+
+
+
+.confirmEmailReward img {
+float: right;
+margin-right: 0;
+margin-left: 10px;
+}
+
+
+/* Madmoo Profile Scroller */
+
+
+#gameLogins .game .thumbnail {
+left: auto;
+right: 10px;
+}
+
+#gameLogins .game .title {
+left: auto;
+right: 60px;
+}
+
+#gameLogins .game .list .account {
+float: right;
+}
+
+
+/*body a.promo {
+background: url('../img/rtl/promo_label.png') no-repeat 0 0;
+right: auto;
+left: 0;
+}
+
+body a.promo:hover {
+background: url('../img/rtl/promo_label.png') no-repeat 100% 100%;
+}*/
+
+body a.happyHour {
+background: url('../img/rtl/happy_hour.png') no-repeat 0 0;
+left: auto;
+right: 50%;
+margin: 0 -563px 0 0;
+}
+
+body a.happyHour:hover {
+background: url('../img/rtl/happy_hour.png') no-repeat 100% 100%;
+}
+
+#firstBuyerPromo{
+right:1011px;
+left:auto;
+margin-top:5px;
+font-size:11px;
+padding-top:2px;
+height:20px;
+}
+
+/* KW 5 from here */
+
+#headerWrap{
+background:url("../img/layout-v5/header-main-ar.png") no-repeat scroll 0 0 transparent
+}
+
+#questerUI{
+left:auto !important;
+right:-15px !important;
+background:url("../img/layout-v5/quester-back-ar.png") no-repeat scroll 0 0 transparent
+}
+
+a.qClose{
+right:auto !important;
+left:5px
+}
+
+#questerUI ul.tabsNavigation{
+margin:50px 45px 0 0 !important;
+}
+
+#questerUI .quests{
+margin:20px 45px 0 0 !important
+}
+
+#questerUI .quests  a.questTitle.completed,
+#questerUI .quests  a.questTitle.reccomended{
+background-position:-612px -222px;
+}
+
+#questerUI .quests  a.questTitle.completed:hover,
+#questerUI .quests  a.questTitle.reccomended:hover,
+#questerUI .quests  a.questTitle.completed.active,
+#questerUI .quests  a.questTitle.reccomended.active{
+background-position:-612px -259px
+}
+
+#questerUI .quests  a.questTitle.new,
+#questerUI .quests  a.questTitle.new.active{
+background-position:-612px -296px
+}
+
+#questerUI .quests  a.questTitle.new:hover,
+#questerUI .quests  a.questTitle.new.active{
+background-position: -612px -336px
+}
+
+#questerUI .quests  .completedIcon,
+#questerUI .quests  .recommendedIcon{
+float:left;
+margin:-11px 26px 0 15px !important
+}
+
+#questerUI .quests a.questTitle big{
+float:right !important;
+padding:7px 37px 0 0 !important
+}
+
+#questerUI .quests .questDesc .QuestDescWrap{
+margin:-2px 11px 28px 2px
+}
+
+#questerUI span.reward{
+float:right !important;
+margin:0 0 0 10px !important
+}
+
+#questerUI .quester_resource_icon{
+float:right !important
+}
+
+#questerUI .quests .questDesc a.wowButt{
+float:left !important;
+margin-top:0px !important
+}
+
+#header #center #vipButton > small{
+float:right;
+margin-right:2px
+}
+
+#header #center #vipButton .vip > a {
+background-position:-396px -384px;
+width:110px;
+font-size:12px;
+margin: 0 15px 0 0;
+}
+
+#header #center #vipButton .vip > a:hover{
+background-position:-508px -384px
+}
+
+#header #center #vipButton{
+margin:0 !important;
+}
+
+#header #center #actionButton.invite a{
+background-position:-620px -376px;
+width:141px
+}
+
+#header #center #actionButton.invite a:hover{
+background-position:-763px -376px
+}
+
+#header ul#resources li{
+background-position:-708px -175px
+}
+
+#header ul#resources li#population{
+background-position:-708px -151px
+}
+
+#header ul#resources li .smallerBar{
+margin-left:auto !important;
+margin-right:30px
+}
+
+#header #fortress #title .castlesHolder dl#castlesList dd a{
+padding:13px 0 5px 5px;
+width:195px
+}
+
+#header #fortress #title .castlesHolder dl#castlesList dd a big{
+left:auto;
+right:9px
+}
+
+.smallHoder{
+left:auto;
+right:56px
+}
+
+.castleImageHolder img.castleImage{
+margin:10px 15px 0 0
+}
+
+.castleImageHolder{
+padding:0 13px 0 0
+}
+
+#header #fortress #title .castlesHolder .castlesWrapper{
+background:url("../img/layout-v5/bdd-big-back-ar.jpg") repeat scroll right top transparent
+}
+
+.castlesFrameTop{
+right:auto;
+left:0;
+background-position:-501px -121px
+}
+
+.hotTopPanel{
+background:url("../img/layout-v5/hot-top-panel-ar.png") no-repeat scroll 0 0 transparent;
+left:auto;
+right:-114px;
+top: 416px;
+}
+
+#hotelinkPanelWrapper{
+left:auto;
+right:-1px;
+top: 439px;
+}
+
+#header #fortress #title .castlesHolder .castlesWrapper .castlesWrapperRight{
+background-position:left top;
+}
+
+.hotTopPanel span{
+padding:28px 22px 0 0;
+text-align:right;
+}
+
+#hotlinksMenu .wrapper, #hotlinksMenu .topLinks{
+padding:17px 10px 5px 0;
+}
+
+#hotlinksMenu ul li, #hotlinksMenu ul li.addToHotlinks, #hotlinksMenu ul li.manageHotlinks{
+background-position:-905px -376px;
+padding:0 10px 0 0 !important;
+}
+
+#miniMapOverflow{
+left:auto;
+right:699px;
+}
+
+#miniMap{
+background:url("../img/map-v5/mini-map-ar.png") no-repeat scroll left bottom transparent;
+}
+
+#miniMap h2{
+left:42px !important;
+}
+
+#globalNewsWrapper h3{
+
+}
+
+#header #fortress #castle{
+left:auto;
+right:35px;
+}
+
+#header #player #unit img{
+left:auto;
+right:-32px;
+}
+
+.choosecastle a.backLink{
+margin:0 354px 0 0 !important;
+}
+
+.choosecastle .message a{
+margin:10px 15px 0 0 !important;
+}
+
+#pagebody .leftMenu .tip, .tip.towerOne{
+margin:20px 20px 20px 0;
+}
+
+#unitsList .inactiveUnit .title{
+background:url("../img/layout-v5/building_active_title-long-ar.jpg") no-repeat scroll left top transparent;
+}
+
+#unitsList .unitItem .title, #skillsList .skillItem .title{
+padding:0 8px 0 0;
+}
+
+#buildingsList .buildingItem .buildingImage span.buildingTime, #unitsList .unitItem .unitPreview span.unitTime, #skillsList .skillItem .skillPreview span.skillLevel{
+
+}
+
+.errorsmall .icon, .infosmall .icon, .infovip .icon{
+left:auto;
+right:-8px;
+}
+
+.buildings .buildingDialog .thumbnail{
+margin:0 10px 0 0;
+}
+
+.buildings .buildingDialog .thumbnail .buildBlock{
+margin:10px 5px 0 0;
+}
+
+#compose_item_wrapper h1{
+margin-left:auto;
+margin-right:153px;
+}
+
+#compose_item_wrapper #knightLevel{
+float:left;
+}
+
+#compose_item_wrapper ul#bonus_slots a#bonus_deselect_1, #compose_item_wrapper ul#bonus_slots a#bonus_deselect_2, #compose_item_wrapper ul#bonus_slots a#bonus_deselect_3{
+float:right;
+}
+
+#compose_item_wrapper ul#bonus_slots input{
+float:left;
+}
+
+#compose_item_wrapper ul#bonus_slots small{
+float:left;
+margin:0 0 0 5px;
+}
+
+#compose_item_wrapper ul#bonus_slots label#bonus_selected_label_1, #compose_item_wrapper ul#bonus_slots label#bonus_selected_label_2, #compose_item_wrapper ul#bonus_slots label#bonus_selected_label_3{
+float:left;
+}
+
+#compose_item_wrapper ul#available_bonuses li .iconK{
+float:right;
+margin:0 0 0 5px;
+}
+
+#compose_item_wrapper ul#available_bonuses li .iconK{
+background-position:-443px -103px;
+}
+
+#compose_item_wrapper ul#available_bonuses li.unactiveK .iconK, #compose_item_wrapper ul#available_bonuses li:hover .iconK{
+background-position:-416px -103px;
+}
+
+.dialogPortrait.image{
+float:right;
+margin:9px 12px 11px 0;
+}
+
+#questerUI .resourceHolder{
+float:right;
+}
+
+.priestButton{
+right:auto;
+left:0;
+}
+
+.priestButton a{
+float:left;
+}
+
+span.priceRit{
+right:auto;
+left:17px
+}
+
+img.addFrameImg{
+left:auto;
+right:63px;
+-moz-transform: scaleX(-1);
+-o-transform: scaleX(-1);
+-webkit-transform: scaleX(-1);
+transform: scaleX(-1);
+filter: FlipH;
+-ms-filter: "FlipH";
+}
+
+.rightContRit{
+margin: 5px 0px 0 5px;
+/*float:left;*/
+}
+
+.rightContRit p{
+margin-left:0;
+margin-right:15px;
+}
+
+.rightContRit small{
+margin:10px 15px 0 0;
+}
+
+.priestImage, .priestImage2, .priestImage3, .priestImage4, .priestImage5{
+margin: 0 0 0 3px;
+float: right;
+}
+
+#topBar ul.topMenu li a.username{
+background-position:-728px -408px;
+padding:0 35px 0 0;
+text-align:right !important;
+}
+
+#topBar ul.topMenu li a.username:hover{
+background-position:-890px -408px;
+}
+
+#header #fortress #title{
+background-position:-376px -414px;
+padding:5px 38px 0 0;
+text-align:right;
+}
+
+#header #fortress #title:hover{
+background-position:-552px -414px;
+}
+
+#header #fortress #title.noCastles {
+background-position: -552px -414px !important;
+}
+
+#header #fortress #title.withCastles {
+background-position: -552px -414px !important;
+}
+
+.specialUnitsBox div.side-attacker{
+float:right;
+}
+
+#upgradesList .upgradeDetails .upgradeType ul.upgradeResources{
+margin-left:0;
+margin-right:12px;
+padding:7px 8px 0 0;
+}
+
+#upgradesQueue .upgradesUnit .thumbnail, #armyQueue .queueArmy .thumbnail{
+float:right;
+}
+
+#upgradesQueue .upgradesUnit .info, #armyQueue .queueArmy .info{
+margin:0 63px 0 0;
+}
+
+#upgradesQueue .upgradesUnit a.cancel, #armyQueue .queueArmy a.cancelArmy {
+/*left:auto;*/
+/*right:9px;*/
+float:left;
+}
+
+.worldMap .coordinates label{
+float:right;
+width:15px;
+text-align:left;
+margin:3px 1px 0 3px
+}
+
+#vipOptions .oneLine{
+width:394px;
+}
+
+#vipOptions .oneLine .description{
+width:283px;
+}
+
+#pagebody.mapContent #inner .worldMap .coordinates input{
+float:right;
+}
+
+#dialogIcon.dialogBody.portrait{
+text-align: right;
+}
+
+body.overview a.showMenu, body.royalcourt a.showMenu{
+left:10px !important;
+}
+
+#kwDialog.dialogWrapper #dialogIcon.dialogBody .dialogButtons input#kwDialogBtnCancel.cancelAdditionalClass{
+left:270px !important;
+}
+
+#kwDialog.dialogWrapper #dialogIcon.dialogBody .dialogButtons input#kwDialogBtnOK.okAdditionalClass{
+left:57px !important;
+}
+
+.startButtonGlow{
+left:60px !important;
+}
+
+#buildingsList .buildingItem.inactiveBuilding .buildingImage span.buildingTime, #unitsList .unitItem.inactiveUnit .unitPreview span.unitTime, #skillsList .skillItem.inactiveSkill .skillPreview span.skillLevel{
+background-position:132px 6px;
+}
+
+/*#overview .buildings .b-13-r-3-l-0, #overview .buildings .b-13-r-3-l-1{
+background: url("../img/overview/building_13_race_3-ar.png");
+}
+
+#overview .buildings .b-13-r-4-l-0, #overview .buildings .b-13-r-4-l-1{
+background: url("../img/overview/building_13_race_4-ar.png");
+}
+
+#overview .buildings .b-13-r-5-l-0, #overview .buildings .b-13-r-5-l-1{
+background: url("../img/overview/building_13_race_5-ar.png");
+}
+
+#overview .buildings .b-13-r-6-l-0, #overview .buildings .b-13-r-6-l-1{
+background: url("../img/overview/building_13_race_6-ar.png");
+}
+
+#overview .buildings .b-13-r-8-l-0, #overview .buildings .b-13-r-8-l-1{
+background: url("../img/overview/building_13_race_8-ar.png");
+}
+
+#overview .buildings .b-13-r-9-l-0, #overview .buildings .b-13-r-9-l-1{
+background: url("../img/overview/building_13_race_9-ar.png");
+}*/
+
+.shortbowImage{
+float:right !important;
+margin-right:0;
+margin-left:15px;
+}
+
+#header #player #title #spanHeroEventTimer {
+right: 14px;
+}
+
+/*---------- Pohod info 2 column popup -------------*/
+
+
+.pohod-info-columns {
+text-align: right;
+}
+
+.pohod-info-columns .pohod-info-left {
+float: right;
+}
+
+.pohod-info-columns .pohod-info-right {
+float: left;
+}
+
+.pohod-info-column-topLeft{
+float:right;
+}
+
+.pohod-info-column-topRight{
+float:left;
+}
+
+.pohod-info-column-resources li{
+float: right;
+border-right:none;
+border-left:1px dotted #443a2e;
+}
+
+.pohod-info-column-resources li ul li {
+padding: 0 5px 0 0;
+}
+
+.pohod-info-column-resources li ul li span {
+float: right;
+}
+
+/*----------------------*/
+
+#barButtons {
+left: auto;
+right: 30px;
+}
+
+#bottomBarContainer #barButtons a {
+float: right;
+background: url('../img/rtl/dock_tab.png') 0 0 no-repeat;
+}
+
+#bottomBarContainer #barButtons a.active {
+background: url('../img/rtl/dock_tab_active.png') 0 0 no-repeat;
+}
+
+#bottomBarContainer #barButtons a .icon {
+margin: 8px 12px 0 0;
+}
+
+#bottomBarContainer a#bottomBarCloseBtn,
+#bottomBarContainer a#bottomBarOpenBtn {
+right: auto;
+left: 18px;
+}
+
+#bottomBarContent {
+padding: 0 0 0 20px;
+}
+
+#scrollbar_track {
+right: auto;
+left: 0;
+}
+
+.castleContainer {
+padding: 0 168px 0 0;
+}
+
+.castleContainer .castleHolder {
+left: auto;
+right: 0px;
+}
+
+.castleContainer .title a.pageLink,
+.marchesContainer .title a.pageLink,
+.playersList .title a.pageLink {
+float: left;
+}
+
+.marchesContainer .title a,
+.playersList .title a {
+float: right;
+}
+
+.marchesIncOut a {
+float: right;
+}
+
+.marchesContainer .title .filter {
+float: left;
+margin: 0 0 0 30px;
+}
+
+.marchesContainer .rowMarches .type,
+.marchesContainer .rowMarches .bar,
+.marchesContainer .rowMarches .actions,
+.marchesContent .rowMarches .type,
+.marchesContent .rowMarches .bar,
+.marchesContent .rowMarches .actions {
+float: right;
+margin: 0 0 10px 0;
+}
+
+.marchesContainer .rowMarches.outgoing .bar .progress,
+.marchesContent .rowMarches.outgoing .bar .progress {
+background-position: top left;
+left: auto;
+right: 0px;
+}
+
+.marchesContainer .rowMarches.incoming .bar .progress,
+.marchesContent .rowMarches.incoming .bar .progress {
+background-position: top right!important;
+left: 0px;
+right: auto;
+}
+
+.marchesBox .marchesContent a.upTime,
+.marchesBox .marchesContent a.downTime {
+float:left;
+}
+
+.unitsContainer .unit,
+#cityEventsContent .unit,
+.pohod-info-columns .unitsContainer .unit,
+.resContainer .resBox .unit,
+.marchesBox .marchesContent .resBox .unit,
+.minesContainer .unit {
+float:right;
+}
+
+.marchesContainer .rowMarches .bar span.castleFrom,
+.marchesContent .rowMarches .bar span.castleFrom {
+left: auto;
+right: 25px;
+}
+
+.marchesContainer .rowMarches .bar span.castleTo,
+.marchesContent .rowMarches .bar span.castleTo {
+right: auto;
+left: 25px;
+}
+
+.loyaltyInfoBar .bar span.castleFrom {
+	white-space: nowrap;
+}
+
+#bottomBarContent .msg {
+float: right;
+}
+
+#bottomBarContent .msg .right {
+right: -1px;
+}
+
+.castleContainer .queue a.allCities,
+.castleContainer .queue a.allBuildings,
+.castleContainer .queue .total {
+float: right;
+padding: 33px 60px 13px 0px;
+}
+
+.playersList .playerItem {
+float: right;
+}
+
+#buildingsQueue {
+left: auto;
+right: -40px;
+}
+
+#buildingsQueue .queueBuilding .info strong {
+text-align: right;
+}
+
+#buildingsQueue .queueBuilding .info  .qLevel {
+text-align: right;
+}
+
+#buildingsQueue .queueBuilding .info span {
+text-align: right;
+}
+
+#buildingsQueue .queueBuilding,
+#infirmaryQue .queueArmy {
+float: right;
+}
+
+#buildingsQueue .queueBuilding .thumbnail,
+.castleContainer .queue .queueBuilding .thumbnail,
+#infirmaryQue .queueArmy .thumbnail {
+float: right;
+}
+
+#buildingsQueue .queueBuilding .info,
+.castleContainer .queue .queueBuilding .info,
+#infirmaryQue .queueArmy .info {
+margin: 0 60px 0 0;
+}
+
+.queueBuilding .wrapper .timeLeft a.cancel,
+#infirmaryQue .queueArmy .wrapper .timeLeft a.cancelArmy {
+right: auto;
+left: 10px;
+}
+
+.queueBuilding .wrapper .timeLeft a.speed,
+#armyQueue .queueArmy .wrapper .timeLeft a.speed,
+#upgradesQueue .upgradesUnit .wrapper .timeLeft a.speed,
+#infirmaryQue .queueArmy .wrapper .timeLeft a.speed {
+float: left;
+}
+
+.queueBuilding .progressBar .bar,
+.minesContainer .mineContainer .mineResourceControlBox .timer .progressBar .bar,
+#armyQueue .queueArmy .progressBar .bar,
+#upgradesQueue .upgradesUnit .progressBar .bar,
+#infirmaryQue .queueArmy .info .progressBar .bar {
+background: url(../img/rtl/h_resources_bar.png) left bottom no-repeat;
+left: auto;
+right: 0px;
+}
+
+.queue .queueBuilding .wrapper .radioButton {
+right: auto;
+left: 10px;
+}
+
+#instantFinishSumPrice {
+background: url(../img/layout/res_ico_coins_new.png) right -2px no-repeat;
+padding: 0 25px 0 0;
+}
+
+#buildingsQueue .queueBuilding, .castleContainer .queue .queueBuilding, #infirmaryQue .queueArmy {
+text-align: right;
+}
+
+/*
+.newPopup a.close {
+right: auto;
+left: -13px;
+}
+*/
+
+.newPopup .title .toggleWindow {
+float: left;
+}
+.newPopup .title {
+padding: 0 55px 0 10px;
+}
+
+#mapPopupFrame #mapPopupMenuContainer {
+float: right;
+padding: 0 0 0 10px;
+border-right: none;
+border-left: 1px dotted #443a2e;
+}
+
+#mapPopupFrame #mapPopupContentContainer .title {
+margin: 0 203px 10px 0;
+}
+
+#mapPopupFrame #mapPopupContentContainer .secondColumn {
+float: right;
+margin: 0 10px 0 0;
+border-right: none;
+border-left: 1px dotted #443a2e;
+}
+
+#mapPopupCheckBoxes {
+margin: 0 0 10px 10px;
+}
+
+#mapPopupCheckBoxes .row .icon {
+float: right;
+margin: 0 0 0 8px;
+}
+
+.secondColumn #heroRow .thumb {
+float: right;
+padding: 8px 8px 0;
+width: 81px;
+}
+
+.secondColumn #heroRow #heroDetails {
+margin: 5px 94px 0 0;
+}
+
+#mapPopupFrame #mapPopupContentContainer .thirdColumn {
+margin: 0 435px 0 0;
+}
+
+.thirdColumn .unitsContainer .unit {
+float: right;
+margin: 0 0 10px 10px;
+}
+
+.thirdColumn .unitsContainer a {
+float: right;
+}
+
+.thirdColumn .unitsContainer .unit .overlay input {
+float: left;
+}
+
+#productionBoostersContent .info img {
+float: right;
+}
+
+#productionBoostersContent .info p {
+margin: 0 125px 0 0;
+}
+
+#productionBoostersContent .info .castle {
+margin: 20px 125px 0 0;
+}
+
+#productionBoostersContent .line {
+background-position: top right;
+padding: 0 50px 0 0;
+}
+
+#productionBoostersContent .line.checked {
+background-position: right -35px;
+}
+
+#productionBoostersContent .line .linkButton.right {
+float: left;
+}
+
+#productionBoostersContent .activateAll .desc {
+margin: 15px 86px 0 0;
+padding-right: 40px;
+float:right;
+}
+
+.minesContainer .mineContainer {
+float: right;
+}
+
+.minesContainer .mineContainer .title {
+margin: -1px -5px 0 0;
+}
+
+.minesContainer .mineContainer .minesSpeed {
+margin-left: 0;
+margin-right: 7px;
+}
+
+.minesContainer .mineContainer .buildingImage .buildingPreview {
+left: auto;
+right: 7px;
+}
+
+.battleMsgWrapper .battleMsgHeader .player {
+float: right;
+}
+
+.battleMsgWrapper .battleMsgHeader {
+background:url("../img/rtl/battle_msg_header.jpg") top center no-repeat;
+}
+
+.battleMsgWrapper.noSupport .battleMsgHeader {
+background:url("../img/rtl/battle_msg_header_nosupport.jpg") top center no-repeat;
+}
+
+.battleMsgWrapper .unitsWrapper .unitRow .icon {
+float: right;
+}
+
+.battleMsgWrapper .unitsWrapper .unitRow .attackerUnits {
+float: right;
+}
+
+#infirmaryForm .title>div {
+float: right;
+}
+
+#infirmaryForm .title .units {
+width: 463px;
+height: 40px;
+}
+
+#infirmaryForm .title .units .population {
+margin: 5px 6px 0 0;
+}
+
+#infirmaryForm .title .cost .gold,
+#infirmaryForm .title .cost .iron,
+#infirmaryForm .title .cost .wood,
+#infirmaryForm .title .cost .food {
+background-position: top right;
+margin: 10px 0 0 4px;
+}
+
+#infirmaryForm .row .cost .time {
+background: url(../img/layout/h_top_clock.png) right center no-repeat;
+text-align: left;
+margin: 0 0 0 5px;
+}
+
+#infirmaryForm .row .cost {
+margin: 0 0 0 10px;
+}
+
+#infirmaryTotal span#healingTime_all {
+background: url(../img/layout/h_top_clock.png) right center no-repeat;
+text-align: left;
+}
+
+#infirmaryTotal span.gold,
+#infirmaryTotal span.iron,
+#infirmaryTotal span.wood,
+#infirmaryTotal span.food {
+margin: 0 5px 0 0;
+padding: 3px 24px 3px 0px;
+background-repeat: no-repeat;
+display: inline-block;
+min-width: 40px;
+}
+
+#infirmaryForm .row .healButton {
+min-width: 65px!important;
+}
+
+#infirmaryForm .row .linkButton {
+
+}
+
+#armyQueue .queueArmy,
+#upgradesQueue .upgradesUnit {
+padding-bottom: 10px;
+margin: -3px 4px 0 0;
+width: 183px;
+}
+
+#pagebody .leftMenu .box.search input.field  {
+margin-right:4px;
+}
+
+#dailyRewWrap #rewWrapper h1 {
+padding-left:0px;
+padding-right:40px;
+}
+
+.formbox .row.hotlinks .left {
+width:auto;
+}
+
+.formbox .row.hotlinks .right input {
+margin-right: 10px;
+margin-left: 20px;
+}
+
+.armyMarches .workersSlider {
+margin: 15px 30px 0px 0px;
+}
+
+#slot100 {
+left: 25px;
+right:auto;
+}
+
+input.form {
+float: right;
+}
+
+td > label {
+float:right;
+margin-right:5px;
+}
+
+.formbox .row input.radio {
+float:right;
+}
+
+#selectedHero .woundedHero .line .text {
+width:auto;
+}
+
+
+/* ============== CityEvents =================*/
+
+#eventContent .resourcesList div {
+border-right:none;
+padding: 0 40px 0 0px;
+/*text-align: right;*/
+font-weight: normal;
+}
+
+.resourcesList .gold {
+background-position: right 0!important;
+text-align: right;
+padding: 0 40px 0 0!important
+}
+
+.resourcesList .iron {
+background-position: right -30px!important;
+text-align: right;
+padding: 0 40px 0 0!important
+}
+
+.resourcesList .wood {
+background-position: right -60px!important;
+text-align: right;
+padding: 0 40px 0 0!important
+}
+
+.resourcesList .food {
+background-position: right -90px!important;
+text-align: right;
+padding: 0 40px 0 0!important
+}
+
+#cityEventsContent #cityEventIcon {
+float:right;
+}
+
+#cityEventsContent .cityEventDescr {
+margin: 0 190px 10px 0px;
+}
+
+#cityEventsContent h2 {
+margin: 0 190px 8px 0px !important;
+}
+
+.cityEventsMessage p#kwDialogMsg .image {
+float:right;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox {
+float:left;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward {
+text-align:right;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward ul li .resourceLine p {
+text-align:left;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward div.unit {
+float:right;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward p.headline {
+text-align:right;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward p.headline img {
+float:right;
+}
+
+.resourcesList div.gold,
+.resourcesList div.iron,
+.resourcesList div.wood,
+.resourcesList div.food,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward span.gold,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward .resourceLine span.gold,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward span.iron,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward .resourceLine span.iron,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward span.wood,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward .resourceLine span.wood,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward span.food,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward .resourceLine span.food,
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward span.coins {
+float:right;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward ul li.left-col {
+padding-left:10px;
+border-left: 1px dotted #443a2e;
+float:right;
+padding-right:0px;
+border-right: none;
+}
+
+.cityEventsMessage p#kwDialogMsg .resultsBox .resultsReward ul li:nth-child(2) {
+float:left;
+}
+
+#cityEventsContent #eventContent span.coins.giftCoins,
+#cityEventsContent #eventContent .reward span.coins.giftCoins {
+padding: 0 25px 0 0;
+background-position: right;
+}
+
+/* ============== New Popups =================*/
+
+.newPopup.vip .stats a {
+right: auto;
+left: 6px;
+}
+
+#vipOptionsContainer .container.wide h2 {
+padding-right: 40px;
+}
+
+#loyalContent .loyalStats div {
+width: 32.933333%;
+}
+
+#loyalContent .loyalStats div:first-child {
+border-right: none;
+}
+
+#loyalContent .loyalStats div:last-child {
+border-right: 1px dotted #483d31;
+}
+
+.newPopup.vip ul.vipBonuses li {
+background: url(../img/layout-v5/vippopup_bullet_crown.png) top right no-repeat;
+padding: 3px 38px 0 0px;
+}
+
+#productionBoostersContent .boostBox strong {
+margin: 0 20px 0 0px;
+}
+
+#productionBoostersContent .boostBox .icon {
+right: auto;
+left: 20px;
+}
+
+.newPopup.vip #premiumLoyalty .premiumDescription {
+margin-left: auto;
+margin-right: 150px;
+}
+
+.newPopup.vip #premiumLoyalty .icon {
+float: right;
+}
+
+#productionBoostersContent .activateAll {
+background: url("../img/rtl/newpopup_prod_boost_offer.jpg") no-repeat 0 0;
+}
+
+#productionBoostersContent .activateAll:hover {
+background-position: 0px -75px;
+}
+
+#vipPopup #switch_auto_renew {
+margin-right: auto;
+margin-left: -31px;
+float: left;
+}
+
+#premiumResources.premiumBox.singleResourcePurchace .premiumDescription {
+margin-right: 0;
+}
+
+#premiumResources.premiumBox.singleResourcePurchace .resourcesList div.coins {
+float: right;
+width: auto;
+}
+
+.infosmall .icon {
+background: url('../img/rtl/newpopup_icon_infobox.png') 0 5px no-repeat;
+}
+
+.errorsmall .icon {
+background: url('../img/rtl/newpopup_icon_infoboxError.png') 0 5px no-repeat;
+}
+
+#premiumResources .resourcesList .boostBox {
+float: right;
+}
+
+.errorsmall .text, .infosmall .text, .infovip .text {
+padding: 8px 90px 7px 25px!important;
+text-align: right;
+}
+
+.newPopup.vip .premiumBox {
+background: url('../img/rtl/vippopup_prembox_bknd.jpg') top right no-repeat;
+}
+
+.newPopup.vip .premiumBox .icon {
+float:right;
+}
+
+.newPopup.vip .premiumBox .premiumDescription {
+margin-left: 0;
+}
+
+#productionBoostersContent .activateAll .value {
+margin: 0;
+width: 100px;
+padding: 12px 0 0;
+}
+
+.newPopup.vip .mainContent .content h2 .filter {
+right: auto;
+left: 34px;
+}
+
+.newPopup.vip .premiumBox .premiumDescription .buttonrow input, .priestButton a, .newPopup.vip .buttonrow input[type=submit] {
+float: right;
+}
+
+.newPopup2 #dialogIcon.marchInfo h1 {
+padding-left: 0px;
+padding-right:18px;
+}
+
+#dialogIcon.marchInfo .pohod-basic-info {
+text-align: right;
+float:right;
+}
+
+#dialogIcon.marchInfo .unitsContainer .unit {
+float: right;
+margin: 0 0px 10px 10px;
+}
+
+ul.pohod-info-column-resources li#gold .icon,
+ul.pohod-info-column-resources li#iron .icon,
+ul.pohod-info-column-resources li#wood .icon,
+ul.pohod-info-column-resources li#food .icon,
+ul.pohod-info-column-resources li#population .icon {
+left: auto;
+right: 6px;
+}
+.pohod-info-column-resources li ul  {
+float:right;
+}
+
+.pohod-info-column-resources li ul li {
+text-align:left;
+}
+
+#dialogIcon.marchInfo .pohod-basic-info {
+width: 372px;
+}
+
+#dialogIcon.marchInfo .knightThumb {
+float:right;
+}
+
+#dialogIcon.marchInfo .knightThumb .hero {
+left:-6px;
+}
+
+#inner .container .content .errorsmall .text, #inner .container .content .infosmall .text, #inner .container .content .infovip .text {
+padding: 16px 90px 15px 25px;
+}
+
+#inner .container .content .errorsmall, #inner .container .content .infosmall, #inner .container .content .infovip {
+margin: 25px 15px 15px 0px;
+}
+
+.newPopup.vip .premiumBox .resourcesList div {
+padding: 0 40px 0 0px;
+}
+
+#vipOptionsMainContent .resourcesList .gold {
+background-position: 58px 0;
+}
+
+#vipOptionsMainContent .resourcesList .iron {
+background-position: 52px -30px;
+}
+
+#vipOptionsMainContent .resourcesList .wood {
+background-position: 56px -60px;
+}
+
+#vipOptionsMainContent .resourcesList .food {
+background-position: 53px -90px;
+}
+
+#productionBoostersContent .activateAll span {
+left: auto;
+right:40px;
+}
+
+#productionBoostersContent .activateAll span.cost {
+left: auto;
+right: 24px;
+}
+
+#instantPopupFrame.newPopup .title {
+padding:0px 35px;
+}
+
+#allBoostBtn .desc .title {
+padding:0;
+}
+
+.newPopup.vip .menuTabs,
+#royalPopup .menuTabs,
+.newPopup3 .menuTabs {
+right:10px;
+left:auto;
+}
+
+#vipPopup ul.tabsNavigation li,
+#royalPopup ul.tabsNavigation li,
+.newPopup3 ul.tabsNavigation li {
+float:right;
+}
+
+.newPopup3 ul.tabsNavigation li a {
+margin-right: 0;
+margin-left: 10px;
+}
+
+.newPopup3 a.close {
+left: -25px;
+right: auto;
+}
+
+/*
+#vipPopup ul.tabsNavigation li a span,
+#royalPopup ul.tabsNavigation li a span,
+.newPopup3 ul.tabsNavigation li a span {
+padding: 0 20px 0 0px;
+margin-left: 25px;
+background: url(../img/layout-v5/newpopup_ar_tabLeft.png) no-repeat right -41px;
+}
+
+#vipPopup ul.tabsNavigation li a,
+#royalPopup ul.tabsNavigation li a,
+.newPopup3 ul.tabsNavigation li a {
+background: url(../img/layout-v5/newpopup_ar_tabRight.png) no-repeat left -41px;
+padding: 0 0px 0 20px;
+}
+
+#vipPopup ul.tabsNavigation li.activeTab a span,
+#royalPopup ul.tabsNavigation li.activeTab a span,
+.newPopup3 ul.tabsNavigation li.activeTab a span {
+background: url(../img/layout-v5/newpopup_ar_tabLeft.png) top right no-repeat;
+padding: 0 20px 0 0px;
+}
+
+#vipPopup ul.tabsNavigation li.activeTab a,
+#royalPopup ul.tabsNavigation li.activeTab a,
+.newPopup3 ul.tabsNavigation li.activeTab a {
+background: url(../img/layout-v5/newpopup_ar_tabRight.png) top left no-repeat;
+padding: 0 0px 0 20px;
+}
+*/
+#vipOptions_scrollbar_track {
+right:auto;
+left:-15px;
+}
+
+.newPopup.vip .mainContent {
+padding: 0 6px 0 14px;
+}
+
+#vipPopup .infosmall {
+margin: 25px 0px 15px 5px;
+}
+
+#optionsPopupContent .content >  .infosmall, .successsmall {
+margin: 10px 0px 10px 0!important;
+}
+
+#optionsPlayerMultiInfo, #optionsPlayerInfo {
+text-align: right;
+}
+
+.newPopup.vip .stats .coins {
+border-left: 1px dotted #443a2e;
+border-right: none;
+padding-left: 40px;
+padding-right: 0;
+margin: 0;
+background-position: 17px 5px;
+}
+
+#kwVipPopup .vip .stats span {
+margin: 0 0 0 10px;
+padding: 0 22px 0 5px;
+}
+
+#kwVipPopup .vip .stats .coins {
+border-left: 1px dotted #443a2e!important;
+border-right: none!important;
+background: url('../img/layout/res_ico_coins_new.png') 45px 5px no-repeat!important;
+}
+
+#kwVipPopup .vip .stats .stars {
+background: url('../img/layout/res_ico_star.png') 40px 5px no-repeat!important;
+}
+
+#kwVipPopup .vip .stats a {
+background: url('../img/vip/getCoins_rtl.png') 200px center no-repeat;
+right: auto;
+left: 0;
+}
+
+body.gid-ir #kwVipPopup .vip .stats a big {
+font-size: 22px;
+}
+
+#optioonsPopupContentContainer.newPopup3 {
+background: url('../img/layout-63/options_bg01-rtl.jpg') no-repeat top center;
+direction: rtl;
+}
+
+#kwVipPopup .vip .leftMenu ul li,
+#kwVipPopup .vip .leftMenu ul li,
+#optioonsPopupContentContainer .leftMenu ul li {
+border-right: none!important;
+border-left: 1px solid #443a2e;
+}
+
+#kwVipPopup .vip .leftMenu ul li:hover,
+#kwVipPopup .vip .leftMenu ul li.selected,
+#optioonsPopupContentContainer .leftMenu ul li.selected,
+#optioonsPopupContentContainer .leftMenu ul li:hover {
+border-left: transparent!important;
+border-right: none!important;
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGI3OGYiIHN0b3Atb3BhY2l0eT0iMC4yNSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+)!important;
+background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(221,183,143,0.25) 100%)!important; /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(221,183,143,0.25)))!important; /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(221,183,143,0.25) 100%)!important; /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(221,183,143,0.25) 100%)!important; /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(221,183,143,0.25) 100%)!important; /* IE10+ */
+background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(221,183,143,0.25) 100%)!important; /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#40ddb78f',GradientType=1 )!important; /* IE6-8 */
+}
+
+#kwVipPopup .vip .leftMenu ul li a img,
+#optioonsPopupContentContainer .leftMenu ul li a img {
+float: right;
+margin: 0 0 0 10px;
+}
+
+#kwVipPopup .vip .leftMenu ul li a p,
+#optioonsPopupContentContainer .leftMenu ul li a p {
+margin: 0 0 0 2px;
+}
+
+.newPopup.vip #vipPopup #mainContentContainer,
+#optionsContent_scrollbar_container {
+margin:0;
+overflow:hidden;
+}
+
+#optioonsPopupContentContainer #optionsPopupContent {
+/*margin: 0 306px 0 0;*/
+}
+
+.newPopup.vip .leftMenu,
+#optionsMenu_scrollbar_container.leftMenu {
+/*float:right;
+padding: 0 0 0 24px;
+border-left: 1px dotted #443a2e;
+border-right: none;*/
+right: 1px;
+}
+
+#vipOptionsMenu_scrollbar_track,
+#optionsMenu_scrollbar_track {
+right: -18px;
+left:auto;
+}
+
+.newPopup.vip .leftMenu ul li a img {
+float:right;
+margin:0;
+}
+
+.newPopup.vip .leftMenu ul li a big {
+margin: 0 74px 3px 0px;
+}
+
+.newPopup.vip .leftMenu ul li a p {
+margin: 0 74px 0 0px;
+}
+
+.priestWrapper .priceRit span.coins {
+float: left;
+}
+
+.premiumDescription .resourcesList span.coins {
+height: 19px;
+}
+
+.newPopup.vip .rightContRit .priestTitle {
+text-align:right;
+}
+
+.overview .buildingDialog .thumbnail {
+float: right;
+margin-right: 2px;
+}
+
+.buildingDialog .enter {
+left: auto;
+right: 0;
+}
+
+.buildingDialog .thumbnail .buildingLevel {
+right: 15px;
+left:auto;
+}
+
+.buildingDialog .headline {
+/*background: url(../img/buildingsPopup/title_ar.png) no-repeat;*/
+background-size:100%;
+margin: 2px 7px 5px 0;
+}
+
+.buildingDialog .decription {
+margin: 2px 6px 0 0;
+}
+
+.buildingDialog .headline .info {
+left: 20px;
+right:auto;
+}
+
+.buildingDialog table.buildingInfo tbody tr td:nth-child(1) {
+border-right: none;
+}
+
+.buildingDialog table.buildingInfo tbody tr td:nth-child(3) {
+border-right: 1px dotted #443a2e;
+}
+
+.buildingDialog .requirements h3 {
+margin:0 2px 0 0;
+}
+
+.gold#NeedGold,
+.iron#NeedIron,
+.wood#NeedWood,
+.food#NeedFood {
+float: right;
+background-position: 66px center;
+line-height: 20px;
+}
+
+.overview .buildingDialog .buildBlock .requirements span {
+padding: 1px 28px 4px 3px;
+}
+
+.buildBlock #NeedResources span:nth-child(1) {
+border-right: none;
+}
+
+.buildBlock #NeedResources span:nth-child(4) {
+border-right: 1px dotted #443a2e;
+}
+
+.buildingDialog .requirements .gold,
+.buildingDialog .requirements .iron,
+.buildingDialog .requirements .wood,
+.buildingDialog .requirements .food {
+padding: 0 32px 0 0;
+background-position: right center;
+text-align: right;
+}
+
+.buildingDialog .building {
+margin: 4px 3px 0 10px;
+}
+
+.buildingDialog .requirements .time {
+font-size:12px;
+background: url(../img/layout/h_top_clock.png) 170px center no-repeat;
+padding-right:15px;
+padding-left:0;
+}
+
+.buildingDialog .requirements .time:before {
+content: '';
+display: inline-block;
+width: 79px;
+height: 12px;
+background: url(../img/buildingsPopup/timeRight.png);
+margin: 5px 0px 0 30px;
+}
+
+.buildingDialog .requirements .time:after {
+content: '';
+display: inline-block;
+width: 79px;
+height: 12px;
+background: url(../img/buildingsPopup/tileLeft.png);
+margin: 5px 10px 0 0px;
+}
+
+/*dl#overPop-units dd {
+box-shadow: 0px 0px 20px rgba(250, 185, 114, 0.19);
+background: rgba(0, 0, 0, 0.27);
+}*/
+
+dl#overPop-units dd .thumb {
+/*float: right;*/
+}
+
+dl#overPop-units dd .details {
+margin: 0;
+/*float: left;*/
+}
+
+dl#overPop-units dd .details .unitAmount {
+/*text-align:left;*/
+}
+
+dl#overPop-units dd .details .unitAmount input {
+text-align: right;
+float: right;
+}
+
+/* ================ POHOD NEW STYLES =============*/
+
+#marchesPopupFrame .stager.step1 {
+background: url(../img/pohod/steps.png) no-repeat 0 -306px;
+}
+
+#marchesPopupFrame .stager.step2 {
+background: url(../img/pohod/steps.png) no-repeat 0 -272px;
+}
+
+#marchesPopupFrame .stager.step3 {
+background: url(../img/pohod/steps.png) no-repeat 0 -238px;
+}
+
+#marchesPopupFrame .stager.step4 {
+background: url(../img/pohod/steps.png) no-repeat 0 -204px;
+}
+
+#marchesPopupFrame .stager.step5 {
+background: url(../img/pohod/steps.png) no-repeat 0 -170px;
+}
+
+#marchesPopupFrame .stager div {
+width:178px;
+}
+
+#marchesPopupFrame .stager div p {
+right:41px;
+left:auto;
+}
+
+#marchesPopupContent .knightInfo {
+text-align: right;
+}
+
+#marchPopup_scrollbarContent {
+direction: rtl;
+}
+
+#marchesPopupContent .step1box.map, #marchesPopupContent .step1box.cargo {
+position: absolute;
+left: 0px!important;
+right: auto!important;
+}
+
+
+#marchPopupMarchesSelect {
+text-align: right;
+}
+
+#marchPopupMarchesSelect .row .icon {
+float:right;
+margin: 0 0px 0 3px;
+}
+
+#marchesPopupContent .thumb {
+float:right;
+}
+
+#marchesPopupContent .step1box.cargo p {
+text-align:right;
+}
+
+#marchesPopupContent .step1box.cargo p strong {
+float:left;
+}
+
+#marchPopupContent .checkbox {
+right: 0px;
+left:auto;
+}
+
+/*#marchesPopupContent .unitsContainer .unitBox {
+float:right;
+}*/
+
+.unitsContainer .unit {
+float:right;
+margin: 0 0px 10px 0;
+}
+
+#marchesPopupContent .unitsContainer .unitBox input {
+margin: 12px 6px 0 0!important;
+float: right;
+}
+
+#marchesPopupContent .unitsContainer .unitBox .count {
+float:right;
+margin: 12px 5px 0 0px;
+}
+
+#marchesPopupContent .unitsContainer .unitBox a {
+float:right;
+margin:-4px 5px 0 0;
+}
+
+#marchesPopupContent .armyOptions {
+float:right;
+}
+
+#marchesPopupContent .armyOptions .column {
+float:right;
+margin-right:0;
+display: inline-table;
+border-left: 1px dotted #483d31;
+border-right:none;
+}
+
+#marchesPopupContent .armyOptions .column:nth-child(1) {
+}
+
+#marchesPopupContent .armyOptions .column.last {
+margin-left: 0;
+border-left:none;
+}
+
+#marchesPopupContent .targets .target {
+float:right;
+}
+
+#marchesPopupContent .step5castles .attacker {
+display:inline-block;
+}
+
+#marchesPopupContent .step5castles .stats {
+display:inline-block;
+}
+
+#marchesPopupContent .step5castles .attacker.right .info {
+display:inline-block;
+}
+
+#marchesPopupContent .step5castles .attacker .info {
+/*float:right; /*fix*/
+transform: rotateY(0deg);
+-ms-transform: rotateY(0deg);
+-webkit-transform: rotateY(0deg);
+}
+
+#marchesPopupContent .step5Options .column5 {
+float:right;
+}
+
+.marchesBox .header .headerLink {
+float:right;
+}
+
+.marchesBox .header select {
+float:left;
+}
+
+.marchesContent .rowMarches .type {
+float:right;
+}
+
+.marchesContent .rowMarches .bar {
+float: right;
+}
+
+/*.marchesBox .marchesContent .unit {
+float:right;
+}
+*/
+#radialMenu .radialTitle img {
+float:right;
+}
+
+#radialMenu .radialTitle p {
+/*text-align: right;
+float:right;*/
+}
+
+#marchPopup_scrollbar_track {
+left:-13px;
+right:auto;
+}
+
+/* =========== ROYAL COURT RTL STYLES ==================*/
+
+/*#royalPopup {
+margin: 150px auto auto -490px;
+}*/
+
+#royalPopup .royalHero,
+#royalPopup .heroContent,
+#royalPopup .royalHero span.heroInfo2 img,
+#royalPopup .heroContent .heroLvl p.title,
+#royalPopup .heroContent .newBar .progress,
+#royalPopup .heroContent .statsAdd .addLine,
+#royalPopup .heroContent .statsAdd .addLine img,
+#royalPopup .heroContent .statsAdd .addLine p,
+#royalPopup .details #itemsNav li a,
+#heroPopup span.heroes,
+#appointDialog > div
+/*#appointDialog .hero,
+#selectedHero #appointDialog .details*/ {
+float:right;
+}
+
+#royalPopup .heroContent .heroLvl p.title {
+margin-right: 30px;
+}
+
+#royalPopup .royalHero {
+border-left: 1px dotted #443A2E;
+border-right: transparent;
+}
+
+/* This is not OK for reverting the inventory
+#royalPopup .royalHero .person {
+-moz-transform: scaleX(-1);
+-o-transform: scaleX(-1);
+-webkit-transform: scaleX(-1);
+transform: scaleX(-1);
+filter: FlipH;
+-ms-filter: "FlipH";
+}*/
+
+#royalPopup .royalHero h2 a.edit,
+#royalPopup .royalHero h2 a.changeCastle,
+#royalPopup .heroContent p.bonusPts,
+#royalPopup .heroContent .statsAdd .addLine a.refresh,
+#royalPopup .heroContent .statsAdd .addLine a.plus,
+#royalPopup h2 strong,
+#royalPopup a.refresh,
+#royalPopup a.plus {
+float:left;
+}
+
+#royalPopup .royalHero h2 a.changeCastle {
+margin-left:5px;
+margin-right:0;
+}
+
+#royalPopup .heroContent p.bonusPts {
+margin-left:39px;
+margin-right:0;
+}
+
+#royalPopup .heroContent .newBar .progressCount {
+right:25px;
+left:auto;
+}
+
+#royalPopup .heroContent .newBar .barCount {
+left:25px;
+right:auto;
+}
+
+#royalPopup .royalHero span.heroInfo2 {
+text-align: right;
+}
+
+#royalPopup .royalHero span.heroInfo2 img {
+margin: 8px 10px 0 20px;
+float: right;
+}
+
+#royalPopup .heroContent .heroLvl {
+/*background: url(../img/royalCourt/ar_heroLvl.png);*/
+}
+
+#royalPopup .details #itemsNav {
+margin-right:20px;
+margin-left:0;
+}
+
+#royalPopup .newBar .actions {
+left:-50px;
+right:auto;
+}
+
+#heroPopup p.playerName {
+margin-right:9px;
+margin-left:0;
+}
+
+ul.royalOffspringsNew {
+right:-128px;
+left:auto;
+}
+
+ul.royalOffspringsNew li a .label {
+-webkit-border-bottom-right-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+border-bottom-right-radius: 5px;
+}
+
+ul.royalOffspringsNew li {
+/*background: url(../img/royalCourt/ar_heroFrame.jpg);*/
+left:auto;
+}
+
+ul.royalOffspringsNew li.activeTab/*, ul.royalOffspringsNew li:hover*/ {
+/*background: url(../img/royalCourt/ar_heroFrameActive.jpg);*/
+left: auto;
+right:-4px;
+}
+
+ul.royalOffspringsNew .heroThumb .hero img {
+position: absolute;
+left: -45px;
+width: 180%;
+}
+
+#royalPopup .errorsmall .text, #royalPopup .infosmall .text {
+text-align:right;
+padding: 17px 90px 14px 25px;
+}
+
+#royalPopup .heroContent .knightAAbility p {
+text-align: right;
+}
+
+#royalPopup .heroContent .newBarHolder .newBarTitle {
+text-align: right;
+}
+
+#appointDialog > div {
+margin: 15px 20px 20px 0;
+/*background: url(../img/royalCourt/ar_promoteBkg.png);*/
+}
+#appointDialog .tavern {
+background: url(../img/royalCourt/ar_castleBkg.png);
+}
+#appointDialog .heroFrame {
+background: url(../img/royalCourt/ar_promoteFrame.png);
+}
+
+#appointDialog .castleFrame {
+background: url(../img/royalCourt/ar_castleFrame.png);
+}
+
+a.promoteButtCastle, /*a.promoteButt*/ {
+    bottom: -27px;
+    position: absolute;
+    left: 23px;
+	right:auto;
+    z-index: 3;
+}
+/* =========== END OF ROYAL COURT ===================*/
+
+.mainButton {
+left:0;
+right:auto;
+}
+
+.mainButton .magnifier {
+margin:37px 40px 0 0;
+}
+
+body.province #pagebody #inner #provinceCity {
+right:260px;
+left:auto;
+}
+
+body.province #pagebody #inner a.open_slot div.infoText {
+margin: 60px -30px 0px 0px;
+}
+
+.tooltipBody span.tinyBuild img {
+float:right;
+margin: 0 0 0 5px;
+}
+
+#selectedHero .person #slot1,
+#selectedHero .person #slot3 {
+right:0;
+left:auto;
+}
+
+#selectedHero .person #slot4,
+#selectedHero .person #slot2 {
+left:14px;
+right:auto;
+}
+
+#cityEventsContent .cityEventDescr div#unit {
+float:right;
+}
+
+#cityEventsContainer .speedUpBtn {
+left:20px;
+right:auto;
+}
+
+/*============= OPTIONS.php ==================*/
+
+#optionsContent_scrollbar_track {
+left:0px;
+right:auto;
+}
+
+/*
+#optioonsPopupContentContainer .mainContent {
+padding:0 0 0 14px;
+}
+*/
+/*
+#optionsPopupContent .profileImageBox,
+.optionBox .smallInput,
+.optionBox .smallInput.large input[type=text] {
+float:right;
+}
+*/
+#optionsPopupContent .profileGallery {
+float:left;
+}
+.smallInput.large a.uniButton2.right {
+float: left!important;
+}
+
+#optionsPopupContent .profileGallery img {
+float: right;
+margin: 0px 0 5px 4px;
+}
+
+.optionBox .sideTitle {
+text-align:left;
+margin-left: 10px;
+}
+
+.optionBox p.editable {
+float:left;
+}
+
+.optionBox .resRequirement .status {
+left: -12px;
+right:auto;
+}
+
+.optionBox .smallInput.half:nth-child(2) {
+float:left;
+}
+
+.uniButton2.right.addHotlink {
+float: left!important;
+}
+
+.maxProtectTime {
+text-align:left;
+}
+
+#optionsPopupContent .optionBox.frame {
+background: #0D0A06 url(../img/layout/recruit_background.png) center right no-repeat;
+}
+
+.optionBox .smallInput.half.right {
+float:left!important;
+}
+
+.optionBox a.social {
+margin: 6px 0px 0 20px;
+float: right;
+}
+
+.optionBox a.social img {
+margin: -3px 0 0 5px;
+}
+
+.sigStyle.right {
+float: left!important;
+}
+
+.sigStyle a {
+float:right;
+margin: 0 0 0 7px;
+}
+
+#optionsPopupContent .profileImage {
+float:right;
+}
+
+#optionsPopupContent .profileImage.frList {
+margin: 0 0 15px 10px!important;
+}
+
+.optionBox .smallInput.large input[type=text] {
+float:right!important;
+}
+
+#optionsPopupContent .profileImageBox.frList {
+margin: 0 0 15px 15px;
+}
+
+.optionBox select.selectCastle {
+margin: 0 13px 0 0;
+}
+
+#newMapSettings .checkboxes {
+direction: rtl;
+}
+
+.newPopup3 .infosmall .text, .newPopup3 .successsmall .text, .newPopup3 .errorsmall .text {
+padding: 5px 90px 5px 15px!important;
+text-align: right!important;
+}
+
+.errorsmall .icon, .infosmall .icon, .infovip .icon, .successsmall .icon {
+left: auto;
+right: 0;
+}
+
+/*
+.optionBox .bbCode {
+float: right;
+clear: right;
+}
+*/
+
+.optionBox .bbSmiles {
+margin-left: 0px;
+margin-right: 55px;
+}
+
+.optionBox .bbCode a {
+float: left;
+}
+
+#optionsPopupContent .abandonCastle {
+text-align: right;
+}
+
+#optionsPopupContent .abandonCastle span.checkbox {
+padding: 3px 20px 3px 0;
+background: url("../img/layout-63/checkbox-green.png") no-repeat right center;
+text-align: right;
+}
+
+#optionsPopupContent .abandonCastle span.checkbox.red {
+background: url("../img/layout-63/checkbox-red.png") no-repeat right center;
+}
+
+h1 a#addMarchTemplateBtn,
+.newPopup3 .listTable tbody tr td a.overwrite {
+float:left;
+}
+
+.newPopup3 #savedTemplatesName {
+float:right;
+}
+
+.newPopup3 .listTable.short thead tr th {
+text-align:right;
+}
+
+.newPopup3 .listTable.short thead tr td {
+text-align: left;
+padding: 5px 10px 5px 5px;
+}
+
+#infirmaryForm .row.title .cost {
+width: 260px!important;
+margin: 0 20px 0 0px;
+}
+
+.newPopup3 .listTable.short tbody tr td {
+text-align:right;
+padding: 5px 10px 5px 0px;
+}
+
+.barracksUnit .unitProfile {
+float:right;
+}
+
+#unitsList .action,
+#unitsList .inactiveUnit .error{
+left: 0;
+right:auto;
+}
+
+.unitAction input[type=text] {
+float:right;
+}
+
+.unitAction select {
+float:right;
+margin: 5px 10px 0 0px;
+}
+
+.unitAction .trainInfo {
+margin: 8px 10px 0 0;
+float:right;
+}
+
+.unitAction ul.neededResources li {
+background-position: right center;
+padding: 4px 26px 0 0;
+float:right;
+}
+
+.barracksUnit_1,
+.barracksUnit_2 {
+margin: -10px -25px 0 0px!important;
+}
+
+.barracksUnit_3 {
+margin: -10px -55px 0 0px!important;
+}
+
+.barracksUnit_4 {
+margin: 0px -35px 0 0px!important;
+}
+
+.barracksUnit_5 {
+margin: 0px -15px 0 0px!important;
+}
+
+.barracksUnit_6 {
+margin: 0px -45px 0 0px!important;
+}
+
+.barracksUnit_7 {
+margin: -10px -35px 0 0px!important;
+}
+
+.barracksUnit_8 {
+margin: -10px -15px 0 0px!important;
+}
+
+.barracksUnit_9 {
+margin: -70px -15px 0 0px!important;
+}
+
+.barracksUnit_10 {
+margin: -60px -25px 0 0px!important;
+}
+
+.barracksUnit_11 {
+margin: -70px -65px 0 0px!important;
+}
+
+.barracksUnit_12 {
+margin: -60px -15px 0 0px!important;
+width: 197px;
+}
+
+.barracksUnit_13 {
+margin: -90px -35px 0 0px!important;
+}
+
+.barracksUnit_14 {
+margin: -60px -25px 0 0px!important;
+width: 207px;
+}
+
+.barracksUnit_15 {
+margin: -20px -5px 0 0px!important;
+width: 177px;
+}
+
+.barracksUnit_16 {
+margin: 0px -45px 0 0px!important;
+}
+
+.barracksUnit_17 {
+margin: -20px -25px 0 0px!important;
+}
+
+.barracksUnit_18 {
+margin: -10px -5px 0 0px!important;
+}
+
+.barracksUnit_19,
+.barracksUnit_20 {
+margin: 0px -45px 0 0px!important;
+}
+
+.barracksUnit_21 {
+margin: -30px -25px 0 0px!important;
+}
+
+.barracksUnit_22 {
+margin: 0px -35px 0 0px!important;
+}
+
+.barracksUnit_23 {
+margin: -30px -35px 0 0px!important;
+}
+
+.barracksUnit_24 {
+width: 217px;
+margin: -30px -35px 0 0px!important;
+}
+
+.barracksUnit_25 {
+width: 177px;
+margin: 0px -5px 0 0px!important;
+}
+
+.barracksUnit_26 {
+margin: -40px -35px 0 0px!important;
+}
+
+.barracksUnit_27 {
+margin: -20px -40px 0 0px!important;
+}
+
+.barracksUnit_28 {
+margin: -40px -20px 0 0px!important;
+}
+
+.left {
+float: right!important;
+}
+
+.right {
+float: left!important;
+}
+
+.paging .row .right {
+text-align: left;
+}
+
+.paging .row .left {
+text-align: right;
+}
+
+.paging .row .left, .paging .row .right, .paging .row .center {
+float: right;
+}
+
+.formbox.clanLogo .row .right {
+margin: 0 100px 5px 0;
+}
+
+.formbox .highlight .right a.motivationOptions {
+margin-right:0;
+margin-left:5px;
+}
+
+#kwDialog.dialogWrapper #dialogIcon.dialogBody p#kwDialogMsg {
+text-align:right;
+}
+
+#introStep1, #introStep2, #introStep3 {
+float: right;
+}
+
+/* FIXES */
+
+#kwVipPopup .vip {
+background: url('../img/layout-63/vipBg_rtl.jpg') center bottom no-repeat;
+}
+
+/*
+#kwVipPopup .vip .premiumBox {
+background: url('../img/layout-v5/vippopup_prembox_bknd-rtl.jpg') top left no-repeat;
+}
+*/
+
+#kwVipPopup .vip .premiumBox .icon {
+float:right;
+}
+
+/*
+#kwVipPopup .vip #vipPopup #leftMenuContainer {
+float:right;
+}
+*/
+
+/*
+#kwVipPopup .vip #vipPopup #mainContentContainer {
+margin: 0 0 20px 0px;
+width: 605px;
+float: left;
+padding: 0 6px 0 0px;
+border-right: 1px dotted #443a2e;
+}
+*/
+
+/*
+#kwVipPopup .vip .leftMenu {
+padding: 0 0 0 5px;
+border:none;
+}
+*/
+
+/*
+#kwVipPopup .vip .mainContent {
+padding: 0 0 0 14px;
+}
+*/
+
+#kwVipPopup .vip .premiumBox .resourcesList p {
+float:right;
+}
+
+#kwVipPopup .vip #vipPopup #vipOptionsContainer span.coins, #cityEventsFrame #cityEventsContent #eventContent #cityEventsRituals .priceRit span.coins {
+float: right;
+}
+#kwVipPopup .vip .priestWrapper .ritualReq {
+	clear: both;
+	white-space: pre-wrap;
+}
+#kwVipPopup .vip .premiumBox .premiumDescription .buttonrow input, .priestButton a, #kwVipPopup .vip .buttonrow input[type=submit] {
+float:right;
+}
+
+#kwVipPopup .vip .mainContent .content h2 .filter {
+float:left;
+}
+
+.orderPicturesSlider {
+left: -180px;
+}
+
+/* ADVISOR */
+
+#advisorBg {
+left: auto;
+right: -12px;
+}
+
+.advisorImage {
+right: auto;
+left: 15px;
+background: url('../img/advisor/advisorImage_rtl.png') center center no-repeat;
+}
+
+#advisorBg.avisorChooseNation {
+background: url('../img/advisor/advisorNation_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorArmy {
+background: url('../img/advisor/advisorArmy_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorOverview {
+background: url('../img/advisor/advisorOverview_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorRoyalCourt {
+background: url('../img/advisor/advisorCourt_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorMap {
+background: url('../img/advisor/advisorMap_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorMessages {
+background: url('../img/advisor/advisorMsg_rtl.png') bottom left no-repeat;
+}
+
+#advisorBg.avisorOptions {
+background: url('../img/advisor/advisorOptions_rtl.png') bottom left no-repeat;
+}
+
+.advisorSkipTitle {
+left: auto;
+right:-5px;
+}
+
+/* QUESTER */
+
+#header #letterNew a {
+left:auto !important;
+right: 75px !important;
+}
+
+#questerUIPopupContentContainer h3 {
+font-family: Tahoma, Arial, Verdana, Helvetica, sans-serif!important;
+}
+
+.questTitle {
+text-align: right;
+}
+
+.showMe a{
+background: url('../img/quests/showMe2.png') center right no-repeat!important;
+padding: 12px 32px 12px 12px!important;
+}
+
+.questShowMe:hover {
+
+}
+
+.questMenu li {
+background: url('../img/quests/menuTab-rtl.png') center center no-repeat;
+}
+
+.questMenu li:hover {
+background: url('../img/quests/menuTabH-rtl.png') center center no-repeat;
+}
+
+.questMenu li.current {
+left: auto;
+right: -5px;
+background: url('../img/quests/menuTabCurrent-rtl.png') center center no-repeat;
+}
+
+.questMenu li.newCat {
+background: url('../img/quests/menuTabCurrent-rtl.png') center center no-repeat;
+}
+
+.questMenu li span {
+margin: 0 20px 0 0;
+}
+
+/*
+.questMenu li {
+background: url('../img/quests/tabSprite-rtl.png') top right no-repeat;
+}
+
+.questMenu li#questUiMenuProduction {
+background-position: -85px 0;
+}
+
+.questMenu li#questUiMenuProduction.current, .questMenu li#questUiMenuProduction.pulse {
+background-position: 0px 0;
+}
+
+.questMenu li#questUiMenuMilitary {
+background-position: -85px -66px;
+}
+
+.questMenu li#questUiMenuMilitary.current, .questMenu li#questUiMenuMilitary.pulse {
+background-position: 0px -66px;
+}
+
+.questMenu li#questUiMenuKnights {
+background-position: 0px -132px;
+}
+
+.questMenu li#questUiMenuKnights.current, .questMenu li#questUiMenuKnights.pulse {
+background-position: -85px -132px;
+}
+
+.questMenu li#questUiMenuUpgrades {
+background-position: 0px -132px;
+}
+
+.questMenu li#questUiMenuUpgrades.current, .questMenu li#questUiMenuUpgrades.pulse {
+background-position: -85px -132px;
+}
+*/
+
+#questsBackground {
+right: auto;
+/*left: -14px;*/
+}
+
+.questMenu li.current {
+/*background: url('../img/quests/menuTabCurrent.png') center center no-repeat;
+background-position: 0 0;*/
+right: -6px;
+}
+
+.questContent {
+background: url('../img/quests/questContentBg-rtl.png') center bottom no-repeat;
+left: auto;
+right:-20px;
+}
+
+.questMenu {
+left: auto;
+right: -30px;
+}
+
+.quest_rewards {
+padding: 4px 8px 4px 0px;
+}
+
+.q_progressBar {
+margin-right: -8px;
+}
+
+.q_progressBarFill {
+float: right;
+}
+
+.q_progressBarEnd {
+box-shadow: 1px 0px 3px #fff;
+}
+
+#questsBackground.qBg1 {
+background: url('../img/quests/qBg01_rtl.png') top right no-repeat;
+}
+
+#questsBackground.qBg2 {
+background: url('../img/quests/qBg02_rtl.png') top right no-repeat;
+}
+
+#questsBackground.qBg3 {
+background: url('../img/quests/qBg03_rtl.png') top right no-repeat;
+}
+
+#questsBackground.qBg4 {
+background: url('../img/quests/qBg04_rtl.png') top right no-repeat;
+}
+
+#questsBackground.qBg5 {
+background: url('../img/quests/qBg05_rtl.png') top right no-repeat;
+}
+
+#questsBackground.qBg6 {
+background: url('../img/quests/qBg06_rtl.png') top right no-repeat;
+}
+
+.q_rewards .unitsContainer {
+top:4px!important;
+}
+
+.q_rewards .unitsContainer .unit {
+margin: 0 0 0 5px!important;
+}
+
+/* INFO Fixes */
+
+.box.information.unit img {
+float:right;
+}
+
+.box span.gold, .box span.iron, .box span.food, .box span.wood {
+padding: 2px 20px 2px 0;
+background-position: top right;
+}
+
+.textformbox .row .left {
+text-align: right!important;
+}
+
+.box.information.skill .infoPic, .box.information.race .infoPic {
+float: right;
+}
+
+
+/* MSG */
+
+.newRegMsg a img {
+margin: 0 0 10px 10px;
+}
+
+/* WAR LOG */
+
+.box.warLog span.archers, .box.warLog span.infantry, .box.warLog span.cavalry, .box.warLog span.machine, .box.warLog span.special {
+padding: 0 22px 0 0;
+text-align: left;
+}
+
+.box.warLog span.economic, .box.warLog span.military, .box.warLog span.production {
+padding: 0 30px 0 0;
+text-align: left;
+}
+
+.box.warLog table tbody tr td:nth-of-type(1) {
+text-align: right;
+padding: 0 5px 0 0;
+}
+
+
+/* CALCULATOR */
+
+#calculator_form table tbody tr td:nth-of-type(5), #calculator_form table tbody tr td:nth-of-type(8) {
+border-left: none!important;
+border-right: 1px solid;
+}
+
+#calculator_form table:nth-of-type(3) tbody tr td:nth-of-type(5) {
+border: none;
+}
+
+
+/* GLOBAL RESOURCES ICONS */
+
+.box span.gold, .box span.iron, .box span.food, .box span.wood, .box span.population, .box span.time {
+padding: 2px 22px 2px 0;
+background-position: top right;
+}
+
+.box span.time {
+background: url(../img/layout-63/res_ico_time_s.png) no-repeat right top!important;
+padding-left:0!important;
+}
+
+span.gold, span.iron, span.wood, span.food, span.population, span.coins, span.vip, span.quickBuild{
+height: 30px;
+text-align: left;
+line-height: 30px;
+display: inline-block;
+padding: 0 45px 0 0;
+cursor: default;
+}
+
+span.gold {
+background-position: right 0;
+}
+
+span.iron {
+background-position: right -30px;
+}
+
+span.wood {
+background-position: right -60px;
+}
+
+span.food {
+background-position: right -90px;
+}
+
+span.population {
+background-position: right -120px;
+}
+
+span.coins {
+background-position: right -180px;
+}
+
+span.vip {
+background-position: right -210px;
+}
+
+/* HIRE ARMY UNIT COUNTAINERS FIX */
+
+.box .q_rewards .unitsContainer .unit {
+	width: 40px!important;
+}
+
+
+/* MARCHES - ADD TO TOWER BUTTON */
+
+
+#towerPopulationBar {
+background: rgb(255,0,0); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjIxJSIgc3RvcC1jb2xvcj0iI2Y5YjcwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwNjY2MWMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(left,  rgba(255,0,0,1) 0%, rgba(249,183,0,1) 21%, rgba(6,102,28,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,0,0,1)), color-stop(21%,rgba(249,183,0,1)), color-stop(100%,rgba(6,102,28,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(255,0,0,1) 0%,rgba(249,183,0,1) 21%,rgba(6,102,28,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(255,0,0,1) 0%,rgba(249,183,0,1) 21%,rgba(6,102,28,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(255,0,0,1) 0%,rgba(249,183,0,1) 21%,rgba(6,102,28,1) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(255,0,0,1) 0%,rgba(249,183,0,1) 21%,rgba(6,102,28,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#06661c',GradientType=1 ); /* IE6-8 */
+
+}
+
+.towerPopulationBarFill {
+right: auto;
+left: 0!important;
+border-right: 1px solid #fff;
+border-left: none;
+}
+
+/* ACHIEVEMENTS */
+
+.achReward {
+float: left;
+}
+
+.achProgressFill {
+background: url("../img/achievements/progressBarFill-rtl.jpg") repeat-x left center;
+}
+
+#pagebody .achievementList #achievementBox .achTitle a {
+float: left;
+}
+
+#pagebody .achievementList #achievementBox .achProgressFill {
+background: url("../img/achievements/progressBarFill_page-rtl.jpg") repeat-x left center;
+border-left: 1px solid #FF7400;
+border-right: none;
+}
+
+
+.achShield .shieldBox.empty {
+background: url("../img/achievements/shieldSprite-rtl.png") no-repeat;
+background-position: -315px 0px;
+}
+.achShield .shieldBox.one {
+background: url("../img/achievements/shieldSprite-rtl.png") no-repeat;
+background-position: -210px 0px;
+}
+.achShield .shieldBox.two {
+background: url("../img/achievements/shieldSprite-rtl.png") no-repeat;
+background-position: -105px 0px;
+}
+.achShield .shieldBox.three {
+background: url("../img/achievements/shieldSprite-rtl.png") no-repeat;
+background-position: 0px 0px;
+}
+.achReward span.achRewardIcon {
+padding: 0 0 0 20px;
+background: url("../img/layout-v5/coin-icon.png") no-repeat left center;
+}
+
+
+.achievementsContainer #questWrapperInnerSpace {
+padding: 0 0 0 10px;
+}
+
+#quest_scrollbar_track {
+left: 0!important;
+right: auto;
+}
+
+a.loginUserLink {
+	float: right;
+}
+
+
+/* IRAN VOTE BUTTON FIX */
+
+#mxvtmw {
+	top: 32px!important;
+}
+
+@media all and (max-width: 1400px) {
+	#mxvtmw {
+		width: 100px!important;
+		height: 100px!important;
+			}
+	#mxvtmw a img {
+		width: 100px!important;
+		height: 100px!important;
+	}
+}
+
+@media all and (max-width: 1010px) {
+	#mxvtmw {
+		display: none!important;
+	}
+}
+
+/* SITTING */
+
+#sittingInfoWrap {
+	font-family: Tahoma, sans-serif!important;
+}
+
+#sittingInfoWrap ul li:last-of-type a {
+	border-right: none;
+}
+
+#sittingInfoWrap ul li:first-of-type a {
+	border-right: 1px solid #685948;
+}
+
+#sitting_log_scrollbar_track {
+	right: auto;
+	left: 20px;
+}
+
+/*----------------
+                  Profile - INFO
+                        ----------------*/
+
+.profileCupsItem {
+	background:url(../img/rtl/profile/profile_cups_bgr.png) no-repeat left top;
+}
+
+#pagebody .container .content .profileCupsList h3 {
+    text-align: right;
+}
+
+#pagebody .container .content .profileCupsItem h3 {
+    padding-left: 0;
+    padding-right: 115px;
+    text-align: right;
+}
+
+.profileCupsItem img {
+    left: auto;
+    right: 7px;
+}
+
+.profileCupsItem big {
+    padding-left: 0;
+    padding-right: 115px;
+    text-align: right;
+}
+
+.profileCupsItem small {
+    padding: 0 115px 0 5px;
+    text-align: right;
+}
+
+/* EVENTS LOGS */
+
+#EventsLogInfoWrap_content #optionsContent_scrollbar_track {
+	top: 10px;
+	right: auto;
+	left: 5px;
+}
+
+ul.msgResources li {
+	padding: 0 30px 0 0;
+	background-position: top right;
+}
+
+#playerMenuEventsLogBtn .newMsg {
+	right: auto;
+	left: 26px;
+}
+
+/* NOTIFICATIONS */
+
+#header #notificationsIcon a {
+	right: auto;
+	left: 40px;
+}
+
+.notificationsCounter {
+	margin: 14px 30px 0 0;
+}
+
+/* PROVINCE MINES */
+
+.buildingDialog .requirements {
+	margin: 30px 0 3px 0;
+}
+
+.buildingDialog .castleMineDialogWrapper .requirements .time {
+	padding: 0;
+	background: url("../img/layout/h_top_clock.png") 160px center no-repeat;
+}
+
+body.province #pagebody #inner a.open_slot div.slotTimer {
+	margin: 2px -41px 2px 0;
+}
+
+.castleMineDialogWrapper .mineStatus .protected {
+padding: 0 40px 0 0;
+background-position: right -126px;
+}
+
+/*.castleMineDialogWrapper .mineStatus .attackable {
+padding: 0 40px 0 0;
+background-position: right -168px;
+}*/
+
+.castleMineDialogWrapper .mineStatus .repairing {
+background-position: right -30px;
+padding: 0 35px 0 0;
+}
+
+.castleMineDialogWrapper .mineStatus .upgrading {
+background-position: right -60px;
+padding: 0 35px 0 0;
+}
+
+.castleMineDialogWrapper .mineStatus .working {
+background-position: right -90px;
+padding: 0 35px 0 0;
+}
+
+.showArenaButton {
+left: auto;
+right: 780px;
+}
+
+.showArenaButton span {
+left: auto;
+right: 60px;
+}
+
+.arenaPopupContainer .tabs a.arenaCloseBtn {
+	right: auto;
+	left: 10px;
+	top: 5px;
+}
+
+#optionsPopupContent .mailNewsletterContainer .switchOuter {
+	direction: ltr;
+}
+.profilePlayerInfo .viewPlayerMasteryBtn {
+  margin-left: 0;
+  margin-right: -6px;
+}
+.nationMasteryPage .nationMasteryTitle .masteryIcon {
+  margin-right: 40px;
+  margin-left: 0;
+}
+.nationMasteryPage .recommended .info .text {
+  text-align: right;
+}

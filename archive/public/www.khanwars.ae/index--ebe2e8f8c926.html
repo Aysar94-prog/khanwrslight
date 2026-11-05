@@ -1,0 +1,481 @@
+<!doctype html>
+<html  dir="rtl" >
+        <head>
+                <link rel="stylesheet" href="https://static.khanwarsx.com/gate8.0/dist/css/shared.css?v=4.3" ></link>
+                <link rel="stylesheet" href="https://static.khanwarsx.com/gate8.0/dist/css/default.css?v=4.3" ></link>
+                <link rel="shortcut icon" href="https://static.khanwarsx.com/gate8.0/dist/img//default/logos/favicon.ico" type="image/x-icon">
+                <title>حرب الملوك: أفضل لعبة إستراتيجية أونلاين!</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta property="og:image" content="https://static.khanwarsx.com/gate8.0/dist/img//default/main/KW_Share_Image.jpg" />
+                <meta property="og:title" content="حرب الملوك: أفضل لعبة إستراتيجية أونلاين!" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.khanwars.ae" />
+                <meta property="og:description" content="حرب الملوك هي لعبة حائزة على جوائز MMO والّتي تمتلك خصائص كلاسيكية للعبة MMO إستراتيجية ممتازة. انضم الآن واحكم العصور الوسطى بقبضة حديدية!" />
+                <meta property="fb:app_id" content="138574219510368" />
+                <script type="application/ld+json">
+     
+                             { 
+                  "@context": "http://schema.org",
+                  "@type": "WebApplication",
+                  "applicationCategory" : "لعبة, أفضل لعبة إستراتيجية, عبر الانترنت",
+                  "applicationSubCategory" : "استراتيجية, MMO, العب لعبة جماعية مجانية أونلاين من",
+                  "operatingSystem" : "Windows, Mac, Linux, Adroid, IOS",
+                  "url": "https://www.khanwars.ae",
+                  "sameAs": [
+                    "https://www.youtube.com/channel/UCTfivf8qVqC9xaGIscrOgww",
+                    "https://www.facebook.com/KhanWarsAgeofStrategy/"
+                  ],
+                  "image" : "https://static.khanwarsx.com/gate8.0/dist/img//default/main/KW_Share_Image.jpg",
+                  "logo" : "https://static.khanwarsx.com/gate8.0/dist/img/default/logos/logo_en.png",
+                  "description" : "حرب الملوك هي لعبة حائزة على جوائز MMO والّتي تمتلك خصائص كلاسيكية للعبة MMO إستراتيجية ممتازة. انضم الآن واحكم العصور الوسطى بقبضة حديدية!",
+                  "keywords" : "حرب الملوك، لعبة متصفح، ألعاب متصفح، لعبة اونلاين، ألعاب أونلاين، أونلاين، حرب الملوك، عصور وسطى، إستراتيجية"
+ 
+                 } 
+                </script>
+                <meta name="description" content="حرب الملوك هي لعبة حائزة على جوائز MMO والّتي تمتلك خصائص كلاسيكية للعبة MMO إستراتيجية ممتازة. انضم الآن واحكم العصور الوسطى بقبضة حديدية!" />
+                <meta name="keywords" content="حرب الملوك، لعبة متصفح، ألعاب متصفح، لعبة اونلاين، ألعاب أونلاين، أونلاين، حرب الملوك، عصور وسطى، إستراتيجية" />
+        </head>
+        <body>
+                <div id="gateApp">                        
+                    <div id="gateMainSection" class="winterGate  rtlGate ">
+    <KW-LoginForm inline-template  ref="KW-LoginForm" v-bind:allowed_auth_methods="settings.allowedAuthMethods" >
+        <div v-bind:class="{ gateLoginForm: true, logged: authenticated }">
+            <div class="links">
+                
+                <kw-button caption="أخبار" class-name="defaultBtn " @click="goToNews"></kw-button>
+                <div class="separator"></div>
+                <kw-button caption="معلومات عن اللعبة" class-name="defaultBtn" @click="gameInfo"></kw-button>
+                <div class="separator"></div>
+                <kw-button caption="الجوائز" class-name="defaultBtn" @click="testimonials"></kw-button>
+                <div class="separator"></div>
+            </div>
+
+            <div v-if="!authenticated" class="loginFormInner">
+                <div class="credentials" v-if="credentialsApi">
+                    <kw-button class-name="credentialsLoginBtn" v-on:click="getCredentials"></kw-button>
+                    <div class="credentialsRejected" v-if="!credentialsAvailable">
+                        <p>لم نتمكن من الحصول على المتطلبات.</p>
+                    </div>
+                </div>
+
+                <div class="inputs">
+                    <input name="username" type="text" v-model="username" autofocus  placeholder="اسم الملك" />
+                    <input name="password" type="password" v-model="password" placeholder="كلمه السر" v-on:keyup="keyPressed" />
+                </div>
+
+                <div v-if="!loading" class="buttonrow">
+                    <kw-button v-if="allowed_auth_methods.indexOf('credentials') > -1" @click="authenticateByCredentials" caption="تسجيل الدخول" class-name="loginBtn"></kw-button>
+                </div>
+                <div v-else><div class="loadingSpinner"><div></div></div></div>
+
+                <kw-button v-if="allowed_auth_methods.indexOf('googlePlay') > -1"  @click="startGooglePlayAuth" class-name="googlePlayLoginBtn"></kw-button>
+
+
+
+                <kw-facebookbtn v-if="allowed_auth_methods.indexOf('facebook') > -1" @success="authenticateByFacebook" class-name="fbLoginBtn"></kw-facebookbtn>
+
+
+                <kw-button @click="forgottenPasswordDialog" caption="نسيت كلمة السر" class-name="forgotPassBtn defaultBtn"></kw-button>
+
+                                    <div class="separator"></div>
+
+                    <div class="langSelector" @click="toggleLangSelector">
+                        <div class="arrow up" v-if="langSelectorExpanded"></div>
+                        <div class="arrow down" v-else></div>
+
+                        <div class="selectedLang">
+                            <div class="langFlag">
+                                <img src="https://static.khanwarsx.com/gate8.0/dist/img/default/flags/ar.jpg" alt="">
+                            </div>
+                            <div class="langName">Arabic</div>
+                        </div>
+                        <div id="langList" v-bind:class="{hidden: !langSelectorExpanded}"></div>
+                    </div>
+                
+                <div class="smDevicesSeparator"></div>
+            </div>
+
+            <div v-else class="loggedPlayerInfo">
+                <div class="welcomeMsg">
+                    مرحبا بعودتك, <span v-text="username"></span>
+                </div>
+
+                <kw-button v-if="!credentialsApi" class-name="logoutBtn" v-on:click="logOut"></kw-button>
+
+                <div class="worldPicker">
+                    <div class="rememberMe">
+                        <input type="checkbox"  v-model="rememberMe"  v-bind:true-value="1"  v-bind:false-value="0" />
+                        <p>تذكرني</p>
+                    </div>
+                    <select v-model="worldId">
+                        <option v-for="world in worlds" v-bind:value="world.id" v-text="world.name" ></option>
+                    </select>
+                </div>
+
+                <kw-button  @click="login" caption="لعب" class-name="loginBtn"></kw-button>
+            </div>
+        </div>
+    </KW-LoginForm>
+
+    <div class="gateMainContent">
+        <div id="gameLogo" class="logo logo_ar"></div>
+
+        <KW-LoginPicker inline-template v-bind:allowed_auth_methods="settings.allowedAuthMethods">
+            <div class="mainForm">
+                <div id="loginPicker" v-if="!formToShow">
+                    <div class="loginPickerTitle">إنشأ حساب جديد</div>
+                    <div>
+                        <kw-guestregistrationbtn class-name="pickerBtn guestRegBtn" caption="إلعب كضيف"></kw-guestregistrationbtn>
+                    </div>
+                    <div class="pickerBtn" @click="showRegForm">سجلني</div>
+                </div>
+
+                <div id="formContainer" v-else>
+                    <div class="loginPickerTitle">إنشأ حساب جديد</div>
+                    
+                    <KW-RegisterForm inline-template recommended="20" ref="KW-RegisterForm" v-bind:allowed_auth_methods="settings.allowedAuthMethods">
+    <div  v-bind:class="formCSSCLass">
+        <div class="registrationFormTabs">
+            <div v-for="authMethod in allowed_auth_methods" class="regTab"  @click="setAuthFieldsVisibility(authMethod)" >
+
+         
+
+                <div v-if="authMethod=='credentials'" class=" credentialsBtn" >
+                    <span v-if="authMethod=='credentials'" > سجّل</span>
+                </div>
+
+                <div v-if="authMethod=='facebook'" class=" fbRegTab">
+                    <div class="fbLogo"></div>
+                </div>
+
+                <div v-if="authMethod=='googlePlay'" class=" googleRegTab" >
+                    <div class="googlePlayLogo"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="registrationFormOuter">
+            <div class="registrationFormInner">
+                <p v-if="authFieldsVisibility.worldLabel" class="worldLabel">عالم حرب الملوك 20</p>
+               
+                <div class="inputField" v-if="authFieldsVisibility.username">
+                    <input type="text" value="" placeholder="اسم الملك" v-model="username" />
+                    <span v-if="errorMessages.username" v-text="errorMessages.username" class="errorMsg"></span>
+                </div>
+
+                <div class="inputField" v-if="authFieldsVisibility.password">
+                    <input type="password" value="" placeholder="كلمه السر" v-model="password" />
+                    <span v-if="errorMessages.password" v-text="errorMessages.password" class="errorMsg"></span>
+                </div>
+
+                <div class="inputField" v-if="authFieldsVisibility.email" >
+                    <input type="text" value="" placeholder="البريد الالكتروني" v-model="email" />
+                    <span v-if="errorMessages.email" v-text="errorMessages.email" class="errorMsg"></span>
+                </div>
+
+             
+
+                <div class="inputField" v-if="authFieldsVisibility.worlds" >
+                    <select v-model="worldId">
+                                                <option value="5"  >
+                            العالم 5 (سريع 10x)
+                        </option>
+                                                <option value="20"  >
+                            العالم 20 (سريع 2x)
+                        </option>
+                                                <option value="62"  >
+                            العالم 62 (سريع 10x)
+                        </option>
+                                                <option value="65"  >
+                            العالم 65 (سريع 5x)
+                        </option>
+                                            </select>
+                    <span v-if="errorMessages.worldId" v-text="errorMessages.worldId" class="errorMsg"></span>
+                </div>
+
+                <div class="registrationFormTerms" v-if="authFieldsVisibility.terms">
+                    <input type="checkbox" v-model="terms" id="temrsCheckbox" >
+                    <label for="temrsCheckbox" class="termsText">
+                        أنا أوافق علي <a href="https://www.khanwars.ae/terms" target="_blank">الشروط والاحكام</a> & 
+                        <a href="https://www.khanwars.ae/rules" target="_blank">Game Rules</a>
+                    </label>
+                    <span v-if="errorMessages.terms" v-text="errorMessages.terms" class="errorMsg"></span>
+                </div>
+                <div class="registrationFormTerms" v-if="authFieldsVisibility.privacy">
+                    <input type="checkbox" v-model="privacyPolicy" id="privacyCheckbox" >
+                    <label for="privacyCheckbox" class="termsText">
+                        أنا أوافق علي <a href="https://www.khanwars.ae/policy" target="_blank">سياسة خاصه</a>  
+                        
+                    </label>
+                    <span v-if="errorMessages.privacyPolicy" v-text="errorMessages.privacyPolicy" class="errorMsg"></span>
+                </div>
+                
+              
+                <div  class="joinBtnsContainer">
+                    <div v-if="!loading" class="joinBtnsContainerInner">
+                        <kw-button v-if="authFieldsVisibility.registrationButton" @click="registerByCredentials" caption="إنضم الان" class-name="loginBtn"></kw-button>
+                      
+                        <div v-if="authFieldsVisibility.googlePlayButton" class="googlePlayBtnContainer" @click="startGooglePlayAuth">
+                            <div class="gpLogoOuter">
+                                <div class="googlePlayLogo"></div>
+                            </div>
+                            <div class="gpText">سجّل عن طريق جوجل بلاي</div>
+                        </div>
+
+
+                        <kw-facebookbtn v-if="authFieldsVisibility.facebookButton"  @success="registerByFacebook" class-name="fbRegBtn" inline-template>
+                            <div class="fbBtnContainer" @click="fbLogin">
+                                <div class="fbLogoOuter">
+                                    <div class="fbLogo"></div>
+                                </div>
+                                <div class="fbText">سجّل عن طريق الفيسبوك</div>
+                            </div>
+                        </kw-facebookbtn>
+
+
+                    </div>
+                    <div v-else><div class="loadingSpinner"><div></div></div></div>
+                </div>
+
+                <span v-if="errorMessages.unknown" v-text="errorMessages.unknown" class="errorMsg unknown"></span>
+            </div>
+        </div>
+    </div>
+</KW-RegisterForm>                    
+
+                    <div id="backBtn" @click="showLoginPicker">العودة</div>
+                </div>
+
+                <kw-capcha v-bind:site_key="settings.RECAPCHA_KEY" ></kw-capcha>
+            </div>
+        </KW-LoginPicker>
+
+                    <div class="gateVideoContainer">
+                <div class="videoTitle">إعلان حرب الملوك</div>
+                <kw-youtubevideo width="304" height="174" video="pJVqXJX_1dY"></kw-youtubevideo>
+            </div>
+            </div>
+</div>
+
+<script type="text/x-template" id="carousel-template">
+    <div id="gateCarousel">
+        <div class="carousel-container" v-on:mouseenter="stopInterval" v-on:mouseleave="startInterval">
+            <kw-button class-name="arrow prev defaultBtn" @click="prevItem"></kw-button>
+            <div class="carousel-container-inner">
+                <div class="carousel-items-container" >
+                    <div class="carousel-item welcomeSlide">
+                        <p>مرحبا بك في حرب الملوك - الحائزة على جائزة الريادة f2p للألعاب الإستراتيجية!</p>
+                        <p>إذا كنت من محبي التنافس والألعاب الإستراتيجية، فقد أتيت للمكان المناسب.</p>
+                        <p>لدى حرب الملوك كل الوسائل الكلاسيكية للعبة إستراتيجية جماعية ممتازة، تتضمن تطوير إمبراطورية عظيمة، تدريب جيش قوي، إنشاء إستراتيجيات إحترافية والأهم من ذلك - محاربة لاعبين آخرين!</p>
+                        <p>هدفك الرئيسي في حرب الملوك هو إختيار شعب عظيم من العصور الوسطى والتغلب على كل اللاعبين للسيطرة على عالم العصور الوسطى.</p>
+                        <p>أدخل الآن إلى العصور الوسطى التي لا ترحم وجرب مهاراتك ضد بعض اللاعبين الأكثر خبرة حول العالم!</p>
+                    </div>
+
+                    <div class="carousel-item nationsSlide">
+                        <h3>الشعوب</h3>
+                        <p>يمكنك الإختيار بين 12 شعب متوازن، لكل واحد مزايا تؤثر على إقتصادك، قوتك في المعركة أو التجارة. مع مرور الوقت يمكنك تجنيد الوحدات الخاصة بالشعب والتي ستغير من إستراتيجيات معركتك وتساعدك على الحصول على أفضلية ضد أعداءك.</p>
+                    </div>
+
+                    <div class="carousel-item citiesSlide">
+                        <h3>القلاع</h3>
+                        <p>طور وإحمي مدينتك في العصور الوسطى بواسطة مباني جديدة وهياكل إستراتيجية. يمكنك إختيار تطور إقتصادي ثابت، هجمات إحتلال قوية على أعداءك، تجارة ذكية، دبلوماسية حكيمة ولعب جماعي في النقابات أو أي مزيج تجده مناسبا.</p>
+                    </div>
+
+                    <div class="carousel-item unitsSlide">
+                        <h3>وحدات</h3>
+                        <p>خلال مسار اللعبة يمكنك إحتلال قلاع أكثر وتدريب أنواع وحدات تصل إلى 28 نوع مختلف - المشاة، الرماة، الفرسان، آلات فك الحصار والوحدات الخاصة بالشعب. يمكن تطوير إمكانيات الهجوم والدفاع لهذه المجموعات. يمكنك إستخدامهم لسحق أعداءك أو مخيمات قطاع الطرق في الخريطة.</p>
+                    </div>
+
+                    <div class="carousel-item battlesSlide">
+                        <h3>المعارك</h3>
+                        <p>أكثر أنظمة المعارك تطورا في عالم الألعاب أصبح متاحا. أعظم قيمة في اللعبة هي نظام إستراتيجيات المعركة. يوجد الآلاف من مختلف الإستراتيجيات المتاحة لك لاكتشافها خلال تنافسك مع لاعبين آخرين. التجسس على أعداءك أمر هام أيضا في أوقات الحرب.</p>
+                    </div>
+
+                    <div class="carousel-item guildsSlide">
+                        <h3>النقابات</h3>
+                        <p>تمثل النقابات في حرب الملوك مجموعة من اللاعبين متحالفين عن طريق قائد نقابتهم وتعطشهم للفوز. قم بإحتلال معاقل عظيمة، سيطر على مناطق الخريطة وانشر قوتك. دردشة النقابة هي خاصية تتيح للاعبين التواصل في نفس الوقت، مع زملاءهم. هذه الخاصية مفيدة جدا في التشاور على السياسات، الإستراتيجيات أو المهمات المنسقة.</p>
+                    </div>
+                </div>
+            </div>
+            <kw-button class-name="arrow next defaultBtn" @click="nextItem"></kw-button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="testimonials-template">
+    <div id="gateTestimonials">
+        <div class="title">الجوائز</div>
+
+        <div class="awards">
+            <div class="award">
+                <div class="awardTitle">أفضل لعبة متصفح لعام 2008</div>
+                <div class="awardSite"><a href="http://mmooftheyear.com/" target="_blank">mmooftheyear.com</a></div>
+                <div class="awardImg">
+                    <img src="https://static.khanwarsx.com/gate8.0/dist/img//default/testimonials/browser-game-of-the-year-2008.jpg" />
+                </div>
+                <div class="awardDesc">أفضل لعبة استراتيجية</div>
+            </div>
+            <div class="award">
+                <div class="awardTitle">أفضل لعبة متصفح لعام 2010</div>
+                <div class="awardSite"><a href="http://mmooftheyear.com/" target="_blank">mmooftheyear.com</a></div>
+                <div class="awardImg">
+                    <img src="https://static.khanwarsx.com/gate8.0/dist/img//default/testimonials/browser-game-of-the-year-2010-2011.jpg" />
+                </div>
+                <div class="awardDesc">أفضل لعبة استراتيجية</div>
+            </div>
+
+            <div class="award">
+                <div class="awardImg">
+                    <img src="https://static.khanwarsx.com/gate8.0/dist/img//default/testimonials/fav_company_2010.jpg" />
+                </div>
+                <div class="awardTitle">أفضل ألعاب المتصفح 2011</div>
+                <div class="awardDesc">اللعبة الإستراتيجية المفضلة</div>
+            </div>
+            <div class="award">
+                <div class="awardImg">
+                    <img src="https://static.khanwarsx.com/gate8.0/dist/img//default/testimonials/fav_company_2011.jpg" />
+                </div>
+                <div class="awardTitle">أفضل ألعاب المتصفح 2011</div>
+                <div class="awardDesc">الشركة المفضلة</div>
+            </div>
+            <div class="award">
+                <div class="awardImg">
+                    <img src="https://static.khanwarsx.com/gate8.0/dist/img//default/testimonials/fav_company_2010.jpg" />
+                </div>
+                <div class="awardTitle">أفضل ألعاب المتصفح 2010</div>
+                <div class="awardDesc">الشركة المفضلة</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="ranking-template">
+    <div id="gateRanking">
+        <kw-ranking inline-template>
+            <div class="rankingContainer">
+                <h2>الترتيبات</h2>
+
+                <div class="rankingControls">
+                    <div class="rankingTabs">
+                        <div v-bind:class="{tab: true, currentTab: isPlayerRanking}" @click="getPlayersRanking">
+                            <div class="tabLeft"></div>
+                            <div class="tabCenter">
+                                <div class="tabPlayers"></div>
+                                <div class="text">الملوك</div>
+                            </div>
+                            <div class="tabRight"></div>
+                        </div>
+
+                        <div v-bind:class="{tab: true, currentTab: isGuildRanking}" @click="getGuildsRanking">
+                            <div class="tabLeft"></div>
+                            <div class="tabCenter">
+                                <div class="tabGuilds"></div>
+                                <div class="text">النقابات</div>
+                            </div>
+                            <div class="tabRight"></div>
+                        </div>
+                    </div>
+
+                    <div class="rankingSelects">
+                        <select v-model="worldId" @change="worldSelected">
+                            <option v-for="world in worlds" v-bind:value="world.id" v-text="world.name" ></option>
+                        </select>
+                        <select v-model="roundId" @change="roundSelected">
+                            <option v-for="round in rounds" v-bind:value="round.rund" v-text="round.name" ></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div v-html="contentHtml" class="rankingTableContainer"></div>
+
+                <kw-pagination v-bind:num-pages="numPages" @pageselect="setPage" current-page="1" ></kw-pagination>
+            </div>
+        </kw-ranking>
+    </div>
+</script>
+
+<div style="display: none;">
+    <p>مرحبا بك في حرب الملوك - الحائزة على جائزة الريادة f2p للألعاب الإستراتيجية!</p>
+    <p>إذا كنت من محبي التنافس والألعاب الإستراتيجية، فقد أتيت للمكان المناسب.</p>
+    <p>لدى حرب الملوك كل الوسائل الكلاسيكية للعبة إستراتيجية جماعية ممتازة، تتضمن تطوير إمبراطورية عظيمة، تدريب جيش قوي، إنشاء إستراتيجيات إحترافية والأهم من ذلك - محاربة لاعبين آخرين!</p>
+    <p>هدفك الرئيسي في حرب الملوك هو إختيار شعب عظيم من العصور الوسطى والتغلب على كل اللاعبين للسيطرة على عالم العصور الوسطى.</p>
+    <p>أدخل الآن إلى العصور الوسطى التي لا ترحم وجرب مهاراتك ضد بعض اللاعبين الأكثر خبرة حول العالم!</p>
+    <h3>الشعوب</h3>
+    <p>يمكنك الإختيار بين 12 شعب متوازن، لكل واحد مزايا تؤثر على إقتصادك، قوتك في المعركة أو التجارة. مع مرور الوقت يمكنك تجنيد الوحدات الخاصة بالشعب والتي ستغير من إستراتيجيات معركتك وتساعدك على الحصول على أفضلية ضد أعداءك.</p>
+    <h3>القلاع</h3>
+    <p>طور وإحمي مدينتك في العصور الوسطى بواسطة مباني جديدة وهياكل إستراتيجية. يمكنك إختيار تطور إقتصادي ثابت، هجمات إحتلال قوية على أعداءك، تجارة ذكية، دبلوماسية حكيمة ولعب جماعي في النقابات أو أي مزيج تجده مناسبا.</p>
+    <h3>وحدات</h3>
+    <p>خلال مسار اللعبة يمكنك إحتلال قلاع أكثر وتدريب أنواع وحدات تصل إلى 28 نوع مختلف - المشاة، الرماة، الفرسان، آلات فك الحصار والوحدات الخاصة بالشعب. يمكن تطوير إمكانيات الهجوم والدفاع لهذه المجموعات. يمكنك إستخدامهم لسحق أعداءك أو مخيمات قطاع الطرق في الخريطة.</p>
+    <h3>المعارك</h3>
+    <p>أكثر أنظمة المعارك تطورا في عالم الألعاب أصبح متاحا. أعظم قيمة في اللعبة هي نظام إستراتيجيات المعركة. يوجد الآلاف من مختلف الإستراتيجيات المتاحة لك لاكتشافها خلال تنافسك مع لاعبين آخرين. التجسس على أعداءك أمر هام أيضا في أوقات الحرب.</p>
+    <h3>النقابات</h3>
+    <p>تمثل النقابات في حرب الملوك مجموعة من اللاعبين متحالفين عن طريق قائد نقابتهم وتعطشهم للفوز. قم بإحتلال معاقل عظيمة، سيطر على مناطق الخريطة وانشر قوتك. دردشة النقابة هي خاصية تتيح للاعبين التواصل في نفس الوقت، مع زملاءهم. هذه الخاصية مفيدة جدا في التشاور على السياسات، الإستراتيجيات أو المهمات المنسقة.</p>
+</div>                    
+                    <div id="gateFooter">
+                            <div class="content">
+                                    <div class="top">
+                                            <div class="social">
+                                                    
+
+                                                                                                        <a href="http://xs-software.com/" target="_blank" class="logoLink"><div class="xsLogo"></div></a>
+                                                    <a href="https://www.facebook.com/KhanWarsAgeofStrategy/" target="_blank" class="fbLink"><div class="fbLogo"></div></a>
+                                                    
+                                                    
+                                                    
+                                                                                                </div>
+
+                                            <div class="links">
+                                                    <div class="btns">
+                                                        <kw-button caption="معلومات العالم" class-name="defaultBtn" @click="stats"></kw-button>
+                                                        <span>|</span>
+                                                        <kw-button caption="كل الترتيبات" class-name="defaultBtn" @click="ranking"></kw-button>
+                                                    </div>
+                                            </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="bottom">
+                                                                                        <h5>2005 - 2026  XS Software</h5>
+                                                                                        <p>
+                                                    <a href="https://www.khanwars.ae/terms" target="_blank">الشروط والاحكام</a>
+                                                    <a href="https://www.khanwars.ae/policy" target="_blank">سياسة خاصه</a>
+                                                                                                                                                    </p>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+
+                <script src="https://static.khanwarsx.com/gate8.0/dist/js/libs.js?v=3.9" ></script>
+                <script src="https://static.khanwarsx.com/gate8.0/dist/js/components.js?v=3.9" ></script>
+                <script src="https://static.khanwarsx.com/gate8.0/dist/js/common.js?v=3.9" ></script>
+
+                <script>
+        
+
+           KW.init({
+              allowedAuthMethods : ["credentials","facebook"],
+              IMG_PATH : 'https://static.khanwarsx.com/gate8.0/dist/img/',
+              RECAPCHA_KEY : '6LeqyToUAAAAAJe0gROSnCrM6trbfDS5UoNOauDR'
+           });
+
+        
+                </script>
+                                <script type="text/javascript">var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-622841-66']);_gaq.push(['_setDomainName', '.khanwars.ae']);_gaq.push(['_setAllowHash', false]);_gaq.push(['_trackPageview']);(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = 'https://ssl.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+              ga('create', 'UA-622841-66', '.khanwars.ae'); ga('send', 'pageview');	</script>
+<script type="text/javascript">  var xsTracker = Xs_namespace._getTracker("6ce4000ad89ab8450505056b82a6afe8");  xsTracker.track();</script>
+                                
+                                        </body>
+</html>

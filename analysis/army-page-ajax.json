@@ -1,0 +1,495 @@
+{
+  "page": "marches.php",
+  "functions": [
+    {
+      "file": "ajax_army_order--95e6c992d8d9.js",
+      "line": 75,
+      "call": "new Ajax.Request(url, {"
+    },
+    {
+      "file": "arena--f7c7825c10da.js",
+      "line": 18,
+      "call": "new Ajax.Request(url, {"
+    },
+    {
+      "file": "blacksmithSlider--494d5940a9bf.js",
+      "line": 74,
+      "call": "new Ajax.Request('ajax_buildings.php', {"
+    },
+    {
+      "file": "blacksmithSlider--494d5940a9bf.js",
+      "line": 95,
+      "call": "new Ajax.Request('ajax_buildings.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 103,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 178,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 191,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 308,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 425,
+      "call": "new Ajax.Request('info.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 438,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 526,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 601,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "bottomBar--e9ed3c5032a3.js",
+      "line": 651,
+      "call": "new Ajax.Request('ajax_bottomBar.php', {"
+    },
+    {
+      "file": "cityEvents--bcea75df3da2.js",
+      "line": 35,
+      "call": "new Ajax.Request('ajax_cityEvents.php', {"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 366,
+      "call": "new Ajax.Request(this.url, this.options);"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 637,
+      "call": "new Ajax.Updater({ success: this.element }, this.url, options);"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 645,
+      "call": "new Ajax.Request(this.url, options);"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 686,
+      "call": "new Ajax.Request(this.options.loadTextURL, options);"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 791,
+      "call": "new Ajax.Request(this.options.loadCollectionURL, options);"
+    },
+    {
+      "file": "controls--6830b05fcba6.js",
+      "line": 826,
+      "call": "new Ajax.Request(this.options.loadTextURL, options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 366,
+      "call": "new Ajax.Request(this.url, this.options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 637,
+      "call": "new Ajax.Updater({ success: this.element }, this.url, options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 645,
+      "call": "new Ajax.Request(this.url, options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 686,
+      "call": "new Ajax.Request(this.options.loadTextURL, options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 791,
+      "call": "new Ajax.Request(this.options.loadCollectionURL, options);"
+    },
+    {
+      "file": "controls--b568f9479e85.js",
+      "line": 826,
+      "call": "new Ajax.Request(this.options.loadTextURL, options);"
+    },
+    {
+      "file": "get_building_info--556d4681640c.js",
+      "line": 6,
+      "call": "new Ajax.Request('get_building_tooltip.php',{"
+    },
+    {
+      "file": "get_building_info--556d4681640c.js",
+      "line": 29,
+      "call": "new Ajax.Request('get_building_tooltip.php',{"
+    },
+    {
+      "file": "knight_inventory--c83049897e1f.js",
+      "line": 398,
+      "call": "new Ajax.Request('ajax_arena.php', {"
+    },
+    {
+      "file": "knight_inventory--c83049897e1f.js",
+      "line": 419,
+      "call": "new Ajax.Request('?set_slot=1', {"
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 60,
+      "call": "Ajax.Request=Class.create(Ajax.Base,{_complete:false,initialize:function($super,url,options){$super(options);this.transport=Ajax.getTransport();this.request(url)},request:function(url){this.url=url;this.method=this.options.method;var params=Object.isString(this.options.parameters)?this.options.parameters:Object.toQueryString(this.options.parameters);if(![\"get\",\"post\"].include(this.method)){params+=(params?\"&\":\"\")+\"_method=\"+this.method;this.method=\"post\"}if(params&&this.method===\"get\")this.url+="
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 64,
+      "call": "pair.value})}for(var name in headers)this.transport.setRequestHeader(name,headers[name])},success:function(){var status=this.getStatus();return!status||status>=200&&status<300||status==304},getStatus:function(){try{if(this.transport.status===1223)return 204;return this.transport.status||0}catch(e){return 0}},respondToReadyState:function(readyState){var state=Ajax.Request.Events[readyState],response=new Ajax.Response(this);if(state==\"Complete\"){try{this._complete=true;(this.options[\"on\"+response."
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 67,
+      "call": "\"\").unfilterJSON())}catch(e){this.dispatchException(e)}},dispatchException:function(exception){(this.options.onException||Prototype.emptyFunction)(this,exception);Ajax.Responders.dispatch(\"onException\",this,exception)}});Ajax.Request.Events=[\"Uninitialized\",\"Loading\",\"Loaded\",\"Interactive\",\"Complete\"];"
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 69,
+      "call": "this._getResponseJSON()}},status:0,statusText:\"\",getStatus:Ajax.Request.prototype.getStatus,getStatusText:function(){try{return this.transport.statusText||\"\"}catch(e){return\"\"}},getHeader:Ajax.Request.prototype.getHeader,getAllHeaders:function(){try{return this.getAllResponseHeaders()}catch(e){return null}},getResponseHeader:function(name){return this.transport.getResponseHeader(name)},getAllResponseHeaders:function(){return this.transport.getAllResponseHeaders()},_getHeaderJSON:function(){var j"
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 71,
+      "call": "Ajax.Updater=Class.create(Ajax.Request,{initialize:function($super,container,url,options){this.container={success:container.success||container,failure:container.failure||(container.success?null:container)};options=Object.clone(options);var onComplete=options.onComplete;options.onComplete=function(response,json){this.updateContent(response.responseText);if(Object.isFunction(onComplete))onComplete(response,json)}.bind(this);$super(url,options)},updateContent:function(responseText){var receiver=thi"
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 74,
+      "call": "arguments)},updateComplete:function(response){if(this.options.decay){this.decay=response.responseText==this.lastText?this.decay*this.options.decay:1;this.lastText=response.responseText}this.timer=this.onTimerEvent.bind(this).delay(this.decay*this.frequency)},onTimerEvent:function(){this.updater=new Ajax.Updater(this.container,this.url,this.options)}});"
+    },
+    {
+      "file": "kw_libs--c18714f4b234.js",
+      "line": 213,
+      "call": "options=Object.clone(options||{});var params=options.parameters,action=form.readAttribute(\"action\")||\"\";if(action.blank())action=window.location.href;options.parameters=form.serialize(true);if(params){if(Object.isString(params))params=params.toQueryParams();Object.extend(options.parameters,params)}if(form.hasAttribute(\"method\")&&!options.method)options.method=form.method;return new Ajax.Request(action,options)}};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 148,
+      "call": "scrollBy:function(a){if(!this.enabled)return!1;this.slider.setValueBy(a/(0==this.getCurrentMaximumDelta()?1:this.getCurrentMaximumDelta()))}});Object.extend(Control.ScrollBar,{instances:[],findByElementId:function(a){return Control.ScrollBar.instances.find(function(b){return b.container.id&&b.container.id==a})}});Object.Event.extend(Control.ScrollBar);function feedback_submit(a){new Ajax.Request(\"feedback.php\",{parameters:$(a).serialize(!0),onSuccess:function(b){b=b.responseText.split(\"#;#\");for"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 159,
+      "call": "function get_archive_msg(a,b){b=parseInt(b);var c=document.getElementById(\"chatHistoryWrap_\"+b);c?c.style.display=\"none\"!=c.style.display?\"none\":\"block\":new Ajax.Request(\"msg_history.php\",{method:\"post\",parameters:{to_user:a,msg_id:b},onSuccess:function(a){var c=a.responseText.split(\"#;#\");a=document.createElement(\"div\");a.className=\"chatHistoryWrap\";a.id=\"chatHistoryWrap_\"+c[0];a.innerHTML=c[1];c=document.getElementById(\"msg_item_\"+b);insertAfter(a,c)}})}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 161,
+      "call": "function set_workers(a,b){b=parseInt(b);var c=parseInt($(\"slider_value\").value);parseInt($(\"population_used\").value);new Ajax.Request(\"ajax_workers.php\",{method:\"post\",parameters:{b_id:b,percent:c},onSuccess:function(c){var e=document.getElementById(a),f=parseInt($(\"slider_all\").innerHTML)-before_workers,g=parseInt($(\"population_used\").innerHTML)+f;$(\"income_worker\");$(\"population_used\").update(g);0<b&&5>b&&(g=$(\"slider_income\").innerHTML,$(\"PerHour_\"+b).innerHTML=g);if(10==b){var g=parseInt($(\""
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 164,
+      "call": "function upgrade_info(a,b,c,d,e){b=parseInt(b);if(isNaN(b))return!1;new Ajax.Request(\"ajax_buildings.php\",{method:\"post\",parameters:{b_id:b,backto:\"overview.php\"},onSuccess:function(a){buildingInfo=new kwModal({width:640,content:a.responseText,placeholder:\"buildingsPlaceholder\",placeholderClass:\"buildingDialog newPopup3\"});buildingInfo.show();\"function\"===typeof d&&buildingInfo.registerCallback(\"onOpen\",d);\"function\"===typeof e&&buildingInfo.registerCallback(\"onHide\",e);$$(\".tooltipHeader\")[0].u"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 165,
+      "call": "function getTavernBox(a){new Ajax.Request(\"ajax_tavern.php\",{method:\"post\",evalJS:\"force\",parameters:{backto:\"overview.php\",action:\"getLevel\"},onSuccess:function(b){$(a).update(b.responseText).show()}})}function reloadImage(a){var b=a.src,c=0>b.indexOf(\"#\")?b.length:b.indexOf(\"#\");a.src=b.substring(0,c)+\"#\"+new Date}function toggleBlock(a){a=document.getElementById(a);\"block\"==a.style.display?a.style.display=\"none\":(a.style.display=\"block\",a.focus())}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 166,
+      "call": "function autoLoadRegistration(){window.setTimeout(\"document.getElementById('link1').click();\",100)}function get_global_news(a){a=parseInt(a);new Ajax.Updater(\"globalNewsWrapper_content\",\"ajax_news.php\",{method:\"post\",parameters:{ot:a}})}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 167,
+      "call": "function showCastleList(a){showCastleList.isFetched||(showCastleList.isFetched=!0,$(\"castlesList\").update(a),new Ajax.Request(\"ajax_castles.php\",{method:\"post\",onSuccess:function(a){\"\"!=a.responseText?($(\"castlesList\").innerHTML=a.responseText,castles=1):($(\"castlesList\").hide(),castles=0)}}))}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 194,
+      "call": "b+\"px;\");s_timer=setInterval(function(){s_arrow_blinker($(\"bigArrow1\"),b,c,a)},400)}function updatePlayerProgress(a){new Ajax.Request(\"overview.php\",{method:\"post\",parameters:{ajax_progress_request:1,progress:a},onSuccess:function(a){}})}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 195,
+      "call": "function refreshSession(a,b){new Ajax.Request(\"ajax_main.php\",{method:\"post\",parameters:{type:\"refreshSession\",reload_from_db:\"undefined\"===typeof b?1:b},onSuccess:function(b){b=b.responseText.evalJSON(!0);b.bar_gold=100<b.bar_gold?100:b.bar_gold;b.bar_iron=100<b.bar_iron?100:b.bar_iron;b.bar_wood=100<b.bar_wood?100:b.bar_wood;b.bar_food=100<b.bar_food?100:b.bar_food;b.bar_pop=100<b.bar_pop?100:b.bar_pop;$(\"barGold\")&&($(\"barGold\").setStyle({width:b.bar_gold+\"%\"}),$(\"countGold\").innerHTML=number"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 201,
+      "call": "closeActWrap=function(a){1==a&&$(\"dailyActWrap\").hide();2==a&&$(\"dailyRewWrap\").hide();hideOverlay(!0)};function stopTutorial(a){new Ajax.Request(\"ajax_advisor.php\",{method:\"post\",parameters:{type:\"skip\"},onSuccess:function(a){window.location.href=\"overview.php\"}})}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 202,
+      "call": "function replyTutorial(){new Ajax.Request(\"ajax_advisor.php\",{method:\"post\",parameters:{type:\"restart\"},onSuccess:function(a){a=a.responseText.evalJSON(!0);a.data.reload?window.location.reload():window.location.href=a.data.redirect_url}})}function getElementAbsolutePosition(a){var b=$(\"mainWrapper\");Element.cumulativeOffset(b);a=Element.cumulativeOffset(a);return{x:a.left,y:a.top}}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 214,
+      "call": "function load_quester(a){var b=$(\"questerWrapperIN\");1!=a&&Effect.Appear(\"questerWrapper\",{duration:1});new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",onSuccess:function(c){1==a?(result=c.responseText,new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$('questerWrapperIN').update(result); result = null;\",1100),setTimeout(\"Effect.Appear('questerWrapperIN', { duration: 0.5 });\",1100),setTimeout(\"Effect.BlindDown('questerWrapperIN', { duration: 1.0 });"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 216,
+      "call": "function load_clan_quester(a){var b=$(\"questerWrapperIN\");1!=a&&Effect.Appear(\"questerWrapper\",{duration:1});new Ajax.Request(\"ajax_clan_quester.php\",{encoding:\"utf-8\",onSuccess:function(c){1==a?(result=c.responseText,new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$('questerWrapperIN').update(result); result = null;\",1100),setTimeout(\"Effect.Appear('questerWrapperIN', { duration: 0.5 });\",1100),setTimeout(\"Effect.BlindDown('questerWrapperIN', { duratio"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 218,
+      "call": "function Complete_Level_1(){var a=$(\"questerWrapperIN\"),b=$(\"CoordForm\");new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",parameters:b.serialize(!0),onSuccess:function(b){result=b.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(a,{from:1,to:0,duration:.5}),Effect.BlindUp(a,{duration:1}),setTimeout(\"$('questerWrapperIN').update(result[1]); result = null;\",1100),setTimeout(\"Effect.Appear('questerWrapperIN', { duration: 0.5 });\",1100),setTimeout(\"Effect.BlindDown('questerWrapperIN"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 220,
+      "call": "function AutocompleteQuester(){var a=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{method:\"get\",encoding:\"utf-8\",parameters:{autocomplete:1},onSuccess:function(b){var c;0<b.responseText.indexOf(\"||\")?(c=b.responseText.split(\"||\"),quester_current_level=c[0]):c[1]=b.responseText;a.update(c[1]);Effect.Appear(\"questerWrapper\",{duration:1})}})}"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 221,
+      "call": "function quester_skip(a){\"one\"!=a&&\"all\"!=a&&alert(\"nothing to skip\");var b=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",parameters:{autocomplete:1},onSuccess:function(a){result=a.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$('questerWrapperIN').update(result[1]); result = null;\",1100),setTimeout(\"Effect.Appear('questerWrapperIN', { duration: 0.5 });\",1100),setTimeout(\"Effect.B"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 223,
+      "call": "function questerSetQuestType(a){var b=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{method:\"post\",parameters:{type:a},onSuccess:function(a){result=a.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$('questerWrapperIN').update(result[1]); result = null;\",1100),setTimeout(\"Effect.Appear('questerWrapperIN', { duration: 0.5 });\",1100),setTimeout(\"Effect.BlindDown('questerWrapperIN', { duration: 1.0 });\""
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 271,
+      "call": "InstantProcess.prototype.getPopupStatus=function(){var a=this,b=Object.toQueryString({type:\"getPopupStatus\",process_type:this.processType})+\"&\"+Object.toQueryString(this.extraInfo);new Ajax.Request(\"ajax_instantProcess.php\",{method:\"post\",parameters:b,onSuccess:function(b){b=b.responseText.evalJSON(!0);void 0!==b.redirectTo?window.location.href=b.redirectTo:(1===b.openPopup&&!1===a.instantFinishTimeReached?(a.instantModal.show(),a.loadPopup()):a.instantFinish(),a.price=b.price,a.promoPercent=b.p"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 273,
+      "call": "InstantProcess.prototype.loadPopup=function(){var a=this,b=Object.toQueryString({type:\"loadPopup\",process_type:this.processType})+\"&\"+Object.toQueryString(this.extraInfo);this.timers={};new Ajax.Request(\"ajax_instantProcess.php\",{method:\"post\",parameters:b,onSuccess:function(b){var d=b.responseText.evalJSON(!0);b={};a.popupIsOpen=!0;a.instantModal.updateContent(d.body);$(\"instantFinishBtn\")&&$(\"instantFinishBtn\").stopObserving(\"click\").observe(\"click\",function(){a.instantFinish()});if(d.data.has"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 276,
+      "call": "InstantProcess.prototype.instantFinish=function(){var a=this,b=$(\"toggleInstantPopup\")&&$(\"toggleInstantPopup\").checked?1:0,c={type:\"instantProcess\",process_type:this.processType,process_id:this.processId};this.popupIsOpen&&(c.skip_popup=b);a.closePopup(!1);c=Object.toQueryString(c)+\"&\"+Object.toQueryString(this.extraInfo);new Ajax.Request(\"ajax_instantProcess.php\",{method:\"post\",parameters:c,onSuccess:function(b){b=b.responseText.evalJSON(!0);if(0===b.success)kwModal.error(b.message);else{hideO"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 295,
+      "call": "ResourceBoosters.prototype.loadContent=function(a){var b=this;a=a||0;if(!$(\"productionBoostersContent\"))return!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",evalJS:!0,parameters:{type:\"loadContent\",castle_id:a},onSuccess:function(a){$(\"productionBoostersContent\").update(a.responseText);b.activationEnabled=!0;b.assignHandlers();$(\"VipOpt-4\")&&$(\"VipOpt-15\")&&($(\"VipOpt-4\").removeClassName(\"selected\"),$(\"VipOpt-15\").addClassName(\"selected\"));vipContentScrollbar=new Control"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 300,
+      "call": "ResourceBoosters.prototype.activate=function(a){var b=this,c=$(\"boostCastleId\")?$(\"boostCastleId\").getValue():0;if(!this.activationEnabled)return!1;this.activationEnabled=!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activate\",booster_type:a,castle_id:c},onSuccess:function(a){b.activationEnabled=!0;a=a.responseText.evalJSON(!0);1===a.success?(refreshSession(),kwUniversalPopup.showInfo(a.message),setTimeout(function(){b.loadContent(c)},2E3),a.hasOwnProp"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 302,
+      "call": "ResourceBoosters.prototype.activateAll=function(){var a=this,b=$(\"boostCastleId\").getValue();if(!this.activationEnabled)return!1;this.activationEnabled=!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activateAll\",castle_id:b},onSuccess:function(c){a.activationEnabled=!0;c=c.responseText.evalJSON(!0);1===c.success?(refreshSession(),kwUniversalPopup.showInfo(c.message),setTimeout(function(){a.loadContent(b)},2E3),c.hasOwnProperty(\"credits\")&&kwUniversalPop"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 303,
+      "call": "kwUniversalPopup.showError(c.message)}})};ResourceBoosters.prototype.activateAutoRenew=function(a){var b=$(\"boostCastleId\").getValue(),c=this;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activateAutoRenew\",booster_type:a,castle_id:b},onSuccess:function(a){a=a.responseText.evalJSON(!0);1===a.success?c.loadContent(b):kwUniversalPopup.showError(a.message)}})};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 304,
+      "call": "ResourceBoosters.prototype.deActivateAutoRenew=function(a){var b=$(\"boostCastleId\").getValue(),c=this;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"deActivateAutoRenew\",booster_type:a,castle_id:b},onSuccess:function(a){a=a.responseText.evalJSON(!0);1===a.success?c.loadContent(b):kwUniversalPopup.showError(a.message)}})};function kwUniversalPopup(){this.contentType=1;this.extraInfo={};this.contentData={};this.autorenewState=this.loadingContent=!1;this.vipO"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 305,
+      "call": "kwUniversalPopup.prototype.loadContent=function(a,b){this.extraInfo=b||{};this.contentType=a||4;if(!0===this.loadingContent)return!1;this.loadingContent=!0;var c=this,d=Object.toQueryString({type:this.contentType})+\"&\"+Object.toQueryString(this.extraInfo);new Ajax.Request(\"vipOptionsBootstrap.php\",{method:\"post\",evalJS:!0,parameters:d,onSuccess:function(a){c.loadingContent=!1;(new kwModal({placeholder:\"kwVipPopup\",width:960,defaultTopOffset:50,content:a.responseText})).show()}})};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 306,
+      "call": "kwUniversalPopup.prototype.showPopup=function(){};kwUniversalPopup.prototype.closePopup=function(){};kwUniversalPopup.prototype.activateAutorenew=function(){var a=this;new Ajax.Request(\"vipOptionsBootstrap.php\",{method:\"post\",evalJS:!0,parameters:{type:this.vipOptionId,method:\"activateAutorenew\",json:!0},onSuccess:function(b){$(\"switch_auto_renew\").value=a.deactivateString;removeTooltip(\"switch_auto_renew\");setTooltip(\"switch_auto_renew\",a.deactivateString,a.autoRenewString);$(\"switch_auto_renew"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 307,
+      "call": "kwUniversalPopup.prototype.deactivateAutorenew=function(){var a=this;new Ajax.Request(\"vipOptionsBootstrap.php\",{method:\"post\",evalJS:!0,parameters:{type:this.vipOptionId,method:\"deactivateAutorenew\",json:!0},onSuccess:function(b){$(\"switch_auto_renew\").value=a.activateString;removeTooltip(\"switch_auto_renew\");setTooltip(\"switch_auto_renew\",a.activateString,a.autoRenewString);$(\"switch_auto_renew\").removeClassName(\"checked\")}})};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 311,
+      "call": "MarchPopup.prototype.getCurrentMarch=function(){return this.marchData.marches[this.marchData.currentMarch]};MarchPopup.prototype.sendData=function(a,b){\"object\"!==typeof a&&(a={});new Ajax.Request(\"ajax_marchesPopup.php\",{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0);\"function\"===typeof b&&b(a)}})};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 370,
+      "call": "MarchInfo.prototype.getTemplateId=function(){return this.templateId};MarchInfo.prototype.setTemplateId=function(a){this.templateId=a};MarchInfo.prototype.getAttackerObjectType=function(){return this.attackerObjectType};MarchInfo.prototype.setAttackerObjectType=function(a){this.attackerObjectType=a;return this};MarchInfo.prototype.getDefenderObjectType=function(){return this.defenderObjectType};MarchInfo.prototype.setDefenderObjectType=function(a){this.defenderObjectType=a;return this};function S"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 376,
+      "call": "$(\"addSavedCoord_3\").stopObserving().observe(\"click\",function(){d.save(a,b,3);d.addDialog.hide();\"function\"===typeof c&&c()})})};SavedCoords.prototype.save=function(a,b,c){this.sendData({x:a,y:b,listType:c,type:\"addCoordinate\"},function(a){a.success?kwModal.info(a.message):kwModal.error(a.message)})};SavedCoords.prototype.deleteCoord=function(a,b,c){var d=this;this.sendData({x:a,y:b,listType:c,type:\"deleteCoordinate\"},function(a){a.success?kwModal.info(a.message):kwModal.error(a.message);d.loadC"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 451,
+      "call": "kwModal.prototype.addPlaceholderClass=function(a){$(this.options.placeholder).addClassName(a)};kwModal.prototype.removePlaceholderClass=function(a){$(this.options.placeholder).removeClassName(a)};kwModal.prototype.setBackgroundDim=function(a){this.options.backgroundDim=a};kwModal.setLangStrings=function(a){this.langStrings=a};function Messages(){this.screen=this.section=\"\";this.dialog=new kwModal({width:960,placeholder:\"messagesPopupContentContainer\",borders:!1,centerDialog:!1});this.scrollBarCo"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 464,
+      "call": "QuesterUI.prototype.sendData=function(a,b,c){c=c||\"ajax_quester_v63.php\";a=a||{};a=Object.extend(a,{pageCont:window.location.pathname+window.location.search});new Ajax.Request(c,{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0);\"function\"===typeof b&&b(a)}})};"
+    },
+    {
+      "file": "kw_scripts--1bb36de5366f.js",
+      "line": 475,
+      "call": "Advisor.prototype.sendData=function(a,b,c){\"object\"!==typeof a&&(a={});new Ajax.Request(c||\"ajax_advisor.php\",{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0);\"function\"===typeof b&&b(a)}})};Advisor.prototype.finish=function(a,b){b=void 0===b?!0:!1;var c={type:\"finish\",advisorType:a},d=this;c.skipAdvisor=$(\"advisorSkipCheckBox\").checked?1:0;this.sendData(c,function(a){b&&d.dialog.hide()})};Advisor.prototype.skip=function(){};function EventEmitter(){this.events={}}E"
+    },
+    {
+      "file": "mapMenu--65b87b5e3980.js",
+      "line": 55,
+      "call": "new Ajax.Request(url, {"
+    },
+    {
+      "file": "mapMenu--f611c30663c4.js",
+      "line": 55,
+      "call": "new Ajax.Request(url, {"
+    },
+    {
+      "file": "MapServer_optimized--a5807702a8c1.js",
+      "line": 523,
+      "call": "new Ajax.Request('ajax_map.php', {"
+    },
+    {
+      "file": "MapServer_optimized--a5807702a8c1.js",
+      "line": 913,
+      "call": "new Ajax.Request('ajax_addCoordinates.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 35,
+      "call": "new Ajax.Request('ajax_marches.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 277,
+      "call": "new Ajax.Request('info.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 291,
+      "call": "new Ajax.Request('ajax_marches.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 347,
+      "call": "new Ajax.Request('ajax_marches.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 377,
+      "call": "new Ajax.Request('ajax_tower.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 394,
+      "call": "new Ajax.Request('ajax_tower.php', {"
+    },
+    {
+      "file": "marches--09fd1ecb4332.js",
+      "line": 414,
+      "call": "new Ajax.Request('ajax_tower.php', {"
+    },
+    {
+      "file": "mineSlider--8b278085d24f.js",
+      "line": 35,
+      "call": "new Ajax.Request('ajax_buildings.php', {"
+    },
+    {
+      "file": "mineSlider--8b278085d24f.js",
+      "line": 56,
+      "call": "new Ajax.Request('ajax_buildings.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 56,
+      "call": "new Ajax.Request('pohod.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 246,
+      "call": "new Ajax.Request('pohod.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 462,
+      "call": "new Ajax.Request('ajax_marches.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 592,
+      "call": "// \tnew Ajax.Request('pohod.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 646,
+      "call": "new Ajax.Request('pohod.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 723,
+      "call": "new Ajax.Request('pohod.php', {"
+    },
+    {
+      "file": "pohod--3c239eea460d.js",
+      "line": 752,
+      "call": "new Ajax.Request('ajax_mines.php', {"
+    },
+    {
+      "file": "province--b4cd6f359cfd.js",
+      "line": 19,
+      "call": "new Ajax.Request('province.php', {"
+    },
+    {
+      "file": "province--b4cd6f359cfd.js",
+      "line": 98,
+      "call": "new Ajax.Request(url, {"
+    },
+    {
+      "file": "tavernSlider--f0f572952044.js",
+      "line": 52,
+      "call": "new Ajax.Request('army_marches.php',{"
+    },
+    {
+      "file": "train_units--f842ecbb4ff0.js",
+      "line": 197,
+      "call": "new Ajax.Request('ajax_units.php', {"
+    },
+    {
+      "file": "train_units--f842ecbb4ff0.js",
+      "line": 219,
+      "call": "new Ajax.Request('ajax_barracks.php', {"
+    },
+    {
+      "file": "train_units--f842ecbb4ff0.js",
+      "line": 274,
+      "call": "new Ajax.Request('ajax_barracks.php', {"
+    },
+    {
+      "file": "whitePortal--1f8dd054909c.js",
+      "line": 26,
+      "call": "new Ajax.Request('ajax_whitePortal.php', {"
+    }
+  ]
+}

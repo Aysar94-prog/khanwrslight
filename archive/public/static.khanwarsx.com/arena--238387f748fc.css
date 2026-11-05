@@ -1,0 +1,1842 @@
+/* ARENA */
+.soon {
+	display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+}
+.soonPopup {
+	display: table;
+	background: url(../img/arena/arena-popup-background-2.jpg) no-repeat center top;
+	text-align: center;
+	width: 680px;
+	height: 383px;
+	margin: 10% auto 0 auto;
+	box-shadow: 0 0 2px #FDFCE8, 0 0 26px #C4B189;
+}
+.soonPopup h1 {
+ 	margin: 20px auto 0 auto;
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: bold;
+    font-family: Verdana, sans-serif;
+    text-shadow: 0 0 4px #000, 0 0 6px #000;
+    text-transform: uppercase;
+}
+.soonPopup h2 {
+ 	margin: 10px auto 0 auto;
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: bold;
+    font-family: Verdana, sans-serif;
+    text-shadow: 0 0 20px #000, 0 0 4px #000;
+    text-transform: uppercase;
+}
+.soon a {
+	display: inline-block;
+    text-decoration: none;
+    padding: 8px 20px;
+    background: rgb(16, 20, 19);
+    color: #FBFCF7;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: Verdana, sans-serif;
+    border-radius: 1px;
+    box-shadow: 0 0 0 1px #2E5354, 0 0 0 3px #1F2322, 0 0 16px #152826;
+}
+.soon ul, .soon li {
+	list-style: disc;
+	list-style-position: inside;
+	text-align: left;
+}
+.soon ul {
+	margin: 8px 0;
+}
+.soon div {
+	width: 90%;
+    margin: 25px auto 0 auto;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.75);
+    font-family: Verdana, sans-serif;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.39), 0 0 0 4px #000;
+}
+.soon div span {
+	font-size: 18px;
+	font-weight: bold;
+}
+.soon div span:nth-of-type(2) {
+	font-size: 16px;
+	font-weight: bold;
+}
+.soon p {
+	margin-top: 20px;
+}
+div#arenaPopupContainer {
+	box-shadow: none;
+	background: none;
+	width: 1050px!important;
+    left: 50%!important;
+    margin-left: -525px!important;
+	top: 0px!important;
+}
+
+.arenaPopup {
+	display: block;
+	margin: 0 auto;
+	width: 1050px;
+	height: 615px;
+	background: url(../img/arena/arena-popup-background.png) no-repeat center top;
+	position: relative;
+	color: #fff;
+}
+.arenaPopup .Content {
+	padding: 20px 0 0 0;
+}
+#royalPopup.arenaPopup {
+	height: 640px;
+}
+
+.arenaPopup.formationToday,
+.arenaPopup.formationTomorrow {
+	background: url(../img/arena/arena-popup-background-formation.png) no-repeat center top;
+	height: 1060px;
+}
+
+.arenaPopupContainer .tabs {
+	display: block;
+	margin: 10px auto -10px;
+	width: 1050px;
+	height: 50px;
+	position: relative;
+	padding-left: 30px;
+}
+
+.arenaPopupContainer .tabs a {
+	display: inline-block;
+	min-width: 164px;
+	height: 45px;
+	line-height: 40px;
+	margin-right: 5px;
+	padding: 0 10px 15px;
+	font-family: verdana;
+	text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background: #0A0A0A;
+	text-align: center;
+	text-decoration: none;
+	font-size: 14px;
+	color: gray;
+	text-transform: uppercase;
+	border: 1px solid #252016;
+}
+
+.arenaPopupContainer .tabs a:hover {
+	color: #fff;
+	background: #292317;
+}
+
+.arenaPopupContainer .tabs a span {
+	padding: 3px;
+	background: #000;
+	border: 1px solid forestgreen;
+	color: forestgreen;
+	border-radius: 3px;
+	margin: 0 0 0 5px;
+}
+
+.arenaPopupContainer .tabs a.home,
+.arenaPopupContainer .tabs a.active.home{
+	width: 60px;
+	min-width: auto;
+	background-image: url(../img/arena/arena-icon-home.png) ;
+	background-position: center 5px;
+	background-repeat: no-repeat;
+}
+
+.arenaPopupContainer .tabs a.active {
+	color: #fff;
+	background: #1A1710;
+}
+
+.arenaPopupContainer .arenaContent {
+	/*float: left;*/
+	display: table;
+	margin: 0 auto;
+	border-spacing: 10px;
+}
+
+.arenaPopupContainer .arenaContent #opponentsWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+}
+
+.arenaPopup .profile {
+	border: 1px solid rgb(53, 44, 25);
+	background-color: rgba(0, 0, 0, 0.31);
+	float: left;
+	width: 580px;
+	height: 156px;
+	margin: 10px 0 0 10px;
+	position: relative;
+}
+
+.arenaPopup .profile .avatar {
+	border-right: solid 1px rgb(53, 44, 25);
+	display: inline-block;
+	float: left;
+	margin: 10px 0 0 10px;
+	padding-right: 10px;
+	position: relative;
+}
+
+.arenaPopup .profile .avatar .playerPicture {
+	border: solid 1px rgb(53, 44, 25);
+	background-color: rgba(0, 0, 0, 0.31);
+	background-image: url(../img/arena/avatar.jpg);
+	background-size: 110px 110px;
+	width: 110px;
+	height: 110px;
+}
+
+.arenaPopup .profile .avatar .level,
+.arenaPopup .arenaCombatants .attackerAvatar span,
+.arenaPopup .arenaCombatants .defenderAvatar span{
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(53, 44, 25);
+	border-radius: 6px;
+	background-color: rgb(7, 7, 4);
+	color: #ffe4bb;
+	padding: 4px;
+	text-align: center;
+	min-width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+.arenaPopup .profile .stats {
+	background: url(../img/arena/profile-stats.png) no-repeat left top;
+	width: 420px;
+	height: 34px;
+	float: right;
+	margin: 10px 0 0;
+	line-height: 34px;
+	padding-left: 20px;
+	display: inline-block;
+}
+
+.arenaPopup .profile .stats span {
+	display: inline-block;
+	width: 135px;
+	text-align: center;
+	font-size: 14px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	line-height: 1.2;
+	text-shadow: 0.707px 0.707px 0px rgba(20, 16, 7, 0.004);
+}
+
+.arenaPopup .profile .playerName {
+	float: left;
+	font-size: 14px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	font-weight: bold;
+	line-height: 1.2;
+	text-align: center;
+	width: 110px;
+	margin: 10px 0 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.arenaPopup .profile .knight {
+	width: 95px;
+	height: 95px;
+	margin: 10px 0 0 10px;
+	float: left;
+	position: relative;
+	overflow: hidden;
+	box-shadow: inset 0px 0px 8px #536928;
+	border-radius: 10px;
+}
+
+.arenaPopup .profile .knight:hover {
+	box-shadow: inset 0px 0px 16px #536928;
+}
+.arenaPopup #knightInfo {
+	position: relative;
+}
+.arenaPopup .profile #knightLevel.level {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(53, 44, 25);
+	border-radius: 6px;
+	background-color: rgb(7, 7, 4);
+	color: #ffe4bb;
+	padding: 4px;
+	text-align: center;
+	min-width: 20px;
+	height: 20px;
+	position: absolute;
+	bottom: 13px;
+	left: 150px;
+}
+
+.arenaPopup .notAppointedKnight {
+	position: absolute;
+    top: 90px;
+    left: 260px;
+}
+
+.arenaPopup #knightName {
+	font-weight: bold;
+	display: inline-block;
+	margin: 10px;
+    padding: 0 10px 0 5px;
+}
+
+.arenaPopup #knightPrestige {
+	display: inline-block;
+}
+
+.arenaPopup .profile .knight #knightIcon a img {
+	width: 100px;
+}
+
+.arenaPopup .profile .knight .notAppointedKnight {
+	position: absolute;
+	bottom: 50%;
+	left: 5px;
+}
+
+.arenaPopup .knightInventory {
+	margin: -10px 5px 0 0;
+	float: right;
+}
+
+.arenaPopup .knightInventory .itemSlot {
+	width: 83px;
+	height: 74px;
+	float: left;
+	text-align: center;
+	padding-top: 10px;
+
+}
+
+.arenaPopup .knightInventory .itemSlot img{
+	border-radius: 10px;
+	background-color: #0d0b07;
+	margin-top: 3px;
+
+}
+
+.arenaPopup .knightInventory #slot1 {
+	background: url(../img/arena/royal_hero_item_1_bknd.png) no-repeat center top;
+}
+
+.arenaPopup .knightInventory #slot2 {
+	background: url(../img/arena/royal_hero_item_2_bknd.png) no-repeat center top;
+}
+
+.arenaPopup .knightInventory #slot3 {
+	background: url(../img/arena/royal_hero_item_3_bknd.png) no-repeat center top;
+}
+
+.arenaPopup .knightInventory #slot4 {
+	background: url(../img/arena/royal_hero_item_4_bknd.png) no-repeat center top;
+}
+
+.arenaPopup .tomorrow {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(53, 44, 25);
+	background-color: rgba(0, 0, 0, 0.31);
+	float: right;
+	margin: 10px 10px 0 0;
+	width: 435px;
+	height: 156px;
+}
+.arenaPopup .noTomorrow {
+	float: right;
+	margin: 10px 10px 0 0;
+	width: 435px;
+	height: 158px;
+}
+.arenaPopup .tomorrow .timer {
+	font-size: 18px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	text-transform: uppercase;
+	line-height: 1.2;
+	text-align: center;
+	text-shadow: 0.707px 0.707px 0px rgba(20, 16, 7, 0.004);
+	margin: 20px 0 10px;
+}
+
+.arenaPopup .tomorrow .timer span {
+	color: #fff;
+	background: url(../img/arena/arena-clock.png) no-repeat left top;
+	padding-left: 20px;
+	margin-left: 5px;
+	width: 75px;
+	display: inline-block;
+}
+
+#timeUntilNextArena.tomorrowTimer {
+    color: #fff;
+    background: url(../img/arena/arena-clock.png) no-repeat left center;
+    padding-left: 20px;
+    margin-left: 5px;
+    width: 75px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.arenaPopup .tomorrow .title {
+	background: url(../img/arena/arena-tomorrow-title.png) no-repeat center top;
+	width: 405px;
+	height: 32px;
+	line-height: 32px;
+	margin: 10px auto 0;
+}
+
+.arenaPopup .today {
+	/*float: left;*/
+	display: table-cell;
+	margin: 10px 0 0 10px;
+	border: 1px solid rgb(53, 44, 25);
+	background-color: rgba(0, 0, 0, 0.31);
+	width: 360px;
+	height: 425px;
+}
+
+.arenaPopup #formations {
+	text-align: right;
+}
+
+.arenaPopup #formations .arenaButton{
+	margin-right: 20px;
+}
+
+.arenaPopup .today .title,
+#attackFormationPane .title,
+#defenseFormationPane .title,
+.arenaPopupContainer #knightStats .title,
+.arenaPopupContainer #knightAbilities .title {
+	background: url(../img/arena/arena-today-title.png) no-repeat center top;
+	width: 340px;
+	height: 32px;
+	line-height: 32px;
+	margin: 10px auto 10px;
+}
+
+.arenaPopup .today .formation.set,
+.arenaPopup .today .formation.notset {
+	background: url(../img/arena/set.png) no-repeat left center;
+	height: 32px;
+	line-height: 32px;
+	text-align: left;
+	padding: 0 0 0 40px;
+	font-size: 16px;
+	font-family: "Verdana";
+	color: rgb(63, 242, 0);
+	text-shadow: 0.707px 0.707px 0px rgba(20, 16, 7, 0.004);
+	margin: 10px 20px 10px;
+	float: left;
+}
+
+.arenaPopup .today .formation.notset {
+	color: #ff0000;
+	background: url(../img/arena/notset.png) no-repeat left center;
+}
+
+.arenaPopup .today .formation.set span {
+	color: #fff;
+	float: left;
+}
+
+.arenaPopup .formationStats {
+	margin: 0 10px 10px;
+	float: left;
+	color: #ffe4bb;
+	font-family: "Georgia";
+	font-size: 18px;
+	border-bottom: 1px dotted #352c19;
+	border-top: 1px dotted #352c19;
+	text-align: left;
+}
+
+.arenaPopup .formationStats .attack {
+	width: 145px;
+	float: left;
+	border-right: 1px dotted #352c19;
+	padding: 0 10px 10px 10px;
+	margin: 10px 10px 5px 0;
+}
+
+.arenaPopup .formationStats .attack span,
+.arenaPopup .formationStats .defense span {
+	display: block;
+	color: #fff;
+	font-size: 14px;
+	padding: 5px 0 0;
+	font-family: "Verdana";
+}
+
+.arenaPopup .formationStats .defense {
+	width: 145px;
+	float: right;
+	padding: 0 0 10px 10px;
+	margin: 10px 0 5px 0;
+}
+
+.arenaPopup .criteriaRow {
+	line-height: 40px;
+	border-top: 1px dotted #352c19;
+	font-size: 14px;
+	font-family: "Verdana";
+	margin: 0 20px
+}
+
+.arenaPopup .criteriaRow.last {
+	border-bottom: 1px dotted #352c19;
+	margin-bottom: 10px;
+}
+
+.arenaPopup .criteriaRow span {
+
+	height: 32px;
+	width: 32px;
+	margin: 3px 10px 0 0;
+
+	float: left;
+}
+
+.arenaPopup .criteriaRow span.arenaMaxPop,
+.arenaPopup #maxPopAttPane.criteriaRow span,
+.arenaPopup #maxPopDefPane.criteriaRow span{
+	background: url(../img/arena/arena-icon-population.png) no-repeat left center;
+}
+
+.arenaPopup #bannedUnits.criteriaRow span,
+.arenaPopup #bannedUnitsPane span{
+	background: url(../img/arena/arena-icon-ban.png) no-repeat left center;
+}
+
+.arenaPopup .bannedUnitPortraitContainer{
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	border-radius: 3px;
+    background-color: rgba(255,255,255,0.05);
+	border: 1px solid #31352B;
+	background-size: 60px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center -10px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_1 {
+	background-position: center -6px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_2 {
+	background-position: -14px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_3 {
+	background-position: -10px -6px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_4 {
+	background-position: -14px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_5 {
+	background-position: -19px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_6 {
+	background-position: -11px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_7 {
+	background-position: -14px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_8 {
+	background-position: -20px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_9 {
+	background-position: -20px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_10 {
+	background-position: -20px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_11 {
+	background-position: -9px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_12 {
+	background-position: -9px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_13 {
+	background-position: -9px -21px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_14 {
+	background-position: -15px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_15 {
+	background-position: -9px -18px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_16 {
+	background-position: -9px -4px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_17 {
+	background-position: -17px -9px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_18 {
+	background-position: -21px -5px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_19 {
+	background-position: -12px -5px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_20 {
+	background-position: -12px -2px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_21 {
+	background-position: -15px -9px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_22 {
+	background-position: -15px -3px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_23 {
+	background-position: -15px -9px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_24 {
+	background-position: -15px -9px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_25 {
+	background-position: -12px -1px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_26 {
+	background-position: -21px -12px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_27 {
+	background-position: -12px -8px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_28 {
+	background-position: -12px -10px;
+}
+
+.arenaPopup .bannedUnitPortraitContainer.bannedUnit_29 {
+	background-position: -12px -10px;
+}
+
+
+
+
+a.purchaseBattles {
+	background: url(../img/arena/getCoinsPlus.png) no-repeat left center;
+	padding: 0 10px 0 60px;
+	color: #fff;
+	height: 32px;
+	border-radius: 3px;
+	line-height: 32px;
+	text-transform: uppercase;
+	text-shadow: 0 0 20px #baff00;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+a.purchaseBattles:hover {
+	text-shadow: 0 0 30px #baff00;
+}
+/* battles */
+
+.arenaPopup .battles .player {
+	width: 195px;
+	margin: 5px;
+	padding: 0;
+	position: relative;
+	display: inline-block;
+	background-color: rgba(37, 32, 22, 0.471);
+	vertical-align: top;
+}
+
+.arenaPopup .battles {
+	/*float: right;*/
+	display: table-cell;
+	padding: 5px;
+	margin: 10px 0 0 10px;
+	border: 1px solid rgb(53, 44, 25);
+	background-color: rgba(0, 0, 0, 0.31);
+	width: 645px;
+	height: 415px;
+	text-align: center;
+	position: relative;
+	vertical-align: middle;
+}
+
+.arenaPopup .battles .title {
+	background: url(../img/arena/arena-battles-title.png) no-repeat center top;
+	width: 620px;
+	height: 34px;
+	line-height: 34px;
+	text-align: left;
+	padding: 0 10px;
+	margin: 5px auto;
+}
+
+.arenaPopup .battles .player ul {
+	display: block;
+	list-style: none;
+	padding: 10px 15px 5px;
+	margin: 0;
+}
+
+.arenaPopup .battles .player ul li {
+	font-size: 12px;
+	font-family: "Verdana";
+	color: rgb(255, 255, 255);
+	line-height: 20px;
+	text-align: left;
+}
+
+.arenaPopup .battles .player ul li span {
+	font-weight: bold;
+}
+
+.arenaPopup .battles .player ul li.op_challenge {
+	border-top: 1px solid #352c19;
+  margin: 5px 0 0;
+  padding: 0;
+	text-align: center;
+}
+
+.arenaPopup .battles .player .op_avatar {
+	width: 125px;
+	height: 115px;
+	background: url(../img/arena/player-profile-pic.png) no-repeat center top;
+	margin: 10px auto;
+	position: relative;
+	text-align: center;
+	padding: 5px 0 0 0;
+}
+
+.arenaPopup .battles .player .op_avatar img {
+	width: 100px;
+	height: 100px;
+}
+
+.arenaPopup .battles .player .oponentName {
+	margin: 10px 0 0 0;
+	font-size: 16px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	font-weight: bold;
+	line-height: 1.2;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 0 10px;
+}
+
+.arenaPopup .battles .player .op_avatar span,
+.arenaPopup .battles .player .knight span {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(53, 44, 25);
+	border-radius: 6px;
+	background-color: rgb(7, 7, 4);
+	color: #ffe4bb;
+	padding: 4px;
+	text-align: center;
+	min-width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 10px;
+	left: 20px;
+}
+
+.arenaPopup .battles .player .knight span {
+	top: auto;
+	left: auto;
+	right: 2px;
+	bottom: 2px;
+}
+
+.arenaPopup .battles .player .knight {
+	background-color: rgba(0, 0, 0, 0.8);
+	background-size: 188px 300px;
+	background-repeat: no-repeat;
+	background-position: center -30px;
+	width: 60px;
+	height: 60px;
+	margin: 10px 0 0;
+	position: absolute;
+	top: 100px;
+	left: 95px;
+	border: 1px solid #352c19;
+}
+
+.arenaPopup .battles .title a {
+	float: right;
+}
+
+.arenaPopup .battles .arenaButton span.shuffle {
+	float: left;
+	margin: 0 -20px 0 0px;
+	height: 100%;
+	width: 23px;
+	padding: 0 0 0 30px;
+	background: url(../img/arena/refresh.png) no-repeat left center;
+}
+
+.arenaPopup .battles .shufflePlayers {
+	position: absolute;
+    right: 20px;
+    top: 3px;
+}
+
+.arenaPopup .battles .playersVerticalLine {
+	width: 1px;
+	background: #352c19;
+	margin: 10px 0 0;
+	height: 410px;
+	display: inline-block;
+}
+
+/*battle formation*/
+
+.arenaPopup.formationToday .formationTitle,
+.arenaPopup.formationTomorrow .formationTitle{
+	font-size: 20px;
+	font-family: "Georgia";
+	color: rgb(10, 107, 0);
+	font-weight: bold;
+	text-transform: uppercase;
+	line-height: 50px;
+	text-align: left;
+	text-shadow: 1px 1px 0px rgba(20, 16, 7, 0.5);
+	margin: 0 10px 10px;
+	padding: 20px 10px 0;
+}
+
+.arenaPopup.formationTomorrow .formationTitle {
+	color: #820a00;
+}
+
+.arenaPopup .formationTitle .formationControls {
+	position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+.newPopup3 .formationControls a.close {
+	top:5px;
+}
+.newPopup3 .arenaPopupContainer.arenaChooseKnight .formationControls a.close{
+	top: -15px;
+    right: -45px;
+}
+
+.arenaPopup .formationTitle .formationControls .arenaButton  {
+	display: inline-block;
+}
+.arenaPopup #attackFormationPane,
+.arenaPopup #defenseFormationPane{
+	border-style: solid;
+    border-width: 1px;
+    border-color: rgb(53, 44, 25);
+    background-color: rgba(0, 0, 0, 0.31);
+    width: 1010px;
+    margin: 0 20px 10px 20px;
+	overflow: hidden;
+	height: 470px;
+}
+
+#attackFormationWrapper,
+#defenseFormationWrapper{
+	float: right;
+	padding-top: 10px;
+	margin-right: 10px;
+	height: 460px;
+}
+
+#attackFormationWrapper a,
+#defenseFormationWrapper a{
+	text-decoration: none;
+}
+
+
+#edit_formations .box {
+	background: url(../img/arena/formation-grid.png) no-repeat right top;
+}
+
+#edit_formations .box,
+#edit_formations .box .army-order-container{
+	height: 460px;
+}
+
+.arenaPopup .attackFormationLeft,
+.arenaPopup .defenseFormationLeft {
+	float: left;
+	width: 350px;
+}
+.arenaPopup .formationUpdateStats div{
+	color: #ffe4bb;
+    font-family: "Georgia";
+    font-size: 18px;
+	margin-top: 10px;
+}
+
+.arenaPopup .formationUpdateStats span{
+	width: 300px;
+	float: left;
+	border-bottom: 1px dotted #352c19;
+	display: block;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 0 10px;
+}
+
+.arenaPopup .formationStats.formationUpdateStats {
+	border-bottom: 0;
+	border-top: 0;
+	margin-bottom: 5px;
+	padding-left: 10px;
+}
+/* common */
+
+.arenaInfoMessage {
+	font-size: 18px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	line-height: 1.2;
+	text-align: center;
+	text-shadow: 0.707px 0.707px 0px rgba(20, 16, 7, 0.004);
+	padding: 50px;
+}
+
+.arenaInfoMessage.locked {
+	background: rgba(0,0,0,0.5) url('../img/arena/requirement.png') no-repeat 40px center;
+	border-radius: 10px;
+	font-size: 20px;
+	padding-left: 100px;
+	margin: 0 50px;
+	clear:both;
+}
+
+.arenaPopup .arenaButtonRow {
+	text-align: center;
+}
+
+.arenaPopupContainer .changeKnightButton {
+	text-align:center;
+	position: absolute;
+    top: -45px;
+	width: 100%;
+}
+
+.arenaPopup .title,
+.arenaPopupContainer .title,
+.arenaSelectKnight .title{
+	font-size: 18px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	font-weight: bold;
+	text-transform: uppercase;
+	line-height: 32px;
+	text-align: center;
+	text-shadow: 1px 1px 0px rgba(20, 16, 7, 0.004);
+}
+
+.arenaPopup .arenaButton,
+.arenaPopupContainer .arenaButton,
+.arenaSelectKnight .arenaButton{
+	display: inline-block;
+	background: url('../img/arena/arena-button.png') repeat-x center top;
+	min-width: 100px;
+	height: 53px;
+	line-height: 53px;
+	margin: 0 auto;
+	font-size: 12px;
+	color: #fff;
+	cursor: pointer;
+	padding: 0 0;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 0 1px 2px #000000;
+	border: 0;
+	cursor: pointer;
+	font-weight: normal;
+	font-family: Verdana;
+	text-transform: uppercase;
+	color: #709332;
+	clear: both;
+	position: relative;
+}
+
+.arenaPopup .arenaButton:before,
+.arenaPopupContainer .arenaButton:before,
+.arenaSelectKnight .arenaButton:before {
+	content:"";
+	background: url('../img/arena/arena-button-left.png') repeat-x center top;
+	width: 20px;
+	display: block;
+    height: 53px;
+    position: absolute;
+    left: -20px;
+}
+
+.arenaPopup .arenaButton:after,
+.arenaPopupContainer .arenaButton:after,
+.arenaSelectKnight .arenaButton:after {
+	content:"";
+	background: url('../img/arena/arena-button-right.png') repeat-x center top;
+	width: 20px;
+	display: block;
+    height: 53px;
+    position: absolute;
+	top: 0;
+    right: -20px;
+}
+
+.arenaPopup .arenaButton.red:before,
+.arenaPopupContainer .arenaButton.red:before,
+.arenaSelectKnight .arenaButton.red:before {
+	background: url('../img/arena/arena-button-red-left.png') repeat-x center top;
+}
+
+.arenaPopup .arenaButton.red:after,
+.arenaPopupContainer .arenaButton.red:after,
+.arenaSelectKnight .arenaButton.red:after {
+	background: url('../img/arena/arena-button-red-right.png') repeat-x center top;
+}
+
+.arenaPopup .arenaButton.red {
+	background: url('../img/arena/arena-button-red.png') repeat-x left top;
+	color: #fff;
+}
+
+.arenaPopup .arenaButton:hover,
+.arenaPopupContainer .arenaButton:hover,
+.arenaSelectKnight .arenaButton:hover,
+.arenaPopup .arenaButton:hover:before,
+.arenaPopupContainer .arenaButton:hover:before,
+.arenaSelectKnight .arenaButton:hover:before,
+.arenaPopup .arenaButton:hover:after,
+.arenaPopupContainer .arenaButton:hover:after,
+.arenaSelectKnight .arenaButton:hover:after{
+	background-position: center bottom;
+}
+
+
+.arenaPopup .arenaButton.red:hover {
+	background-position: center bottom;
+}
+
+.arenaPopup .arenaButton.inactive,
+.arenaPopup .arenaButton.inactive:hover{
+	opacity: 0.7;
+	background: url('../img/arena/arena-button-inactive.png') repeat-x center top;
+	color: #707070;
+}
+
+.arenaPopup .arenaButton.inactive:before,
+.arenaPopup .arenaButton.inactive:hover:before{
+	background: url('../img/arena/arena-button-inactive-left.png') repeat-x center top;
+}
+
+.arenaPopup .arenaButton.inactive:after,
+.arenaPopup .arenaButton.inactive:hover:after{
+	background: url('../img/arena/arena-button-inactive-right.png') repeat-x center top;
+}
+
+.arenaPopup .subTitle {
+	text-align: center;
+	font-size: 18px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	font-weight: bold;
+	line-height: 1.2;
+	text-align: center;
+	text-shadow: 1px 1px 0px rgba(20, 16, 7, 0.004);
+	margin: 0 0 10px;
+}
+
+.arenaPopup .subTitle:before {
+	content: '';
+	display: inline-block;
+	width: 79px;
+	height: 12px;
+	background: url(../img/arena/tileLeft.png);
+	margin: 5px 10px 0 0;
+}
+
+.arenaPopup .subTitle:after {
+	content: '';
+	display: inline-block;
+	width: 79px;
+	height: 12px;
+	background: url(../img/arena/timeRight.png);
+	margin: 5px 0 0 10px;
+}
+
+/* Knight */
+
+.arenaPopupContainer #royalPopup .formationControls {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.arenaPopupContainer #royalPopup .royalHero{
+	width: 360px;
+	text-align: center;
+	border: none;
+	float: left;
+}
+
+.arenaPopupContainer #royalPopup .heroContent{
+	float: right;
+	padding-right: 60px;
+	margin-top: 50px;
+}
+
+.arenaPopupContainer #royalPopup .royalHero #selectedHero {
+	width: 360px;
+}
+
+.arenaPopupContainer #royalPopup .royalHero #selectedHero .person {
+	margin: 0 auto;
+	height: 270px;
+    overflow: hidden;
+    border-bottom: 2px solid #443a2e;
+}
+
+.arenaPopupContainer #royalPopup .royalHero h2 {
+	width: auto;
+	text-align: center;
+	margin: 10px 20px 0;
+}
+
+.arenaPopupContainer .itemsWarning {
+
+}
+
+.arenaPopupContainer.arenaChooseKnight {
+	margin-top: 10px;
+}
+
+
+
+.arenaPopupContainer.arenaChooseKnight #knightLevel {
+	border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.251);
+    width: 630px;
+    height: 70px;
+    float: right;
+    position: absolute;
+    right: 20px;
+    top: 380px;
+    font-size: 18px;
+    font-family: "Georgia";
+    color: rgb(255, 228, 187);
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: 0.707px 0.707px 0px rgba(20, 16, 7, 0.004);
+    -moz-transform: matrix( 1,0,0,1.00083477099449,0,0);
+    -webkit-transform: matrix( 1,0,0,1.00083477099449,0,0);
+    -ms-transform: matrix( 1,0,0,1.00083477099449,0,0);
+    line-height: 70px;
+}
+
+.arenaPopupContainer #attackAbility {
+	position: absolute;
+    right: 20px;
+    top: 460px;
+    width: 630px;
+}
+
+.arenaPopupContainer #attackAbility #abilityTitle {
+	text-align: center;
+	background: url(../img/arena/arena-battles-title.png);
+	height: 34px;
+	line-height: 34px;
+	font-size: 18px;
+	font-family: "Georgia";
+	color: rgb(255, 228, 187);
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.arenaPopupContainer #attackAbility #abilityDscr {
+	font-size: 16px;
+	padding: 10px;
+}
+
+.arenaPopupContainer .knightInfoLeft {
+	position: absolute;
+    left: 30px;
+    top: 370px;
+}
+#arenaKnightChooserPopup {
+	margin-top: 20px;
+}
+.arenaPopupContainer .knightInfoLeft .knightInfoRow,
+#arenaKnightChooserPopup .knightInfoRow{
+	font-size: 14px;
+    padding: 0px 10px 5px;
+    margin: 5px 5px;
+    border-bottom: 1px dotted #352c19;
+}
+
+.arenaPopupContainer #itemsWarning {
+    position: absolute;
+    top: 20px;
+    width: 430px;
+    left: 390px;
+	color: #ff8801;
+}
+
+.arenaPopupContainer.arenaChooseKnight .formationControls {
+	position: absolute;
+    top: 10px;
+    right: 30px;
+    z-index: 30;
+}
+
+.arenaPopupContainer .formationControls .arenaButton {
+	display: inline-block;
+	margin-left: 30px;
+}
+
+.arenaSelectKnight {
+	width: 239px;
+    padding: 8px 10px;
+    display: inline-block;
+    border-right: 1px dotted #443a2e;
+	vertical-align:top;
+	height: 840px;
+}
+
+.arenaSelectKnight:last-of-type {
+	border: none;
+}
+
+.arenaSelectKnight h2 {
+	text-align: center;
+}
+
+.arenaSelectKnight #selectedHero .person {
+	width: 220px;
+	height: 120px;
+	margin-top: 10px;
+	border-bottom: 2px solid #443a2e;
+}
+
+.arenaSelectKnight #selectedHero .person img {
+	margin-top: -30px;
+}
+
+#royalPopup .arenaSelectKnight .royalHero {
+	width: 220px;
+}
+
+#royalPopup .arenaSelectKnight .royalHero h2{
+	width: auto;
+}
+
+#royalPopup .arenaSelectKnight .royalHero {
+	border: none;
+}
+
+#royalPopup .arenaSelectKnight .royalHero #knightLevel{
+	border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+	position: absolute;
+    bottom: 0px;
+	font-weight: bold;
+	text-shadow: 0 0 10px #000;
+}
+
+.arenaSelectKnight .title{
+	background: url(../img/arena/arena-knight-title.png) repeat-y center top;
+	width: 215px;
+	min-height: 32px;
+	line-height: 32px;
+	margin: 10px auto 10px;
+	font-size: 14px;
+}
+
+.arenaSelectKnight .abilityDscr {
+	padding: 0 15px;
+}
+
+.arenaSelectKnight.selected {
+	background: rgba(0,0,0,0.5);
+}
+
+.btnSelectKnightWrapper {
+	height: 50px;
+	text-align: center;
+}
+
+/* Notifications */
+.noTodayArena {
+	padding: 100px;
+    font-size: 26px;
+    line-height: 30px;
+	color: rgb(255, 228, 187);
+}
+
+
+/* FIX ME ANDREI */
+
+.arenaPopup table  {
+
+    border: solid 1px rgb(53, 44, 25);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 5px;
+    margin: 0 20px;
+    width: 1010px;
+
+    margin-top: -1px;
+    table-layout: fixed;
+
+}
+.arenaPopup table.ranking {
+	table-layout: auto;
+}
+.arenaPopup table.ranking tr td:nth-of-type(1) {
+	width: 20px;
+}
+.arenaPopup table.ranking tr td:nth-of-type(2) {
+	width: 50px;
+}
+
+.arenaPopup table tr {
+	line-height:30px;
+}
+
+.arenaPopup table tr td {
+	/*padding: 0 5px;*/
+	overflow: hidden;
+}
+
+.arenaPopup table tr:hover {
+	background-color: rgba(73, 64, 67, 0.3);
+}
+
+.arenaPopup table tr:nth-child(even) {
+	background-color: rgba(73, 64, 67, 0.3);
+}
+
+.arenaPopup table tr:nth-child(1) {
+	font-weight: bold;
+}
+
+.arenaPopup table tr:nth-child(2) {
+	line-height:34px;
+	height: 34px;
+	font-weight: bold;
+	position: relative;
+	background: transparent;
+	/*background: url(../img/arena/arena-ranking-title.png) no-repeat center top;*/
+}
+
+.arenaPopup table tr:nth-child(2):after {
+    content: "";
+    background: url(../img/arena/arena-ranking-title.png) no-repeat center top;
+    width: 980px;
+    height: 34px;
+    position: absolute;
+    z-index:1;
+    /*top: 58px;*/
+    display: block;
+    left: 35px;
+}
+
+.arenaPopup table tr:nth-child(2) td{
+	position: relative;
+	z-index: 5;
+}
+
+.arenaPopup table a {
+	color: #4f6527;
+}
+
+.arenaPopup table a {
+	color: #4f6527;
+	text-decoration: none;
+}
+
+.arenaPopup table a:hover {
+	color: #608225;
+}
+
+.arenaPopup table td img {
+	padding-right: 5px;
+}
+.arenaPopup .ul-class {
+	text-align: center;
+	margin-top: 10px;
+}
+.arenaPopup .ul-class a{
+	padding: 3px 8px 6px 8px;
+    border: 1px solid #2D2716;
+    color: #BFB2A8;
+    border-radius: 5px;
+    text-decoration: none;
+    background: rgba(0,0,0,0.1);
+}
+
+.arenaPopup .ul-class a:hover{
+	color: #fff;
+}
+
+.arenaPopup .Content {
+    padding: 20px 0 0 0;
+}
+.arenaPopupContainer ul.ul-class > li {
+    display: inline-block;
+    margin: 5px 5px 0 15px;
+}
+
+
+.arenaPopupContainer .loadingOverlay {
+	background: url(../img/arena/arena-battle-bgr.png) no-repeat left bottom;
+    display: inline-block;
+    width: 100%;
+    height: 425px;
+    min-height: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+	z-index: 1;
+	text-align: center;
+}
+
+.arenaPopupContainer .loadingOverlay .arenaCombatants {
+	display: block;
+    width: 100%;
+    height: 200px;
+}
+
+.arenaPopupContainer .loadingOverlay h1 {
+	font-size: 28px;
+	background: url(../img/arena/arena-battle-progress.png) no-repeat center top;
+	margin: 10px 0 0;
+	height: 74px;
+	line-height: 74px;
+	text-transform: uppercase;
+	color: rgb(255, 228, 187);
+	width: 100%;
+}
+.arenaCombatants .attacker,
+.arenaCombatants .defender{
+	background: rgba(0,0,0,0.5);
+	width: 50%;
+	}
+
+.arenaCombatants .attacker {
+    float: left;
+}
+
+.arenaCombatants .defender {
+    float: right;
+}
+
+.arenaCombatants .attacker .attackerAvatar,
+.arenaCombatants .defender .defenderAvatar{
+	width: 136px;
+	height: 136px;
+	position: relative;
+	border: solid 1px rgb(53, 44, 25);
+	margin: 20px;
+}
+
+.arenaCombatants .attacker .attackerAvatar {
+	float: left;
+}
+
+.arenaCombatants .defender .defenderAvatar {
+	float: right;
+}
+.arenaCombatants .attacker .playerName,
+.arenaCombatants .defender .playerName {
+	width: 95%;
+	height: 25px;
+	line-height: 25px;
+	font-size: 18px;
+  	color: rgb(255, 228, 187);
+	text-shadow: 0 0 5px #000;
+}
+
+.arenaCombatants .attacker .playerName{
+	background: url(../img/arena/arena-battle-progress-attacker.png) no-repeat center top;
+	padding-left: 5%;
+	text-align: left;
+	float: left;
+}
+
+.arenaCombatants .defender .playerName{
+	background: url(../img/arena/arena-battle-progress-defender.png) no-repeat center top;
+	padding-right: 5%;
+	text-align: right;
+	float: right;
+}
+
+#opponentsWrapper .loadingOverlay .battleProgress {
+	background: url(../img/arena/arena-loading.gif) no-repeat left bottom;
+	width: 198px;
+	height: 198px;
+	display: block;
+    margin: 0 auto;
+	position: absolute;
+	top: 75px;
+    left: 230px;
+}
+
+#opponentsWrapper .loadingOverlay .battleProgress span{
+	width: 100%;
+	height: 100%;
+	line-height: 198px;
+	text-align: center;
+	position: absolute;
+    top: 0;
+    left: 0;
+	font-size: 60px;
+	color: rgb(255, 228, 187);
+}
+
+/*rules*/
+
+.arenaPopup.arenaRules .Content{
+	padding: 0 50px 50px;
+	text-align: left;
+	width: 88%;
+	height: 530px;
+/*    overflow-y: scroll;*/
+
+}
+
+.arenaPopup.arenaRules h2 {
+	font-weight: bold;
+	color: rgb(255, 228, 187);
+	text-align: center;
+	font-size: 18px;
+	margin: 20px 0;
+}
+
+.arenaPopup.arenaRules h3 {
+	font-weight: bold;
+	color: rgb(255, 228, 187);
+	font-size: 16px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.arenaPopup.arenaRules ul li{
+	list-style: disc;
+	padding: 5px;
+	font-family: "Verdana";
+}
+
+.arenaPopup.arenaRules ul li ul li{
+	list-style: circle;
+	margin-left: 15px;
+}
+
+/*reports*/
+.arenaPopup #reports {
+	/* overflow-y: scroll; */
+    height: 550px;
+    margin: 0 auto;
+    /* width: 1000px; */
+}
+
+.arenaPopup #reports .noReports {
+	margin: 0 50px;
+    clear: both;
+    text-align: center;
+    padding: 30px;
+	background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.arenaPopup #reports .green {
+	color: #769243;
+}
+.arenaPopup #reports .red {
+	color: #D7261D;
+}
+.arenaPopup #reports .blue {
+	color: #4C81DD;
+}
+.arenaPopup #reports #report td, .arenaPopup #reports .header td {
+	text-align: center;
+	vertical-align: middle;
+	width: 14.5%;
+}
+.arenaPopup #reports #report td:nth-of-type(1), .arenaPopup #reports .header td:nth-of-type(1) {
+	width: 30px!important;
+}
+.arenaPopup #reports #report a {
+	text-decoration: none;
+}
+.arenaPopup #reports #report a.viewReport {
+	border: 1px solid #4f6527;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	padding: 3px 5px;
+	background: rgba(0,0,0,0.5);
+	color: #769243;
+	font-weight: normal;
+}
+.arenaPopup #reports #report a:hover {
+    border: 1px solid #6D8E31;
+    color: #99BF53;
+}
+.arenaPopup.arenaRules .Content {
+	overflow-y: scroll;
+}
+.arenaPopup .battleMsgWrapper {
+	width: 495px;
+    margin: 0 auto;
+	padding: 20px;
+	background: rgba(0,0,0,0.5);
+	border-radius: 10px;
+}
+
+.arenaPopup .msgImageVictory,
+.arenaPopup .msgImageDefeat {
+	font-size: 28px;
+	text-align: center;
+	width: auto;
+	margin-top: 0;
+}
+
+.arenaPopup .msgImageVictory {
+	background: url(../img/arena/arena-victory.png) no-repeat left bottom;
+}
+
+.arenaPopup .msgImageDefeat {
+	background: url(../img/arena/arena-defeat.png) no-repeat left bottom;
+}
+
+.arenaPopup .msgImageVictory span,
+.arenaPopup .msgImageDefeat span{
+	margin: 70px 0;
+    display: block;
+	text-transform: uppercase;
+    font-size: 32px;
+    color: #b1c849;
+	text-shadow: 0 0 10px #000;
+}
+
+.arenaPopup .msgImageDefeat span {
+	color: #8f201d;
+	margin-top: 67px;
+}
+
+.arenaPopup .battleMsgWrapper.noSupport .battleMsgHeader{
+	background: url("../img/arena/battle_msg_header_nosupport.png") top center no-repeat;
+	height: 25px;
+
+}
+
+.arenaPopup .battleMsgWrapper .battleMsgHeader .player .name {
+	line-height: 15px;
+	text-shadow: 0 0 5px #000;
+}
+
+.arenaPopup .bottomLink .msgReportLink {
+margin-top: 20px;
+
+}
+
+#arenaBattleResult {
+	text-align: center;
+	top: 195px!important;
+	border-radius: 10px;
+	height: 195px!important;
+}
+
+#arenaBattleResult .msgImageDefeat{
+	background: url(../img/arena/arena-defeat.png) no-repeat center center;
+    width: 100%;
+    height: 180px;
+	border-radius: 10px;
+	margin: 0 auto;
+}
+
+#arenaBattleResult .msgImageVictory{
+	background: url(../img/arena/arena-victory.png) no-repeat center center;
+    width: 100%;
+    height: 180px;
+	border-radius: 10px;
+	margin: 0 auto;
+}
+
+#arenaBattleResult .msgImageVictory span,
+#arenaBattleResult .msgImageDefeat span{
+	margin: 70px 0 0;
+    display: block;
+	text-transform: uppercase;
+    font-size: 32px;
+    color: #b1c849;
+	text-shadow: 0 0 10px #000;
+}
+
+#arenaBattleResult .msgImageDefeat span {
+	color: #8f201d;
+}
+
+.arenaPopup #reports .bottomLink {
+	text-align: center;
+}
+
+/* report buttons */
+
+
+.arenaPopup .msgReportLink,
+#arenaBattleResult .msgReportLink{
+	display: inline-block;
+	background: url('../img/arena/arena-button.png') repeat-x center top;
+	min-width: 130px;
+	height: 53px;
+	line-height: 53px;
+	margin: 0 auto;
+	font-size: 12px;
+	padding: 0 0;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 0 1px 10px #000000;
+	border: 0;
+	cursor: pointer;
+	font-weight: normal;
+	font-family: Verdana;
+	text-transform: uppercase;
+	color: #a0e329;
+	clear: both;
+	position: relative;
+	margin-top: -100px;
+	font-weight: bold;
+}
+
+#arenaBattleResult .msgReportLink {
+	margin: -60px auto 30px;
+}
+
+.arenaPopup .msgReportLink:before,
+#arenaBattleResult .msgReportLink:before{
+	content:"";
+	background: url('../img/arena/arena-button-left.png') repeat-x center top;
+	width: 20px;
+	display: block;
+    height: 53px;
+    position: absolute;
+    left: -20px;
+}
+
+.arenaPopup .msgReportLink:after,
+#arenaBattleResult .msgReportLink:after{
+	content:"";
+	background: url('../img/arena/arena-button-right.png') repeat-x center top;
+	width: 20px;
+	display: block;
+    height: 53px;
+    position: absolute;
+	top: 0;
+    right: -20px;
+}
+
+
+
+.arenaPopup .msgReportLink:hover,
+.arenaPopup .msgReportLink:hover:before,
+.arenaPopup .msgReportLink:hover:after,
+#arenaBattleResult .msgReportLink:hover,
+#arenaBattleResult .msgReportLink:hover:before,
+#arenaBattleResult .msgReportLink:hover:after
+{
+	background-position: center bottom;
+}
+
+.arenaPopup span.coins {
+	display: inline-block;
+	height: 22px;
+	background: url('../img/layout/res_ico_coins_new.png') 0px 5px no-repeat;
+	padding: 0 0 0 22px;
+}
+
+.arenaPopup span.medal {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	background: url('../img/arena/medalRanking.png') 0px 0px no-repeat;
+	vertical-align: top;
+}
+
+.arenaPopupContainer .tabs a.arenaCloseBtn {
+	display: block;
+    background: url('../img/layout-63/popup_close.png') no-repeat;
+    background-position: 0 0;
+    position: absolute;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    box-shadow: none;
+    top: -35px;
+    right: -35px;
+    height: 60px;
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    z-index: 10;
+    opacity: 0.8;
+
+    top: 15px;
+    right: 10px;
+}
+.arenaPopupContainer .tabs a.arenaCloseBtn:hover {
+	background-position: -60px 0;
+	opacity: 1;
+}

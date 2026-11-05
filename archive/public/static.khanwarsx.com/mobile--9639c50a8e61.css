@@ -1,0 +1,59 @@
+/*
+Title: CSS Styles for Khan Wars 5.0 GATE
+Author: Peter Gavrilov for XS Software
+Email: peter (at) xs-software.com
+Website: http://www.xs-software.com/
+*/
+#mobileArmyArrows {
+	display:block;
+}
+
+#mobile_unit_count {
+	display: inline-block;
+	width: 70px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 6px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#mobile_increase_units, #mobile_decrease_units {
+	display:inline-block;
+	font-weight: bold;
+	font-size: 24px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, 0.3);
+	color: #fff;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 6px;
+}
+
+@media screen and (max-device-width: 800px) {
+/*@media screen and (max-device-width: 1800px) {*/
+	
+	
+	.dialogWrapper .dialogBody.message{
+		font-size:14px !important;
+	}
+
+	#hotelinkPanelWrapper {
+		display:block;
+	}
+
+	#hotlinksMenu {
+		display:block;
+	}
+	.hotTopPanel {
+		display:block;
+	}
+	
+	#kwDialogMsg {
+		-webkit-text-size-adjust: 100%;	
+	}
+}
+

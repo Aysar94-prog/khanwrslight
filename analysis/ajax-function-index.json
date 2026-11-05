@@ -1,0 +1,444 @@
+[
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\ajax_army_order--95e6c992d8d9.js",
+    "ajax_calls": [
+      {
+        "line": 75,
+        "code": "new Ajax.Request(url, {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\arena--f7c7825c10da.js",
+    "ajax_calls": [
+      {
+        "line": 18,
+        "code": "new Ajax.Request(url, {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\blacksmithSlider--494d5940a9bf.js",
+    "ajax_calls": [
+      {
+        "line": 74,
+        "code": "new Ajax.Request('ajax_buildings.php', {"
+      },
+      {
+        "line": 95,
+        "code": "new Ajax.Request('ajax_buildings.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\bottomBar--e9ed3c5032a3.js",
+    "ajax_calls": [
+      {
+        "line": 103,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 178,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 191,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 308,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 425,
+        "code": "new Ajax.Request('info.php', {"
+      },
+      {
+        "line": 438,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 526,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 601,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      },
+      {
+        "line": 651,
+        "code": "new Ajax.Request('ajax_bottomBar.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\cityEvents--bcea75df3da2.js",
+    "ajax_calls": [
+      {
+        "line": 35,
+        "code": "new Ajax.Request('ajax_cityEvents.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\controls--6830b05fcba6.js",
+    "ajax_calls": [
+      {
+        "line": 366,
+        "code": "new Ajax.Request(this.url, this.options);"
+      },
+      {
+        "line": 637,
+        "code": "new Ajax.Updater({ success: this.element }, this.url, options);"
+      },
+      {
+        "line": 645,
+        "code": "new Ajax.Request(this.url, options);"
+      },
+      {
+        "line": 686,
+        "code": "new Ajax.Request(this.options.loadTextURL, options);"
+      },
+      {
+        "line": 791,
+        "code": "new Ajax.Request(this.options.loadCollectionURL, options);"
+      },
+      {
+        "line": 826,
+        "code": "new Ajax.Request(this.options.loadTextURL, options);"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\controls--b568f9479e85.js",
+    "ajax_calls": [
+      {
+        "line": 366,
+        "code": "new Ajax.Request(this.url, this.options);"
+      },
+      {
+        "line": 637,
+        "code": "new Ajax.Updater({ success: this.element }, this.url, options);"
+      },
+      {
+        "line": 645,
+        "code": "new Ajax.Request(this.url, options);"
+      },
+      {
+        "line": 686,
+        "code": "new Ajax.Request(this.options.loadTextURL, options);"
+      },
+      {
+        "line": 791,
+        "code": "new Ajax.Request(this.options.loadCollectionURL, options);"
+      },
+      {
+        "line": 826,
+        "code": "new Ajax.Request(this.options.loadTextURL, options);"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\get_building_info--556d4681640c.js",
+    "ajax_calls": [
+      {
+        "line": 6,
+        "code": "new Ajax.Request('get_building_tooltip.php',{"
+      },
+      {
+        "line": 29,
+        "code": "new Ajax.Request('get_building_tooltip.php',{"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\knight_inventory--c83049897e1f.js",
+    "ajax_calls": [
+      {
+        "line": 398,
+        "code": "new Ajax.Request('ajax_arena.php', {"
+      },
+      {
+        "line": 419,
+        "code": "new Ajax.Request('?set_slot=1', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\kw_libs--c18714f4b234.js",
+    "ajax_calls": [
+      {
+        "line": 60,
+        "code": "Ajax.Request=Class.create(Ajax.Base,{_complete:false,initialize:function($super,url,options){$super(options);this.transport=Ajax.getTransport();this.request(url)},request:function(url){this.url=url;this.method=this.options.method;var params=Object.isString(this.options.parameters)?this.options.param"
+      },
+      {
+        "line": 64,
+        "code": "pair.value})}for(var name in headers)this.transport.setRequestHeader(name,headers[name])},success:function(){var status=this.getStatus();return!status||status>=200&&status<300||status==304},getStatus:function(){try{if(this.transport.status===1223)return 204;return this.transport.status||0}catch(e){r"
+      },
+      {
+        "line": 67,
+        "code": "\"\").unfilterJSON())}catch(e){this.dispatchException(e)}},dispatchException:function(exception){(this.options.onException||Prototype.emptyFunction)(this,exception);Ajax.Responders.dispatch(\"onException\",this,exception)}});Ajax.Request.Events=[\"Uninitialized\",\"Loading\",\"Loaded\",\"Interactive\",\"Complete"
+      },
+      {
+        "line": 69,
+        "code": "this._getResponseJSON()}},status:0,statusText:\"\",getStatus:Ajax.Request.prototype.getStatus,getStatusText:function(){try{return this.transport.statusText||\"\"}catch(e){return\"\"}},getHeader:Ajax.Request.prototype.getHeader,getAllHeaders:function(){try{return this.getAllResponseHeaders()}catch(e){retur"
+      },
+      {
+        "line": 71,
+        "code": "Ajax.Updater=Class.create(Ajax.Request,{initialize:function($super,container,url,options){this.container={success:container.success||container,failure:container.failure||(container.success?null:container)};options=Object.clone(options);var onComplete=options.onComplete;options.onComplete=function(re"
+      },
+      {
+        "line": 74,
+        "code": "arguments)},updateComplete:function(response){if(this.options.decay){this.decay=response.responseText==this.lastText?this.decay*this.options.decay:1;this.lastText=response.responseText}this.timer=this.onTimerEvent.bind(this).delay(this.decay*this.frequency)},onTimerEvent:function(){this.updater=new "
+      },
+      {
+        "line": 213,
+        "code": "options=Object.clone(options||{});var params=options.parameters,action=form.readAttribute(\"action\")||\"\";if(action.blank())action=window.location.href;options.parameters=form.serialize(true);if(params){if(Object.isString(params))params=params.toQueryParams();Object.extend(options.parameters,params)}i"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\kw_scripts--1bb36de5366f.js",
+    "ajax_calls": [
+      {
+        "line": 148,
+        "code": "scrollBy:function(a){if(!this.enabled)return!1;this.slider.setValueBy(a/(0==this.getCurrentMaximumDelta()?1:this.getCurrentMaximumDelta()))}});Object.extend(Control.ScrollBar,{instances:[],findByElementId:function(a){return Control.ScrollBar.instances.find(function(b){return b.container.id&&b.contai"
+      },
+      {
+        "line": 159,
+        "code": "function get_archive_msg(a,b){b=parseInt(b);var c=document.getElementById(\"chatHistoryWrap_\"+b);c?c.style.display=\"none\"!=c.style.display?\"none\":\"block\":new Ajax.Request(\"msg_history.php\",{method:\"post\",parameters:{to_user:a,msg_id:b},onSuccess:function(a){var c=a.responseText.split(\"#;#\");a=documen"
+      },
+      {
+        "line": 161,
+        "code": "function set_workers(a,b){b=parseInt(b);var c=parseInt($(\"slider_value\").value);parseInt($(\"population_used\").value);new Ajax.Request(\"ajax_workers.php\",{method:\"post\",parameters:{b_id:b,percent:c},onSuccess:function(c){var e=document.getElementById(a),f=parseInt($(\"slider_all\").innerHTML)-before_wo"
+      },
+      {
+        "line": 164,
+        "code": "function upgrade_info(a,b,c,d,e){b=parseInt(b);if(isNaN(b))return!1;new Ajax.Request(\"ajax_buildings.php\",{method:\"post\",parameters:{b_id:b,backto:\"overview.php\"},onSuccess:function(a){buildingInfo=new kwModal({width:640,content:a.responseText,placeholder:\"buildingsPlaceholder\",placeholderClass:\"bui"
+      },
+      {
+        "line": 165,
+        "code": "function getTavernBox(a){new Ajax.Request(\"ajax_tavern.php\",{method:\"post\",evalJS:\"force\",parameters:{backto:\"overview.php\",action:\"getLevel\"},onSuccess:function(b){$(a).update(b.responseText).show()}})}function reloadImage(a){var b=a.src,c=0>b.indexOf(\"#\")?b.length:b.indexOf(\"#\");a.src=b.substring("
+      },
+      {
+        "line": 166,
+        "code": "function autoLoadRegistration(){window.setTimeout(\"document.getElementById('link1').click();\",100)}function get_global_news(a){a=parseInt(a);new Ajax.Updater(\"globalNewsWrapper_content\",\"ajax_news.php\",{method:\"post\",parameters:{ot:a}})}"
+      },
+      {
+        "line": 167,
+        "code": "function showCastleList(a){showCastleList.isFetched||(showCastleList.isFetched=!0,$(\"castlesList\").update(a),new Ajax.Request(\"ajax_castles.php\",{method:\"post\",onSuccess:function(a){\"\"!=a.responseText?($(\"castlesList\").innerHTML=a.responseText,castles=1):($(\"castlesList\").hide(),castles=0)}}))}"
+      },
+      {
+        "line": 194,
+        "code": "b+\"px;\");s_timer=setInterval(function(){s_arrow_blinker($(\"bigArrow1\"),b,c,a)},400)}function updatePlayerProgress(a){new Ajax.Request(\"overview.php\",{method:\"post\",parameters:{ajax_progress_request:1,progress:a},onSuccess:function(a){}})}"
+      },
+      {
+        "line": 195,
+        "code": "function refreshSession(a,b){new Ajax.Request(\"ajax_main.php\",{method:\"post\",parameters:{type:\"refreshSession\",reload_from_db:\"undefined\"===typeof b?1:b},onSuccess:function(b){b=b.responseText.evalJSON(!0);b.bar_gold=100<b.bar_gold?100:b.bar_gold;b.bar_iron=100<b.bar_iron?100:b.bar_iron;b.bar_wood=1"
+      },
+      {
+        "line": 201,
+        "code": "closeActWrap=function(a){1==a&&$(\"dailyActWrap\").hide();2==a&&$(\"dailyRewWrap\").hide();hideOverlay(!0)};function stopTutorial(a){new Ajax.Request(\"ajax_advisor.php\",{method:\"post\",parameters:{type:\"skip\"},onSuccess:function(a){window.location.href=\"overview.php\"}})}"
+      },
+      {
+        "line": 202,
+        "code": "function replyTutorial(){new Ajax.Request(\"ajax_advisor.php\",{method:\"post\",parameters:{type:\"restart\"},onSuccess:function(a){a=a.responseText.evalJSON(!0);a.data.reload?window.location.reload():window.location.href=a.data.redirect_url}})}function getElementAbsolutePosition(a){var b=$(\"mainWrapper\")"
+      },
+      {
+        "line": 214,
+        "code": "function load_quester(a){var b=$(\"questerWrapperIN\");1!=a&&Effect.Appear(\"questerWrapper\",{duration:1});new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",onSuccess:function(c){1==a?(result=c.responseText,new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$"
+      },
+      {
+        "line": 216,
+        "code": "function load_clan_quester(a){var b=$(\"questerWrapperIN\");1!=a&&Effect.Appear(\"questerWrapper\",{duration:1});new Ajax.Request(\"ajax_clan_quester.php\",{encoding:\"utf-8\",onSuccess:function(c){1==a?(result=c.responseText,new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),set"
+      },
+      {
+        "line": 218,
+        "code": "function Complete_Level_1(){var a=$(\"questerWrapperIN\"),b=$(\"CoordForm\");new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",parameters:b.serialize(!0),onSuccess:function(b){result=b.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(a,{from:1,to:0,duration:.5}),Effect.BlindUp(a,{duratio"
+      },
+      {
+        "line": 220,
+        "code": "function AutocompleteQuester(){var a=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{method:\"get\",encoding:\"utf-8\",parameters:{autocomplete:1},onSuccess:function(b){var c;0<b.responseText.indexOf(\"||\")?(c=b.responseText.split(\"||\"),quester_current_level=c[0]):c[1]=b.responseText;a.update("
+      },
+      {
+        "line": 221,
+        "code": "function quester_skip(a){\"one\"!=a&&\"all\"!=a&&alert(\"nothing to skip\");var b=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{encoding:\"utf-8\",parameters:{autocomplete:1},onSuccess:function(a){result=a.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(b,{from:1,to:0,duration:.5})"
+      },
+      {
+        "line": 223,
+        "code": "function questerSetQuestType(a){var b=$(\"questerWrapperIN\");new Ajax.Request(\"ajax_quester.php\",{method:\"post\",parameters:{type:a},onSuccess:function(a){result=a.responseText.split(\"||\");eval(result[0])?(new Effect.Opacity(b,{from:1,to:0,duration:.5}),Effect.BlindUp(b,{duration:1}),setTimeout(\"$('qu"
+      },
+      {
+        "line": 271,
+        "code": "InstantProcess.prototype.getPopupStatus=function(){var a=this,b=Object.toQueryString({type:\"getPopupStatus\",process_type:this.processType})+\"&\"+Object.toQueryString(this.extraInfo);new Ajax.Request(\"ajax_instantProcess.php\",{method:\"post\",parameters:b,onSuccess:function(b){b=b.responseText.evalJSON("
+      },
+      {
+        "line": 273,
+        "code": "InstantProcess.prototype.loadPopup=function(){var a=this,b=Object.toQueryString({type:\"loadPopup\",process_type:this.processType})+\"&\"+Object.toQueryString(this.extraInfo);this.timers={};new Ajax.Request(\"ajax_instantProcess.php\",{method:\"post\",parameters:b,onSuccess:function(b){var d=b.responseText."
+      },
+      {
+        "line": 276,
+        "code": "InstantProcess.prototype.instantFinish=function(){var a=this,b=$(\"toggleInstantPopup\")&&$(\"toggleInstantPopup\").checked?1:0,c={type:\"instantProcess\",process_type:this.processType,process_id:this.processId};this.popupIsOpen&&(c.skip_popup=b);a.closePopup(!1);c=Object.toQueryString(c)+\"&\"+Object.toQue"
+      },
+      {
+        "line": 295,
+        "code": "ResourceBoosters.prototype.loadContent=function(a){var b=this;a=a||0;if(!$(\"productionBoostersContent\"))return!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",evalJS:!0,parameters:{type:\"loadContent\",castle_id:a},onSuccess:function(a){$(\"productionBoostersContent\").update(a.re"
+      },
+      {
+        "line": 300,
+        "code": "ResourceBoosters.prototype.activate=function(a){var b=this,c=$(\"boostCastleId\")?$(\"boostCastleId\").getValue():0;if(!this.activationEnabled)return!1;this.activationEnabled=!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activate\",booster_type:a,castle_id:c},o"
+      },
+      {
+        "line": 302,
+        "code": "ResourceBoosters.prototype.activateAll=function(){var a=this,b=$(\"boostCastleId\").getValue();if(!this.activationEnabled)return!1;this.activationEnabled=!1;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activateAll\",castle_id:b},onSuccess:function(c){a.activati"
+      },
+      {
+        "line": 303,
+        "code": "kwUniversalPopup.showError(c.message)}})};ResourceBoosters.prototype.activateAutoRenew=function(a){var b=$(\"boostCastleId\").getValue(),c=this;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"activateAutoRenew\",booster_type:a,castle_id:b},onSuccess:function(a){a="
+      },
+      {
+        "line": 304,
+        "code": "ResourceBoosters.prototype.deActivateAutoRenew=function(a){var b=$(\"boostCastleId\").getValue(),c=this;new Ajax.Request(\"ajax_premium_productionBooster.php\",{method:\"post\",parameters:{type:\"deActivateAutoRenew\",booster_type:a,castle_id:b},onSuccess:function(a){a=a.responseText.evalJSON(!0);1===a.succ"
+      },
+      {
+        "line": 305,
+        "code": "kwUniversalPopup.prototype.loadContent=function(a,b){this.extraInfo=b||{};this.contentType=a||4;if(!0===this.loadingContent)return!1;this.loadingContent=!0;var c=this,d=Object.toQueryString({type:this.contentType})+\"&\"+Object.toQueryString(this.extraInfo);new Ajax.Request(\"vipOptionsBootstrap.php\",{"
+      },
+      {
+        "line": 306,
+        "code": "kwUniversalPopup.prototype.showPopup=function(){};kwUniversalPopup.prototype.closePopup=function(){};kwUniversalPopup.prototype.activateAutorenew=function(){var a=this;new Ajax.Request(\"vipOptionsBootstrap.php\",{method:\"post\",evalJS:!0,parameters:{type:this.vipOptionId,method:\"activateAutorenew\",jso"
+      },
+      {
+        "line": 307,
+        "code": "kwUniversalPopup.prototype.deactivateAutorenew=function(){var a=this;new Ajax.Request(\"vipOptionsBootstrap.php\",{method:\"post\",evalJS:!0,parameters:{type:this.vipOptionId,method:\"deactivateAutorenew\",json:!0},onSuccess:function(b){$(\"switch_auto_renew\").value=a.activateString;removeTooltip(\"switch_a"
+      },
+      {
+        "line": 311,
+        "code": "MarchPopup.prototype.getCurrentMarch=function(){return this.marchData.marches[this.marchData.currentMarch]};MarchPopup.prototype.sendData=function(a,b){\"object\"!==typeof a&&(a={});new Ajax.Request(\"ajax_marchesPopup.php\",{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0)"
+      },
+      {
+        "line": 370,
+        "code": "MarchInfo.prototype.getTemplateId=function(){return this.templateId};MarchInfo.prototype.setTemplateId=function(a){this.templateId=a};MarchInfo.prototype.getAttackerObjectType=function(){return this.attackerObjectType};MarchInfo.prototype.setAttackerObjectType=function(a){this.attackerObjectType=a;r"
+      },
+      {
+        "line": 376,
+        "code": "$(\"addSavedCoord_3\").stopObserving().observe(\"click\",function(){d.save(a,b,3);d.addDialog.hide();\"function\"===typeof c&&c()})})};SavedCoords.prototype.save=function(a,b,c){this.sendData({x:a,y:b,listType:c,type:\"addCoordinate\"},function(a){a.success?kwModal.info(a.message):kwModal.error(a.message)})"
+      },
+      {
+        "line": 451,
+        "code": "kwModal.prototype.addPlaceholderClass=function(a){$(this.options.placeholder).addClassName(a)};kwModal.prototype.removePlaceholderClass=function(a){$(this.options.placeholder).removeClassName(a)};kwModal.prototype.setBackgroundDim=function(a){this.options.backgroundDim=a};kwModal.setLangStrings=func"
+      },
+      {
+        "line": 464,
+        "code": "QuesterUI.prototype.sendData=function(a,b,c){c=c||\"ajax_quester_v63.php\";a=a||{};a=Object.extend(a,{pageCont:window.location.pathname+window.location.search});new Ajax.Request(c,{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0);\"function\"===typeof b&&b(a)}})};"
+      },
+      {
+        "line": 475,
+        "code": "Advisor.prototype.sendData=function(a,b,c){\"object\"!==typeof a&&(a={});new Ajax.Request(c||\"ajax_advisor.php\",{method:\"post\",parameters:a,onSuccess:function(a){a=a.responseText.evalJSON(!0);\"function\"===typeof b&&b(a)}})};Advisor.prototype.finish=function(a,b){b=void 0===b?!0:!1;var c={type:\"finish\""
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\mapMenu--65b87b5e3980.js",
+    "ajax_calls": [
+      {
+        "line": 55,
+        "code": "new Ajax.Request(url, {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\MapServer_optimized--a5807702a8c1.js",
+    "ajax_calls": [
+      {
+        "line": 523,
+        "code": "new Ajax.Request('ajax_map.php', {"
+      },
+      {
+        "line": 913,
+        "code": "new Ajax.Request('ajax_addCoordinates.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\marches--09fd1ecb4332.js",
+    "ajax_calls": [
+      {
+        "line": 35,
+        "code": "new Ajax.Request('ajax_marches.php', {"
+      },
+      {
+        "line": 277,
+        "code": "new Ajax.Request('info.php', {"
+      },
+      {
+        "line": 291,
+        "code": "new Ajax.Request('ajax_marches.php', {"
+      },
+      {
+        "line": 347,
+        "code": "new Ajax.Request('ajax_marches.php', {"
+      },
+      {
+        "line": 377,
+        "code": "new Ajax.Request('ajax_tower.php', {"
+      },
+      {
+        "line": 394,
+        "code": "new Ajax.Request('ajax_tower.php', {"
+      },
+      {
+        "line": 414,
+        "code": "new Ajax.Request('ajax_tower.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\mineSlider--8b278085d24f.js",
+    "ajax_calls": [
+      {
+        "line": 35,
+        "code": "new Ajax.Request('ajax_buildings.php', {"
+      },
+      {
+        "line": 56,
+        "code": "new Ajax.Request('ajax_buildings.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\tavernSlider--f0f572952044.js",
+    "ajax_calls": [
+      {
+        "line": 52,
+        "code": "new Ajax.Request('army_marches.php',{"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\train_units--f842ecbb4ff0.js",
+    "ajax_calls": [
+      {
+        "line": 197,
+        "code": "new Ajax.Request('ajax_units.php', {"
+      },
+      {
+        "line": 219,
+        "code": "new Ajax.Request('ajax_barracks.php', {"
+      },
+      {
+        "line": 274,
+        "code": "new Ajax.Request('ajax_barracks.php', {"
+      }
+    ]
+  },
+  {
+    "file": "archive\\public\\static.khanwarsx.com\\whitePortal--1f8dd054909c.js",
+    "ajax_calls": [
+      {
+        "line": 26,
+        "code": "new Ajax.Request('ajax_whitePortal.php', {"
+      }
+    ]
+  }
+]

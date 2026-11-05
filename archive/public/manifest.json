@@ -1,0 +1,403 @@
+{
+  "https://www.khanwars.ae/": {
+    "url": "https://www.khanwars.ae/",
+    "collected_at": "2026-10-30T15:14:49.558956+00:00",
+    "status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "path": "archive\\public\\www.khanwars.ae\\index--ebe2e8f8c926.html",
+    "bytes": 32190,
+    "sha256": "e94d600f7f0b448a54cec353dfa719825e6bb9a2fee143616a4a755afb6d4916"
+  },
+  "https://static.khanwarsx.com/game7.1/js/ajax_army_order.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/ajax_army_order.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.004849+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\ajax_army_order--95e6c992d8d9.js",
+    "bytes": 21213,
+    "sha256": "de41457e5e5c96ab9379f894ecfda4394d3d8e5c736e802deb23eb3bb6bea347"
+  },
+  "https://static.khanwarsx.com/gate8.0/dist/css/shared.css?v=4.3": {
+    "url": "https://static.khanwarsx.com/gate8.0/dist/css/shared.css?v=4.3",
+    "collected_at": "2026-10-30T15:14:51.443943+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\shared--c06ef382b1a7.css",
+    "bytes": 22039,
+    "sha256": "1cd5060eebf3065c033351afea2381d379302854d673a3dbf45cd69c12a9c1ea"
+  },
+  "https://static.khanwarsx.com/gate8.0/dist/css/default.css?v=4.3": {
+    "url": "https://static.khanwarsx.com/gate8.0/dist/css/default.css?v=4.3",
+    "collected_at": "2026-10-30T15:14:51.507365+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\default--fb7725c4042a.css",
+    "bytes": 59673,
+    "sha256": "25a92120752dbbc09d99daed1700e37981b380a4bd158e7ce45e62b78cf9cfd4"
+  },
+  "https://static.khanwarsx.com/gate8.0/dist/js/libs.js?v=3.9": {
+    "url": "https://static.khanwarsx.com/gate8.0/dist/js/libs.js?v=3.9",
+    "collected_at": "2026-10-30T15:14:51.564088+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\libs--d6d27d39745b.js",
+    "bytes": 187753,
+    "sha256": "f44a318640d1a070d291325044e3771999a22271f07dea67bd2eaccbddc78ae4"
+  },
+  "https://static.khanwarsx.com/gate8.0/dist/js/components.js?v=3.9": {
+    "url": "https://static.khanwarsx.com/gate8.0/dist/js/components.js?v=3.9",
+    "collected_at": "2026-10-30T15:14:51.606420+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\components--411a0ad9d71c.js",
+    "bytes": 20277,
+    "sha256": "6f75075f0618991ba5076aed6035440ca49bcf672168e38358b327ad7dc17a96"
+  },
+  "https://static.khanwarsx.com/gate8.0/dist/js/common.js?v=3.9": {
+    "url": "https://static.khanwarsx.com/gate8.0/dist/js/common.js?v=3.9",
+    "collected_at": "2026-10-30T15:14:51.658258+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\common--0c797b79f7e2.js",
+    "bytes": 5840,
+    "sha256": "25f9d73179242d2bb65acb0d3dab812b526aa6396d12f808b9b8e74660e7350c"
+  },
+  "https://static.khanwarsx.com/game7.1/js/kw_libs.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/kw_libs.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.073723+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\kw_libs--c18714f4b234.js",
+    "bytes": 127336,
+    "sha256": "ee57ae83c0e9f1515dda4a8e344bef731125cafe8aeae57cba6ef490c5a75e82"
+  },
+  "https://static.khanwarsx.com/game7.1/js/kw_scripts.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/kw_scripts.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.133871+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\kw_scripts--1bb36de5366f.js",
+    "bytes": 211589,
+    "sha256": "a15efd79fe8d655000dff97162e4bbcf484212c440c6e184a9d4199543dd5950"
+  },
+  "https://static.khanwarsx.com/game7.1/js/arena.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/arena.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.176670+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\arena--f7c7825c10da.js",
+    "bytes": 18871,
+    "sha256": "8e7a4fbf7aea1310b8c90c3824f94c44c75cf94159219cb639a71e733fcb5934"
+  },
+  "https://static.khanwarsx.com/game7.1/js/dragdrop.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/dragdrop.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.337226+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\dragdrop--f1a577804b56.js",
+    "bytes": 31056,
+    "sha256": "ebc56045f199391ad34d706e4453e775c2e1d5815bca374dc26616610834723c"
+  },
+  "https://static.khanwarsx.com/game7.1/js/controls.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/controls.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.399649+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\controls--b568f9479e85.js",
+    "bytes": 34787,
+    "sha256": "f7486b4b3955611156b8e47c768e4879739155ab0318ce1725c6df8565e4d922"
+  },
+  "https://static.khanwarsx.com/game7.1/js/knight_inventory.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/knight_inventory.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.466374+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\knight_inventory--c83049897e1f.js",
+    "bytes": 10953,
+    "sha256": "5317c5bbf34775c7f66b2f5d118e1799be25c15de7d0619aab7e5b2d9a04a116"
+  },
+  "https://static.khanwarsx.com/game7.1/js/isMobile.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/isMobile.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.528027+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\isMobile--66fad045e13e.js",
+    "bytes": 494,
+    "sha256": "7354d372ffbe0a45eac2a62d9add0092a584f9490c6a04976c3d7f74dc8e645d"
+  },
+  "https://static.khanwarsx.com/game7.1/js/bottomBar.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/bottomBar.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.632291+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\bottomBar--e9ed3c5032a3.js",
+    "bytes": 18109,
+    "sha256": "46182f237b22814524ba7879b64e9873fe828c569226b42bdf0f562678442315"
+  },
+  "https://static.khanwarsx.com/game7.1/js/flaotingbox.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/flaotingbox.js",
+    "collected_at": "2026-10-30T15:14:50.684795+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\flaotingbox--3d0fc6e0ca24.js",
+    "bytes": 3486,
+    "sha256": "88ea55d68f46cb7676e2ed0760e613feeb33dd32c36e0c2ca320a7fa092e3ded"
+  },
+  "https://static.khanwarsx.com/game7.1/js/hotlink.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/hotlink.js",
+    "collected_at": "2026-10-30T15:14:50.728727+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\hotlink--d518eee588fa.js",
+    "bytes": 2192,
+    "sha256": "2bd900ac4f68764ff33f526e3fe0d3bd1c553d9811238db8fd72a76d32693ead"
+  },
+  "https://static.khanwarsx.com/game7.1/js/slider.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/slider.js",
+    "collected_at": "2026-10-30T15:14:50.772207+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\slider--67fef0533542.js",
+    "bytes": 10162,
+    "sha256": "b0ff95361e15629bc9fd5d6a266349e3573765c3fc5f53bb0fc0362e53985955"
+  },
+  "https://static.khanwarsx.com/game7.1/js/mineSlider.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/mineSlider.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.813351+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\mineSlider--8b278085d24f.js",
+    "bytes": 2567,
+    "sha256": "297de806f0753d288edb76b3e9551c27b553d4ae2731c618dbc8dffd47835825"
+  },
+  "https://static.khanwarsx.com/game7.1/js/blacksmithSlider.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/blacksmithSlider.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.854651+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\blacksmithSlider--494d5940a9bf.js",
+    "bytes": 4070,
+    "sha256": "7097cc99b2043f0d9c0c9515ef1fee2e9929d41b668b20ddbd1dbe5a03d063e5"
+  },
+  "https://static.khanwarsx.com/game7.1/js/tavernSlider.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/tavernSlider.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.897346+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\tavernSlider--f0f572952044.js",
+    "bytes": 2600,
+    "sha256": "8488be941a6af62ee883dc243718af5d3b34aafb4ab0855a2f93c6697766328f"
+  },
+  "https://static.khanwarsx.com/game7.1/js/cityEvents.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/cityEvents.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.941769+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\cityEvents--bcea75df3da2.js",
+    "bytes": 11645,
+    "sha256": "e04ed7bd21a2dfa68cfb2523f1ca2138166d66d8109042c509f90fd34c1289d8"
+  },
+  "https://static.khanwarsx.com/game7.1/js/whitePortal.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/whitePortal.js?ver=73",
+    "collected_at": "2026-10-30T15:14:50.985246+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\whitePortal--1f8dd054909c.js",
+    "bytes": 1503,
+    "sha256": "3f56b7b6e942eeed6e594ca2287598e98cc21d8c0f918d7464de2214dabb3593"
+  },
+  "https://static.khanwarsx.com/game7.1/js/jquery1.10.min.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/jquery1.10.min.js",
+    "collected_at": "2026-10-30T15:14:51.025648+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\jquery1.10.min--69fad110abb2.js",
+    "bytes": 93100,
+    "sha256": "89a15e9c40bc6b14809f236ee8cd3ed1ea42393c1f6ca55c7855cd779b3f922e"
+  },
+  "https://static.khanwarsx.com/game7.1/css/layout.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/layout.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.068272+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\layout--442f7efab8eb.css",
+    "bytes": 582455,
+    "sha256": "ab4dc96d10368430530eba847a0ec03dee3b83f9b4bd4216d4c505ce1595b209"
+  },
+  "https://static.khanwarsx.com/game7.1/css/popups.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/popups.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.142175+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\popups--a7562c0e1304.css",
+    "bytes": 227252,
+    "sha256": "6117a0e048cd57e751154a28ce27d80b0eb7d5dffa3f73bffb3f1cea516d3363"
+  },
+  "https://static.khanwarsx.com/game7.1/css/quester_v63.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/quester_v63.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.189140+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\quester_v63--fa6f7a740d0a.css",
+    "bytes": 26857,
+    "sha256": "ae06573f31f2590f70a7712ab60caada5b68e707b5f61dd9d7a036dc0f2fd581"
+  },
+  "https://static.khanwarsx.com/game7.1/css/arena.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/arena.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.234490+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\arena--238387f748fc.css",
+    "bytes": 37991,
+    "sha256": "c14e34c10dfdd68a082bd1481227c53d034ff06b62516071e1959fbd9f6f3211"
+  },
+  "https://static.khanwarsx.com/game7.1/css/layout_rtl.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/layout_rtl.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.277198+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\layout_rtl--40f7985d0dcb.css",
+    "bytes": 78945,
+    "sha256": "bbebfb20d71746b0ad9607f710762ecd4048a9a59abab5966472a480f03e3d25"
+  },
+  "https://static.khanwarsx.com/game7.1/css/muslim.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/muslim.css?v=36",
+    "collected_at": "2026-10-30T15:30:31.984753+00:00",
+    "error": "HTTP Error 404: Not Found"
+  },
+  "https://static.khanwarsx.com/game7.1/css/mobile.css?v=36": {
+    "url": "https://static.khanwarsx.com/game7.1/css/mobile.css?v=36",
+    "collected_at": "2026-10-30T15:14:51.395653+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\mobile--9639c50a8e61.css",
+    "bytes": 1009,
+    "sha256": "35511e860b92e2114b7ceae4e8e5c6ef14b8e16a173366717b9869f59bd2e6f6"
+  },
+  "https://static.khanwarsx.com/game7.1/css/reset.css": {
+    "url": "https://static.khanwarsx.com/game7.1/css/reset.css",
+    "collected_at": "2026-10-30T15:14:51.716753+00:00",
+    "status": 200,
+    "content_type": "text/css",
+    "path": "archive\\public\\static.khanwarsx.com\\reset--2994d23d7a2d.css",
+    "bytes": 1003,
+    "sha256": "cb71cbd6860540d241c17d6d9e413fb9408163a4758c7d29f3b0edcc7a71bffd"
+  },
+  "https://static.khanwarsx.com/game7.1/js/rcourt-accordion.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/rcourt-accordion.js",
+    "collected_at": "2026-10-30T15:17:27.950974+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\rcourt-accordion--64b761b78353.js",
+    "bytes": 4078,
+    "sha256": "1938841509b7c0b3dc0d77ee6857d3faccc2a3167ab6f9e9d18352950052edcd"
+  },
+  "https://static.khanwarsx.com/game7.1/js/dragdrop.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/dragdrop.js",
+    "collected_at": "2026-10-30T15:17:28.044565+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\dragdrop--d39bc9d048d5.js",
+    "bytes": 31056,
+    "sha256": "ebc56045f199391ad34d706e4453e775c2e1d5815bca374dc26616610834723c"
+  },
+  "https://static.khanwarsx.com/game7.1/js/time_counter.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/time_counter.js",
+    "collected_at": "2026-10-30T15:17:28.237111+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\time_counter--1c72c3378627.js",
+    "bytes": 3383,
+    "sha256": "90b8458f420a06d397e9008f920a81b1f0abe97f1137c2db2d8be8a0df50ebf0"
+  },
+  "https://static.khanwarsx.com/game7.1/js/train_units.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/train_units.js?ver=73",
+    "collected_at": "2026-10-30T15:17:28.458978+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\train_units--f842ecbb4ff0.js",
+    "bytes": 8592,
+    "sha256": "d2e8659565fcc786511b84cd19bfff432aa89cf5eae1dea1ebd0df5d321793f1"
+  },
+  "https://static.khanwarsx.com/game7.1/js/get_building_info.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/get_building_info.js",
+    "collected_at": "2026-10-30T15:17:28.520878+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\get_building_info--556d4681640c.js",
+    "bytes": 1969,
+    "sha256": "1e834bf21808b144d0e81dcf9230ada9804f78144b84f1a6cf77bd6c9795ff17"
+  },
+  "https://static.khanwarsx.com/game7.1/js/marches.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/marches.js",
+    "collected_at": "2026-10-30T15:17:28.591600+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\marches--09fd1ecb4332.js",
+    "bytes": 10653,
+    "sha256": "f390875e6a7f0a6666012a05729c36d25398752abfe9a3b4507f2c371751489a"
+  },
+  "https://static.khanwarsx.com/game7.1/js/controls.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/controls.js",
+    "collected_at": "2026-10-30T15:17:47.286058+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\controls--6830b05fcba6.js",
+    "bytes": 34787,
+    "sha256": "f7486b4b3955611156b8e47c768e4879739155ab0318ce1725c6df8565e4d922"
+  },
+  "https://static.khanwarsx.com/game7.1/js/MapCore_optimized.js?v=3.3": {
+    "url": "https://static.khanwarsx.com/game7.1/js/MapCore_optimized.js?v=3.3",
+    "collected_at": "2026-10-30T15:17:47.365177+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\MapCore_optimized--145073767d8d.js",
+    "bytes": 21214,
+    "sha256": "bc6baabd9218f1d07324d2581d1dbbdb243028a71329cbc95eabadd6b79aab77"
+  },
+  "https://static.khanwarsx.com/game7.1/js/mapMenu.js": {
+    "url": "https://static.khanwarsx.com/game7.1/js/mapMenu.js",
+    "collected_at": "2026-10-30T15:17:47.422933+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\mapMenu--65b87b5e3980.js",
+    "bytes": 5462,
+    "sha256": "b2ada7ba6c7a2d69c2b7dfdceeb62175b158a877a4178de6c8deac3ab39e2dc2"
+  },
+  "https://static.khanwarsx.com/game7.1/js/MapServer_optimized.js?v=2.4": {
+    "url": "https://static.khanwarsx.com/game7.1/js/MapServer_optimized.js?v=2.4",
+    "collected_at": "2026-10-30T15:17:47.479829+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\MapServer_optimized--a5807702a8c1.js",
+    "bytes": 28602,
+    "sha256": "1e9ac2422e17cb2126bcedfab6d7dd58a046465ac18e480dfad9840669bea051"
+  },
+  "https://static.khanwarsx.com/game7.1/js/pohod.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/pohod.js?ver=73",
+    "collected_at": "2026-10-30T15:29:17.183964+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\pohod--3c239eea460d.js",
+    "bytes": 19963,
+    "sha256": "ab6e8c36d9a07d19bf5a4c44c688a60a48ca171fb48f2ff5a90b9ce0adf0339f"
+  },
+  "https://static.khanwarsx.com/game7.1/js/mapMenu.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/mapMenu.js?ver=73",
+    "collected_at": "2026-10-30T15:30:32.077546+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\mapMenu--f611c30663c4.js",
+    "bytes": 5462,
+    "sha256": "b2ada7ba6c7a2d69c2b7dfdceeb62175b158a877a4178de6c8deac3ab39e2dc2"
+  },
+  "https://static.khanwarsx.com/game7.1/js/province.js?ver=73": {
+    "url": "https://static.khanwarsx.com/game7.1/js/province.js?ver=73",
+    "collected_at": "2026-10-30T15:30:32.135939+00:00",
+    "status": 200,
+    "content_type": "application/javascript",
+    "path": "archive\\public\\static.khanwarsx.com\\province--b4cd6f359cfd.js",
+    "bytes": 7231,
+    "sha256": "3b1b41911719f08c32913f32047b96cb3f510c6d93109af393d9ac5c27659c05"
+  }
+}
