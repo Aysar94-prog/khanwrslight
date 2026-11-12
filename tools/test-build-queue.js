@@ -394,4 +394,66 @@ context.sleepUntilHead = remain => { scheduledHead = remain; };
 vm.runInContext(extract('checkBuildQueue'), context);
 context.checkBuildQueue(value => assert.equal(value, false));
 assert.equal(scheduledHead, 180);
-console.log('Build queue, preview, startup, free-finish, and idle-wakeup regression checks passed.');
+
+// A rejected upgrade keeps its queue entry and prevents all build polling
+// before the resource wait expires, even when the timer fires every two seconds.
+const sleepStorage = new Map();
+let resourceEstimate = { error: 'http-500' };
+let resourceChecks = 0;
+let rejectedSends = 0;
+Object.assign(context, {
+	localStorage: {
+		getItem: key => sleepStorage.get(key),
+		setItem: (key, value) => sleepStorage.set(key, value)
+	},
+	getBuildingResourceWait: (id, cb) => cb(resourceEstimate),
+	getBuildingUpgradePreview: (id, cb) => cb({ nextLevel: 3 }),
+	getBuildQueue: cb => { resourceChecks++; cb({ items: [] }); },
+	upgradeBuilding: (id, cb) => {
+		rejectedSends++;
+		cb({ error: 1, error_txt: 'الذهب غير كافي' });
+	}
+});
+context.LS.autoBuildSleep = 'kw.autoBuildSleep';
+vm.runInContext(['lsGet', 'autoBuildSleepMap', 'autoBuildSleepUntil', 'setAutoBuildSleep',
+	'clearAutoBuildSleep'].map(extract).join('\n'), context);
+items = [7, 5];
+Object.assign(state, {
+	autoBuildAll: false, currentCastleId: '342', castlesAt: testNow,
+	autoBuildNextAt: 0, ifCheckAt: 0, abEmptyWaiting: false
+});
+context.autoBuildTick();
+assert.equal(rejectedSends, 1);
+assert.equal(context.autoBuildSleepUntil('342'), testNow + 120000);
+assert.equal(state.pendingBuilds.length, 0);
+assert.deepEqual(items, [7, 5]);
+const checksBeforeSleep = resourceChecks;
+for (let elapsed = 2000; elapsed < 120000; elapsed += 2000) {
+	testNow += 2000;
+	context.autoBuildTick();
+}
+assert.equal(resourceChecks, checksBeforeSleep);
+assert.equal(rejectedSends, 1);
+testNow += 2000;
+resourceEstimate = { seconds: 30, resource: 'الذهب' };
+context.autoBuildTick();
+assert.equal(rejectedSends, 2);
+assert.equal(context.autoBuildSleepUntil('342'), testNow + 35000);
+
+// Use the castle recorded at submission even if the current castle changes.
+state.currentCastleId = '999';
+resourceEstimate = { seconds: 600, resource: 'الذهب' };
+context.handleBuildResult(7, null, { error: 1, error_txt: 'الذهب غير كافي' }, unknown);
+assert.equal(context.autoBuildSleepUntil('342'), testNow + 300000);
+assert.equal(context.autoBuildSleepUntil('999'), 0);
+
+// If persisting the wait fails, the current session still backs off.
+context.localStorage.setItem = () => { throw new Error('storage unavailable'); };
+resourceEstimate = { seconds: 30, resource: 'الذهب' };
+context.handleBuildResult(7, null, { error: 1, error_txt: 'الذهب غير كافي' }, { ...unknown, castleId: '999' });
+assert.equal(state.autoBuildNextAt, testNow + 35000);
+const checksBeforeFallback = resourceChecks;
+testNow += 2000;
+context.autoBuildTick();
+assert.equal(resourceChecks, checksBeforeFallback);
+console.log('Build queue, preview, startup, free-finish, idle-wakeup, and resource-wait regression checks passed.');

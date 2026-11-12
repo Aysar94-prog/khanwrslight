@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KhanWars Toolkit — الإرساليات والمباني والقلاع
 // @namespace    khanwrslight
-// @version      1.7.23
+// @version      1.7.26
 // @description  إدارة الإرساليات والمباني والحداد والقلاع والأمير عبر طلبات خلفية دون التنقل بين الصفحات.
 // @author       khanwrslight
 // @match        https://*.game.khanwars.ae/*
@@ -46,7 +46,7 @@
 	if (window.__KW_TOOLKIT_LOADED__) return;
 	window.__KW_TOOLKIT_LOADED__ = true;
 
-	var VERSION = '1.7.23';
+	var VERSION = '1.7.26';
 
 	/* ============================================================
 	 * 1) Helpers (منقولة من analysis/*.js)
@@ -1119,7 +1119,7 @@
 		'        <span class="kw-meta" id="kw-smith-status">اختر العاصمة «ي-8-» من قائمة القلاع.</span>',
 		'      </div>',
 		'      <div class="kw-qhead" id="kw-smith-castle-label">—</div>',
-		'      <div class="kw-ablog" id="kw-smith-note">الطابور للقراءة فقط هنا؛ استخدم داشبوردك الحالية للإضافة والحذف.</div>',
+		'      <div class="kw-ablog" id="kw-smith-note">إدارة الطابور من داشبوردك؛ يُحذف أمر واحد تلقائياً بعد تأكيد قبول التطوير فقط.</div>',
 		'    </div>',
 		'    <div class="kw-table-wrap"><table id="kw-smith-levels"></table></div>',
 		'    <div class="kw-empty" id="kw-smith-empty">اختر قلعة التطوير ثم اضغط «تحديث المستويات».</div>',
@@ -1522,6 +1522,130 @@
 	}
 
 	function smithySentKey(castleId) { return 'kw.smithy.sent.' + String(castleId); }
+	function smithyPendingKey(castleId) { return 'kw.smithy.pending.' + String(castleId); }
+
+	/* The dashboard owns ordering. Reconcile only the accepted unit/type pair:
+	 * a reduced count means it has already been removed; otherwise pull one copy
+	 * wherever it moved. Equal pairs are interchangeable; other commands stay intact. */
+	function smithyConsumeAccepted(pending) {
+		var current = readJsonLS(SMITHY_QUEUE_KEY, []), original = pending.queue;
+		if (!Array.isArray(current) || !Array.isArray(original)) return false;
+		if (!Number.isInteger(pending.index) || pending.index < 0 || pending.index >= original.length) return false;
+		var pair = original[pending.index];
+		if (!Array.isArray(pair) || String(pair[0]) !== String(pending.unitId) ||
+			toInt(pair[1]) !== (pending.stat === 'attack' ? 1 : 0)) return false;
+		function matches(item) {
+			return Array.isArray(item) && String(item[0]) === String(pair[0]) && toInt(item[1]) === toInt(pair[1]);
+		}
+		var originalCount = original.filter(matches).length, currentCount = current.filter(matches).length;
+		if (currentCount < originalCount) return 'already-removed';
+		var index = current.findIndex(matches);
+		if (index < 0) return 'already-removed';
+		var occurrence = current.slice(0, index).filter(matches).length;
+		current.splice(index, 1);
+		localStorage.setItem(SMITHY_QUEUE_KEY, JSON.stringify(current));
+		/* Occurrence keys in the legacy ledger must move with duplicate commands. */
+		var prefix = String(pair[0]) + ':' + toInt(pair[1]) + ':';
+		Object.keys(localStorage).filter(function (key) { return key.indexOf('kw.smithy.sent.') === 0; }).forEach(function (key) {
+			var old = readJsonLS(key, {}), moved = {};
+			Object.keys(old).forEach(function (entry) {
+				if (entry.indexOf(prefix) !== 0) { moved[entry] = old[entry]; return; }
+				var n = Number(entry.slice(prefix.length));
+				if (n !== occurrence) moved[prefix + (n > occurrence ? n - 1 : n)] = old[entry];
+			});
+			localStorage.setItem(key, JSON.stringify(moved));
+		});
+		return 'removed';
+	}
+
+	function smithyFinishAccepted(castle, pending) {
+		var result = smithyConsumeAccepted(pending);
+		if (!result) {
+			state.smithyStatus = 'بيانات الأمر المقبول غير صالحة؛ لم أغيّر الطابور';
+			return;
+		}
+		localStorage.removeItem(smithyPendingKey(castle.id));
+		state.smithyStatus = result === 'removed' ? 'تأكد قبول التطوير — حُذف أمر واحد من الكيو' :
+			'تأكد قبول التطوير — أُزيل أمره من الطابور مسبقاً؛ سأكمل الأوامر الحالية';
+	}
+
+	function smithyResponseError(text) {
+		var payload;
+		try { payload = JSON.parse(text); } catch (_) { /* HTML response */ }
+		if (payload) {
+			var data = payload.data || payload, error = data.error;
+			if (error != null && String(error) !== '0' && String(error) !== 'false') {
+				return data.error_txt || data.message || payload.error_txt || payload.message || String(error);
+			}
+		}
+		var doc = new DOMParser().parseFromString(text, 'text/html');
+		doc.querySelectorAll('script, style').forEach(function (node) { node.remove(); });
+		var message = (doc.body.textContent || '').match(/[^\n.!؟]{0,100}(?:غير كاف[يةي]*|not enough|insufficient)[^\n.!؟]{0,100}/i);
+		return message ? message[0].trim() : '';
+	}
+
+	function smithyFetchLevel(pending) {
+		return fetch('/upgrades.php?u_type=' + encodeURIComponent(pending.category), {
+			credentials: 'same-origin', cache: 'no-store'
+		}).then(function (response) {
+			if (!response.ok) throw new Error('HTTP ' + response.status);
+			return response.text();
+		}).then(function (html) {
+			var doc = new DOMParser().parseFromString(html, 'text/html'), result = null;
+			doc.querySelectorAll('#upgradesList .upgradeItem').forEach(function (item) {
+				var link = item.querySelector('.title a');
+				if (!link || new URL(link.getAttribute('href'), location.origin).searchParams.get('posted_id') !== pending.unitId) return;
+				var levels = item.querySelectorAll('.typeLevel'), node = levels[pending.stat === 'attack' ? 0 : 1];
+				if (node) result = parseInt(node.textContent.replace(/[^\d-]/g, ''), 10);
+			});
+			return result;
+		});
+	}
+
+	/* HTTP 200 is not acceptance. Check new process IDs (even if the old head
+	 * finished and the count stayed unchanged), or a fresh matching unit level. */
+	function smithyVerifyPending(castle, pending) {
+		/* Previously confirmed requests need local reconciliation only. In particular,
+		 * recover v1.7.25 journals even after the dashboard replaced the whole queue. */
+		if (pending.accepted) {
+			smithyFinishAccepted(castle, pending);
+			state.smithyBusy = false; renderSmithy();
+			return Promise.resolve();
+		}
+		state.smithyBusy = true;
+		return new Promise(function (resolve) {
+			withVerifiedCastle(castle.id, function (release) {
+				fetchSmithyQueueInfo().then(function (info) {
+					var data = smithyReadData(castle.id);
+					data.queueCount = info.count; data.queueItems = info.items; data.queueAt = info.at;
+					data.at = 0;
+					localStorage.setItem(smithyDataKey(castle.id), JSON.stringify(data));
+					if (pending.accepted || info.items.some(function (item) { return pending.processIds.indexOf(String(item.id)) < 0; })) return true;
+					return smithyFetchLevel(pending).then(function (level) { return level != null && level > pending.before; });
+				}).then(function (accepted) {
+					if (accepted) {
+						pending.accepted = true;
+						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
+						smithyFinishAccepted(castle, pending);
+					} else if (pending.rejection) {
+						localStorage.removeItem(smithyPendingKey(castle.id));
+						state.smithyRetryAt = Date.now() + 120000;
+						state.smithyStatus = 'لم يُقبل التطوير؛ الأمر بقي مكانه وسأعيد المحاولة بعد دقيقتين: ' + pending.rejection;
+					} else {
+						pending.nextCheck = Date.now() + 30000;
+						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
+						state.smithyStatus = 'بانتظار تأكيد قبول التطوير؛ لم أحذف الأمر ولم أعد إرساله';
+					}
+				}).catch(function (error) {
+					state.smithyStatus = 'تعذّر تأكيد التطوير؛ الأمر محفوظ دون تكرار: ' + error.message;
+				}).finally(function () { release(); state.smithyBusy = false; renderSmithy(); resolve(); });
+			}, function () {
+				state.smithyBusy = false;
+				state.smithyStatus = 'تعذّر التحقق من قلعة التطوير؛ الأمر محفوظ';
+				renderSmithy(); resolve();
+			});
+		});
+	}
 
 	function smithyItemKey(item, queue, index) {
 		var id = String(item[0]), type = String(toInt(item[1]) === 1 ? 1 : 0), occurrence = 0;
@@ -1540,7 +1664,7 @@
 		if (!castleId) return 'بانتظار التنفيذ';
 		var entry = smithyReadSent(castleId)[smithyItemKey(item, queue, index)];
 		if (!entry) return 'بانتظار التنفيذ';
-		return entry.skipped === 'max-level' ? 'الحد الأقصى — متخطّى' : 'أُرسل — الطابور للداشبورد';
+		return entry.skipped === 'max-level' ? 'الحد الأقصى — متخطّى' : 'سجل إرسال قديم — القبول غير مؤكد';
 	}
 
 	function smithyPruneSent(castleId, queue) {
@@ -1755,9 +1879,15 @@
 
 	function smithyAutoTick() {
 		if (!state.smithyAuto || state.smithyBusy || state.smithyLoading) return;
+		if (state.smithyRetryAt && Date.now() < state.smithyRetryAt) return;
 		ensureSmithyCastle(function (castle, err) {
 			if (!state.smithyAuto) return;
 			if (!castle) { state.smithyStatus = err; renderSmithy(); return; }
+			var pending = readJsonLS(smithyPendingKey(castle.id), null);
+			if (pending) {
+				if (!pending.nextCheck || Date.now() >= pending.nextCheck) smithyVerifyPending(castle, pending);
+				return;
+			}
 			var data = smithyReadData(castle.id);
 			var queue = smithyReadQueue();
 			if (!queue.length) { state.smithyStatus = 'الطابور فارغ — ' + smithyQueueSummary(data); renderSmithy(); return; }
@@ -1806,12 +1936,12 @@
 					sent[key] = { at: Date.now(), skipped: 'max-level' };
 					continue;
 				}
-				picked = { item: candidate, key: key, unitId: id, stat: stat, category: data.types[id], before: toInt(unit[stat], 0) };
+				picked = { item: candidate, key: key, index: qi, unitId: id, stat: stat, category: data.types[id], before: toInt(unit[stat], 0) };
 				break;
 			}
 			if (!picked) {
 				localStorage.setItem(smithySentKey(castle.id), JSON.stringify(sent));
-				state.smithyStatus = 'كل عناصر الطابور أُرسلت أو بلغت الحد الأقصى؛ الطابور بقي دون تعديل — ' + smithyQueueSummary(data); renderSmithy(); return;
+				state.smithyStatus = 'الطابور يحتوي سجلات إرسال قديمة غير مؤكدة أو عناصر بالحد الأقصى؛ راجعها من داشبوردك — ' + smithyQueueSummary(data); renderSmithy(); return;
 			}
 			state.smithyBusy = true;
 			state.smithyStatus = 'التحقق من خانات الحداد قبل الإرسال…';
@@ -1829,32 +1959,48 @@
 					return;
 				}
 				withVerifiedCastle(castle.id, function (releaseCastleLock) {
+					if (!state.smithyAuto || JSON.stringify(smithyReadQueue()) !== JSON.stringify(queue)) {
+						releaseCastleLock(); state.smithyBusy = false; renderSmithy(); return;
+					}
+					var rawQueue = readJsonLS(SMITHY_QUEUE_KEY, []), validIndex = -1, rawIndex = -1;
+					rawQueue.some(function (item, index) {
+						if (Array.isArray(item) && toInt(item[0]) > 0 && (toInt(item[1]) === 0 || toInt(item[1]) === 1)) validIndex++;
+						if (validIndex === picked.index) { rawIndex = index; return true; }
+						return false;
+					});
+					pending = { queue: rawQueue, index: rawIndex, unitId: picked.unitId, stat: picked.stat,
+						category: picked.category, before: picked.before, at: Date.now(),
+						processIds: queueInfo.items.map(function (item) { return String(item.id); }) };
 					state.smithyStatus = 'إرسال تطوير ' + (data.levels[picked.unitId].name || picked.unitId) + ' (' + currentCount + '/' + SMITHY_MAX_QUEUE + ')…';
 					renderSmithy();
-					fetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' })
+					/* Fresh baseline prevents an older/manual upgrade from confirming this request. */
+					var submitted = false;
+					smithyFetchLevel(pending).then(function (before) {
+						if (!Number.isFinite(before)) throw new Error('تعذّر قراءة المستوى قبل التطوير');
+						if (!state.smithyAuto || JSON.stringify(smithyReadQueue()) !== JSON.stringify(queue)) throw new Error('توقف التشغيل أو تغيّر الطابور قبل الإرسال');
+						pending.before = before;
+						/* Save before sending: reloads and network errors must not resend blindly. */
+						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
+						submitted = true;
+						return fetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' });
+					})
 					.then(function (response) {
 						if (!response.ok) throw new Error('HTTP ' + response.status);
 					if (response.redirected && /login|signin/i.test(response.url)) throw new Error('انتهت جلسة اللعبة');
 					return response.text();
 				})
 					.then(function (text) {
-						var payload = null;
-						try { payload = JSON.parse(text); } catch (_) { /* رد اللعبة قد يكون HTML */ }
-						var gameError = payload && payload.data && payload.data.error != null ? payload.data.error : (payload && payload.error);
-						if (gameError === true || (gameError != null && String(gameError) !== '0' && String(gameError) !== 'false')) {
-							throw new Error((payload && (payload.error_txt || payload.message)) || String(gameError));
-						}
-						sent[picked.key] = { at: Date.now(), before: picked.before, unitId: picked.unitId, type: picked.item[1] };
-						localStorage.setItem(smithySentKey(castle.id), JSON.stringify(sent));
-						data.queueCount = currentCount + 1;
-						data.at = 0;
-						localStorage.setItem(smithyDataKey(castle.id), JSON.stringify(data));
-						state.smithyStatus = 'أُرسل الأمر؛ ' + data.queueCount + '/' + SMITHY_MAX_QUEUE + ' والطابور المحلي لم يتغير';
+						pending.rejection = smithyResponseError(text);
+						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
 					})
 					.catch(function (error) {
-						state.smithyStatus = 'فشل التطوير، أبقيت العنصر بالطابور: ' + error.message;
+						state.smithyStatus = 'رد التطوير غير مؤكد؛ سأتحقق قبل الحذف أو إعادة الإرسال: ' + error.message;
 					})
-						.finally(function () { releaseCastleLock(); state.smithyBusy = false; renderSmithy(); });
+						.finally(function () {
+							releaseCastleLock();
+							if (submitted) smithyVerifyPending(castle, pending);
+							else { state.smithyBusy = false; renderSmithy(); }
+						});
 				}, function () {
 					state.smithyStatus = 'تغيّرت القلعة النشطة؛ لم أرسل تطوير الحداد';
 					state.smithyBusy = false;
@@ -2505,10 +2651,14 @@
 				var p = state.pendingBuilds[0];
 				txt = 'بانتظار تأكيد قبول أمر ' + (p.name || ('#' + p.id));
 			}
-			if (on && state.autoBuildNextAt > Date.now()) {
-				txt += ' — بعد ' + Math.ceil((state.autoBuildNextAt - Date.now()) / 1000) + 'ث';
-			} else if (on && state.ifCheckAt > Date.now()) {
-				txt += ' — فحص الجدول بعد ' + Math.ceil((state.ifCheckAt - Date.now()) / 1000) + 'ث';
+			if (on) {
+				var now = Date.now();
+				var nextAt = Math.max(state.autoBuildNextAt, autoBuildSleepUntil(state.currentCastleId));
+				if (nextAt > now) {
+					txt += ' — إعادة الفحص بعد ' + Math.ceil((nextAt - now) / 1000) + 'ث';
+				} else if (state.ifCheckAt > now) {
+					txt += ' — فحص الجدول بعد ' + Math.ceil((state.ifCheckAt - now) / 1000) + 'ث';
+				}
 			}
 			el.abStatus.textContent = txt;
 		}
@@ -2722,11 +2872,13 @@
 		return toInt(m[String(castleId)], 0);
 	}
 	function setAutoBuildSleep(castleId, until) {
-		if (castleId == null) return;
+		if (castleId == null) return false;
 		var m = autoBuildSleepMap();
 		m[String(castleId)] = until;
-		try { localStorage.setItem(LS.autoBuildSleep, JSON.stringify(m)); }
-		catch (e) { /* ignore */ }
+		try {
+			localStorage.setItem(LS.autoBuildSleep, JSON.stringify(m));
+			return true;
+		} catch (e) { return false; }
 	}
 	function clearAutoBuildSleep(castleId) {
 		if (castleId == null) return;
@@ -3125,6 +3277,7 @@
 	function autoBuildTick() {
 		if (!state.autoBuild || state.autoBuildBusy || state.confirmBusy) return;
 		wakeOnLocalBuildCommands();
+		if (Date.now() < state.autoBuildNextAt) { renderAbStatus(); return; }
 		/* حماية: طلب جدول البناء لا يعلّق التشغيل للأبد */
 		if (state.ifBusy && Date.now() - state.ifBusyAt > 25000) state.ifBusy = false;
 		/* per-castle sleep: قلعة без ресурсов (أو نائمة) لا تُطلب — castles أخرى могут строить */
@@ -3165,7 +3318,6 @@
 			return;
 		}
 
-		if (Date.now() < state.autoBuildNextAt) { renderAbStatus(); return; }
 		if (!hasAjax()) return;
 
 		if (!state.castles.length || Date.now() - state.castlesAt > CASTLES_TTL) {
@@ -3697,24 +3849,21 @@
 
 		/* موارد غير كافية: «الذهب غير كافي» وأمثالها */
 		if (/غير كاف|غير كافي|موارد|ذهب|حديد|خشب|طعام/.test(raw)) {
-			/* حافظ على ترتيب الكيو، واستخدم تقدير متطلبات اللعبة لتوقيت إعادة المحاولة.
-			 * per-castle sleep: قلعة без ресурсов спит до 5 мин, не блокируя другие замки. */
+			/* احفظ انتظار القلعة التي أُرسل منها الأمر حتى تتابع القلاع الأخرى. */
+			var castleId = pending && pending.castleId != null ? pending.castleId : state.currentCastleId;
 			state.autoBuildBusy = true;
 			getBuildingResourceWait(id, function (estimate) {
 				state.autoBuildBusy = false;
 				if (!state.autoBuild) return;
 				var seconds = estimate && toInt(estimate.seconds, 0);
-				var waitMs = seconds > 0 ? (seconds * 1000 + 5000) : 120000;
-				/* cap at 5 min per user request */
-				if (waitMs > 5 * 60 * 1000) waitMs = 5 * 60 * 1000;
+				var waitMs = seconds > 0 ? Math.min(seconds * 1000 + 5000, 300000) : 120000;
+				var retryAt = Date.now() + waitMs;
 				state.ifCheckAt = 0;
-				setAutoBuildSleep(actionCastle ? actionCastle.id : state.currentCastleId, Date.now() + waitMs);
-				state.autoBuildNextAt = Date.now() + 2000;  /* short: per-castle sleep gates */
-				var estimateText = seconds > 0 ? 'حوالي ' + formatSeconds(seconds) + (estimate.resource ? ' (' + estimate.resource + ')' : '') : 'وقت تقريبي غير متاح؛ إعادة الفحص بعد دقيقتين';
-				setAbStatus('waiting', 'موارد غير كافية لـ ' + name + ' — متوقع توفرها بعد ' + estimateText);
-				abLog('… ' + name + ': بانتظار الموارد ' + estimateText + ' — سيبقى أولاً في الكيو', 'warn');
+				state.autoBuildNextAt = setAutoBuildSleep(castleId, retryAt) ? 0 : retryAt;
+				var resource = seconds > 0 && estimate.resource ? ' (' + estimate.resource + ')' : '';
+				setAbStatus('waiting', 'موارد غير كافية لـ ' + name + resource);
+				abLog('… ' + name + ': بانتظار الموارد — إعادة الفحص بعد ' + formatSeconds(waitMs / 1000), 'warn');
 				renderBuildQueue();
-				renderAbStatus();
 			});
 			return;
 		}
