@@ -19,9 +19,17 @@ const types = {
 };
 
 http.createServer((req, res) => {
-	const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+	let urlPath;
+	try {
+		urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+	} catch (error) {
+		/* A malformed %-escape must not crash the server. */
+		res.writeHead(400, { 'content-type': 'text/plain' }).end('bad request');
+		return;
+	}
 	const file = path.join(root, path.normalize(urlPath).replace(/^([/\\])+/, ''));
-	if (!file.startsWith(root)) {
+	/* Compare with a trailing separator so a sibling like `userscript-old` is not served. */
+	if (file !== root && !file.startsWith(root + path.sep)) {
 		res.writeHead(403).end('forbidden');
 		return;
 	}

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         KhanWars Toolkit — الإرساليات والمباني والقلاع
 // @namespace    khanwrslight
-// @version      1.7.26
+// @version      1.7.29
 // @description  إدارة الإرساليات والمباني والحداد والقلاع والأمير عبر طلبات خلفية دون التنقل بين الصفحات.
 // @author       khanwrslight
 // @match        https://*.game.khanwars.ae/*
@@ -46,7 +46,7 @@
 	if (window.__KW_TOOLKIT_LOADED__) return;
 	window.__KW_TOOLKIT_LOADED__ = true;
 
-	var VERSION = '1.7.26';
+	var VERSION = '1.7.29';
 
 	/* ============================================================
 	 * 1) Helpers (منقولة من analysis/*.js)
@@ -54,6 +54,97 @@
 
 	function hasAjax() {
 		return !!(window.Ajax && typeof window.Ajax.Request === 'function');
+	}
+
+	/* ---------- طلبات بمهلة وإلغاء فعلي ----------
+	 * كل طلب ينتهي خلال AJAX_TIMEOUT_MS: إما برده أو بإلغائه (abort) واستدعاء
+	 * onFailure مرة واحدة بحالة 'timeout'. بعد الحسم لا يُستدعى أي callback
+	 * متأخر، فلا يتداخل رد قديم مع عملية جديدة. الطلبات تُوسَم بدورة قفل
+	 * القلعة التي بدأت خلالها حتى يلغيها القفل إذا انتهت مهلته. */
+	var AJAX_TIMEOUT_MS = 30000;
+	var liveRequests = [];
+	var castleLockEpoch = 0;
+
+	function untrackLive(entry) {
+		var i = liveRequests.indexOf(entry);
+		if (i >= 0) liveRequests.splice(i, 1);
+	}
+
+	function cancelLockRequests(epoch) {
+		liveRequests.slice().forEach(function (entry) {
+			if (entry.epoch === epoch) entry.cancel();
+		});
+	}
+
+	function ajaxRequest(url, options) {
+		options = options || {};
+		var settled = false, request = null, timer = null;
+		function abort() {
+			try { if (request && request.transport && request.transport.abort) request.transport.abort(); }
+			catch (e) { /* ignore */ }
+		}
+		var entry = {
+			epoch: castleLockEpoch,
+			/* إلغاء صامت: لا callback إطلاقاً (يستخدمه قفل القلعة عند انتهاء مهلته). */
+			cancel: function () {
+				if (settled) return;
+				settled = true;
+				clearTimeout(timer);
+				untrackLive(entry);
+				abort();
+			}
+		};
+		function settle(name, response) {
+			if (settled) return;
+			settled = true;
+			clearTimeout(timer);
+			untrackLive(entry);
+			if (typeof options[name] === 'function') options[name](response);
+		}
+		var wrapped = {};
+		for (var k in options) {
+			if (Object.prototype.hasOwnProperty.call(options, k)) wrapped[k] = options[k];
+		}
+		wrapped.onSuccess = function (response) { settle('onSuccess', response); };
+		wrapped.onFailure = function (response) { settle('onFailure', response); };
+		timer = setTimeout(function () {
+			/* الحسم أولاً: abort في Prototype يطلق onSuccess بحالة 0 ورد فارغ. */
+			settle('onFailure', { status: 'timeout', responseText: '' });
+			abort();
+		}, AJAX_TIMEOUT_MS);
+		liveRequests.push(entry);
+		request = new window.Ajax.Request(url, wrapped);
+		return request;
+	}
+
+	/* fetch بنفس المهلة: الإلغاء يرفض الوعد فيمر عبر catch عند المستدعي. */
+	function kwFetch(url, options, timeoutMs) {
+		var controller = (typeof AbortController === 'function') ? new AbortController() : null;
+		var opts = {};
+		for (var k in (options || {})) {
+			if (Object.prototype.hasOwnProperty.call(options, k)) opts[k] = options[k];
+		}
+		if (controller) opts.signal = controller.signal;
+		var limit = timeoutMs > 0 ? timeoutMs : AJAX_TIMEOUT_MS;
+		var rejectLate = null;
+		var entry = {
+			epoch: castleLockEpoch,
+			cancel: function () {
+				untrackLive(entry);
+				try { if (controller) controller.abort(); } catch (e) { /* ignore */ }
+				/* متصفح بلا AbortController: نرفض الوعد نفسه حتى لا يُنفَّذ مساره لاحقاً. */
+				if (rejectLate) rejectLate(new Error('timeout'));
+			}
+		};
+		liveRequests.push(entry);
+		/* المؤقت يغطي قراءة جسم الرد أيضاً؛ الإلغاء بعد اكتمال الطلب بلا أثر. */
+		setTimeout(entry.cancel, limit);
+		var request = window.fetch(url, opts);
+		if (controller) return request;
+		return new Promise(function (resolve, reject) {
+			rejectLate = reject;
+			request.then(resolve, reject);
+		});
 	}
 
 	function toInt(v, def) {
@@ -239,7 +330,7 @@
 	/* --- info.php: السكان + الحمولة + وقت الوصول/العودة + الوقت الكلي --- */
 	function fetchMarchInfo(marchId, callback) {
 		if (!hasAjax()) { callback({ error: 'no-ajax' }); return; }
-		new window.Ajax.Request('info.php', {
+		ajaxRequest('info.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: { what: 'pohod', posted_id: marchId },
@@ -379,7 +470,7 @@
 	function requestLoadContent(callback) {
 		var gameMarches = window.marches || null;
 		var direction = gameMarches && typeof gameMarches.direction !== 'undefined' ? gameMarches.direction : 0;
-		new window.Ajax.Request('ajax_marches.php', {
+		ajaxRequest('ajax_marches.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: {
@@ -438,6 +529,7 @@
 				if (res && Array.isArray(res.castles)) {
 					state.castles = res.castles;
 					state.castlesAt = res.at || Date.now();
+					state.castlesLiveAt = state.castlesAt;
 				}
 				fetchMarchLists();
 			});
@@ -451,7 +543,7 @@
 	/* --- المباني: قائمة + مستوى + تكلفة + وقت + إمكانية ترقية --- */
 	function getBuildings(callback) {
 		if (!hasAjax()) { callback({ error: 'no-ajax', buildings: [] }); return; }
-		new window.Ajax.Request('buildings.php', {
+		ajaxRequest('buildings.php', {
 			evalJS: false,
 			method: 'get',
 			onSuccess: function (response) {
@@ -513,7 +605,7 @@
 		if (!hasAjax()) { callback({ error: 'no-ajax' }); return; }
 		var id = toInt(buildingId);
 		if (!id || id < 1) { callback({ error: 'bad-id' }); return; }
-		new window.Ajax.Request('buildings.php?tb_id=' + id + '&method=ajax', {
+		ajaxRequest('buildings.php?tb_id=' + id + '&method=ajax', {
 			method: 'get',
 			evalJS: false,
 			onSuccess: function (response) {
@@ -543,7 +635,7 @@
 			callback({ level: cached.level, name: cached.name, error: cached.level == null ? 'no-level' : null });
 			return;
 		}
-		new window.Ajax.Request('ajax_buildings.php', {
+		ajaxRequest('ajax_buildings.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: { b_id: id, backto: 'overview.php' },
@@ -592,7 +684,7 @@
 
 	function getBuildingUpgradePreview(id, cb) {
 		if (!hasAjax()) { cb({ error: 'no-ajax', nextLevel: null }); return; }
-		new window.Ajax.Request('ajax_buildings.php', {
+		ajaxRequest('ajax_buildings.php', {
 			evalJS: false, method: 'post',
 			parameters: { b_id: toInt(id), backto: 'overview.php' },
 			onSuccess: function (response) {
@@ -609,7 +701,7 @@
 	/* يقرأ تقدير اللعبة للوقت اللازم لتأمين موارد ترقية مبنى. */
 	function getBuildingResourceWait(buildingId, callback) {
 		if (!hasAjax()) { callback({ error: 'no-ajax' }); return; }
-		new window.Ajax.Request('ajax_buildings.php', {
+		ajaxRequest('ajax_buildings.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: { b_id: toInt(buildingId), backto: 'overview.php' },
@@ -645,7 +737,7 @@
 	 */
 	function getCastles(callback) {
 		if (!hasAjax()) { callback({ error: 'no-ajax', castles: [] }); return; }
-		new window.Ajax.Request('ajax_castles.php', {
+		ajaxRequest('ajax_castles.php', {
 			evalJS: false,
 			method: 'post',
 			onSuccess: function (response) {
@@ -697,6 +789,9 @@
 	/* قفل قصير يمنع تبديل القلعة بين التحقق وإرسال طلب تغيير الحالة. */
 	var castleOperationBusy = false;
 	var castleOperationQueue = [];
+	var castleLockSeq = 0;
+	var CASTLE_LOCK_TIMEOUT_MS = 120000;
+	var CASTLE_SWITCH_TIMEOUT_MS = 12000;
 
 	function withCastleLock(task) {
 		castleOperationQueue.push(task);
@@ -704,12 +799,32 @@
 			if (castleOperationBusy || !castleOperationQueue.length) return;
 			castleOperationBusy = true;
 			var released = false;
+			var watchdog = null;
+			var epoch = ++castleLockSeq;
+			castleLockEpoch = epoch;
+			/* أعلن الانشغال في عقد القيادة قبل أي طلب، وحدّثه عند الانتهاء. */
+			var announce = function () {
+				if (!leaderActive) return;
+				try { writeLeaderLease(); } catch (e) { /* ignore */ }
+			};
+			announce();
 			var taskRelease = function () {
 				if (released) return;
 				released = true;
+				clearTimeout(watchdog);
+				if (castleLockEpoch === epoch) castleLockEpoch = 0;
 				castleOperationBusy = false;
+				announce();
 				setTimeout(drain, 0);
 			};
+			/* شبكة أمان أخيرة (كل طلب له مهلته الخاصة 30ث): عند انتهائها نلغي
+			 * فعلياً طلبات هذه الدورة قبل تحرير القفل، فلا يصل رد متأخر ليتداخل
+			 * مع العملية التالية. ما أُرسل منها يبقى في سجل «غير محسوم» ويُتحقق
+			 * منه لاحقاً بدل افتراض نجاحه أو فشله. */
+			watchdog = setTimeout(function () {
+				cancelLockRequests(epoch);
+				taskRelease();
+			}, CASTLE_LOCK_TIMEOUT_MS);
 			try { castleOperationQueue.shift()(taskRelease); }
 			catch (error) { taskRelease(); throw error; }
 		}
@@ -721,7 +836,9 @@
 		expectedId = expectedId == null ? null : String(expectedId);
 		/* استخدام كاش القلاع إذا كان حديثاً (<10 ث) لتجنّب طلب ajax_castles.php
 		 * في كل محاولة بناء — تقليل طلبات السيرفر أثناء البناء النشط. */
-		if (state.castles && state.castles.length && (Date.now() - (state.castlesAt || 0)) < 10000) {
+		/* castlesLiveAt = آخر قراءة من السيرفر في هذه الصفحة؛ كاش localStorage
+		 * (castlesAt) قد يسبق تبديلاً يدوياً أعاد تحميل الصفحة فلا يُعتمد هنا. */
+		if (state.castles && state.castles.length && (Date.now() - (state.castlesLiveAt || 0)) < 10000) {
 			var cachedActive = null;
 			for (var ci = 0; ci < state.castles.length; ci++) {
 				if (state.castles[ci].isCurrent) { cachedActive = state.castles[ci]; break; }
@@ -738,6 +855,7 @@
 			}
 			state.castles = res.castles;
 			state.castlesAt = Date.now();
+			state.castlesLiveAt = state.castlesAt;
 			state.smithyCastleCheckedAt = state.castlesAt;
 			var active = null;
 			for (var i = 0; i < res.castles.length; i++) {
@@ -792,21 +910,21 @@
 		function done(res) {
 			if (finished) return;
 			finished = true;
-			clearTimeout(watchdog);
 			callback(res);
 		}
 
-		var watchdog = setTimeout(function () {
-			done({ error: 'timeout', ok: false });
-		}, 12000);
-
-		window.fetch(url, {
+		/* المهلة هي مهلة الطلب نفسه: عند انتهائها يُلغى الطلب (abort) فيُرفض
+		 * الوعد، ومن الرفض فقط يُعلَن الفشل. لا مؤقّت مستقل يعلن الفشل بينما
+		 * الطلب مستمر ومساره المتأخر قد يُنفَّذ بعد ذلك. */
+		kwFetch(url, {
 			method: 'GET',
 			credentials: 'same-origin',
 			cache: 'no-store'
-		}).then(function () {
+		}, CASTLE_SWITCH_TIMEOUT_MS).then(function () {
+			if (finished) return;
 			/* الجلسة تغيّرت على السيرفر — تحقّق من القلعة النشطة */
 			setTimeout(function () {
+				if (finished) return;
 				getCastles(function (res) {
 					var current = null;
 					(res.castles || []).forEach(function (c) {
@@ -821,8 +939,9 @@
 					});
 				});
 			}, 300);
-		}).catch(function () {
-			done({ error: 'network', ok: false });
+		}).catch(function (error) {
+			var timedOut = !!error && (error.name === 'AbortError' || error.message === 'timeout');
+			done({ error: timedOut ? 'timeout' : 'network', ok: false });
 		});
 	}
 
@@ -861,6 +980,165 @@
 		try { localStorage.setItem(k, v); } catch (e) { /* ignore */ }
 	}
 
+	/* ---------- تبويب واحد فقط يدير الأتمتة ----------
+	 * السكربت يعمل في كل تبويب لعبة والإعدادات مشتركة عبر localStorage، فبدون
+	 * قائد واحد ينفّذ كل تبويب الطابور نفسه (أوامر مكررة/قلعة خاطئة).
+	 * عقد إيجار في kw.leader يُجدَّد كل 5 ثوانٍ؛ ينتقل لتبويب آخر بعد 15 ثانية
+	 * من توقف القائد. معرّف التبويب في sessionStorage ليبقى التبويب نفسه قائداً
+	 * عبر تنقّل الصفحات، ومعه معرّف الصفحة (inst) حتى لا يشارك تبويبٌ مكرَّر
+	 * (ينسخ sessionStorage) القيادة. الأفعال اليدوية غير مقيّدة بهذا. */
+	var LEADER_KEY = 'kw.leader';
+	var LEADER_TTL_MS = 15000;
+	var LEADER_BUSY_TTL_MS = 150000;      /* = مهلة انشغال البناء/الحداد القصوى */
+	var LEADER_REQUEST_KEY = 'kw.leader.request';
+	var LEADER_REQUEST_TTL_MS = 60000;    /* طلب قيادة من تبويب لم يعد موجوداً */
+	function newLeaderId() {
+		return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+	}
+	var TAB_ID = (function () {
+		var id = null;
+		try { id = sessionStorage.getItem('kw.tabId'); } catch (e) { id = null; }
+		if (!id) {
+			id = newLeaderId();
+			try { sessionStorage.setItem('kw.tabId', id); } catch (e) { /* ignore */ }
+		}
+		return id;
+	})();
+	/* معرّف هذه الصفحة تحديداً. تكرار التبويب ينسخ sessionStorage (TAB_ID نفسه)
+	 * لكن لا ينسخ هذا؛ العقد ملك لصفحة واحدة: id + inst معاً. */
+	var INSTANCE_ID = newLeaderId();
+	var leaderActive = false;
+
+	function readLeaderLease() {
+		try { return JSON.parse(localStorage.getItem(LEADER_KEY)); } catch (e) { return null; }
+	}
+
+	/* هل لهذه الصفحة عملية أتمتة جارية (طلب أُرسل ولم يُحسم، أو قفل قلعة)؟ */
+	function automationBusy() {
+		return !!(castleOperationBusy || castleOperationQueue.length ||
+			state.autoBuildBusy || state.confirmBusy || state.ifBusy ||
+			state.smithyBusy || state.smithyLoading || state.pvBusy);
+	}
+
+	/* العقد يحمل busy: قائد منشغل لا يُعدّ ميتاً بعد 15 ثانية (تبويب خلفي
+	 * مؤقتاته مخنوقة مثلاً) بل بعد مهلة الانشغال القصوى، فلا يبدأ تبويب آخر
+	 * والعملية الأولى ما زالت جارية. */
+	function leaseIsFresh(lease, now) {
+		if (!lease) return false;
+		return now - (parseInt(lease.at, 10) || 0) < (lease.busy ? LEADER_BUSY_TTL_MS : LEADER_TTL_MS);
+	}
+
+	function writeLeaderLease() {
+		localStorage.setItem(LEADER_KEY, JSON.stringify({
+			id: TAB_ID, inst: INSTANCE_ID, at: Date.now(), busy: automationBusy()
+		}));
+	}
+
+	function readLeaderRequest() {
+		try { return JSON.parse(localStorage.getItem(LEADER_REQUEST_KEY)); } catch (e) { return null; }
+	}
+
+	function automationLeader() {
+		var now = Date.now(), lease = readLeaderLease();
+		var fresh = leaseIsFresh(lease, now);
+		var sameTab = !!(lease && lease.id === TAB_ID);
+		var mine = sameTab && lease.inst === INSTANCE_ID;
+		/* inst فارغ = الصفحة السابقة في هذا التبويب سلّمت العقد عند مغادرتها. */
+		var handoff = sameTab && lease.inst == null;
+		if (mine && fresh) {
+			/* تبويب آخر طلب القيادة: نسلّمها فقط ونحن بلا أي عملية جارية، فلا
+			 * يبدأ القائد الجديد وطلبات القديم لم تُحسم. منشغل = يبقى الطلب قائماً. */
+			var request = readLeaderRequest();
+			if (request && request.inst === INSTANCE_ID) request = null;
+			if (request && now - (parseInt(request.at, 10) || 0) >= LEADER_REQUEST_TTL_MS) {
+				try { localStorage.removeItem(LEADER_REQUEST_KEY); } catch (e) { /* ignore */ }
+				request = null;
+			}
+			if (request && request.id && request.inst && !automationBusy()) {
+				try {
+					localStorage.setItem(LEADER_KEY, JSON.stringify({ id: request.id, inst: request.inst, at: now }));
+					localStorage.removeItem(LEADER_REQUEST_KEY);
+					leaderActive = false;
+					return false;
+				} catch (e) { /* تعذّر التسليم: نبقى القائد */ }
+			}
+		}
+		if (fresh && !mine && !handoff) {
+			if (sameTab) {
+				/* عقد حي بمعرّف تبويبنا لصفحة أخرى ما زالت تعمل: نحن تبويب مكرَّر.
+				 * نأخذ معرّفاً جديداً ونتصرف كأي تبويب آخر. */
+				TAB_ID = newLeaderId();
+				try { sessionStorage.setItem('kw.tabId', TAB_ID); } catch (e) { /* ignore */ }
+			}
+			leaderActive = false;
+			return false;
+		}
+		try { writeLeaderLease(); }
+		catch (e) { return true; /* لا تخزين = لا تنسيق ممكن؛ نعمل كما في السابق */ }
+		/* مطالبة جديدة: ننتظر النبضة التالية للتأكد أن تبويباً آخر لم يسبقنا. */
+		if (!mine && !handoff) { leaderActive = false; return false; }
+		if (!leaderActive) {
+			leaderActive = true;
+			/* تبويب آخر ربما أرسل أوامر لم تُحسم — اقرأها قبل أي إرسال. */
+			loadPendingBuilds();
+			/* صرنا القائد: طلبنا (إن وُجد) تحقق. */
+			var own = readLeaderRequest();
+			if (own && own.inst === INSTANCE_ID) {
+				try { localStorage.removeItem(LEADER_REQUEST_KEY); } catch (e) { /* ignore */ }
+			}
+		}
+		return true;
+	}
+
+	/* تفعيل المستخدم لأتمتة من هذا التبويب يطلب القيادة له. لا ننتزعها من قائد
+	 * حي: نكتب طلباً، والقائد يسلّم العقد عند فراغه من عملياته (automationLeader).
+	 * إن لم يكن هناك قائد حي نأخذها مباشرة. */
+	function takeLeadership() {
+		var now = Date.now(), lease = readLeaderLease();
+		var ours = !!(lease && lease.id === TAB_ID && (lease.inst === INSTANCE_ID || lease.inst == null));
+		try {
+			if (leaseIsFresh(lease, now) && !ours) {
+				localStorage.setItem(LEADER_REQUEST_KEY, JSON.stringify({ id: TAB_ID, inst: INSTANCE_ID, at: now }));
+			} else {
+				writeLeaderLease();
+			}
+		} catch (e) { /* ignore */ }
+	}
+
+	/* عند مغادرة الصفحة: القائد يسلّم العقد لتبويبه (inst فارغ) لتتابع الصفحة
+	 * التالية فيه فوراً؛ من دون ذلك تُعدّ الصفحة التالية تبويباً مكرَّراً. */
+	function releaseLeadershipOnLeave() {
+		var lease = readLeaderLease();
+		if (!lease || lease.id !== TAB_ID || lease.inst !== INSTANCE_ID) return;
+		try { localStorage.setItem(LEADER_KEY, JSON.stringify({ id: TAB_ID, inst: null, at: Date.now() })); }
+		catch (e) { /* ignore */ }
+		leaderActive = false;
+	}
+
+	/* مفاتيح التشغيل مشتركة بين التبويبات: طبّق تغيير تبويب آخر هنا أيضاً،
+	 * وإلا يبقى القائد يعمل بعد إيقافه من تبويب آخر (أو لا يبدأ بعد تشغيله). */
+	function onSharedSettingChange(ev) {
+		if (!ev) return;
+		/* طلب قيادة أو تغيّر العقد: القائد يسلّم فور فراغه، والطالب يستلم فوراً. */
+		if (ev.key === LEADER_REQUEST_KEY || ev.key === LEADER_KEY) { automationLeader(); return; }
+		if (ev.newValue == null) return;
+		var on = ev.newValue === '1';
+		if (ev.key === LS.autoBuild) {
+			if (on !== state.autoBuild) autoBuildSet(on, true);
+		} else if (ev.key === LS.smithyAuto) {
+			if (on !== state.smithyAuto) setSmithyAuto(on);
+		} else if (ev.key === LS.provinceAuto) {
+			state.pvAuto = ev.newValue !== '0';
+			renderProvince();
+			syncProvinceAutoTimer();
+		} else if (ev.key === LS.cycle) {
+			if (on === state.cycle) return;
+			state.cycle = on;
+			if (el.cycle) el.cycle.checked = on;
+			if (on) startCycle(); else stopCycle();
+		}
+	}
+
 	var state = {
 		open: lsGet(LS.open, '1') === '1',
 		tab: lsGet(LS.tab, 'marches'),
@@ -878,6 +1156,7 @@
 		buildingsError: null,
 		castles: [],
 		castlesAt: 0,
+		castlesLiveAt: 0,
 		castlesLoading: false,
 		castlesError: null,
 		currentCastleId: null,
@@ -1279,16 +1558,23 @@
 			lsSet(LS.smithyCastle, state.smithyCastleId);
 			state.smithyLevels = {};
 			state.smithyTypes = {};
+			state.smithyRetryAt = 0;
 			renderSmithy();
 			if (state.smithyCastleId) syncSmithyLevels(false);
 		});
 		el.smithAuto.checked = state.smithyAuto;
-		el.smithAuto.addEventListener('change', function () { setSmithyAuto(el.smithAuto.checked); });
+		el.smithAuto.addEventListener('change', function () {
+			if (el.smithAuto.checked) takeLeadership();
+			setSmithyAuto(el.smithAuto.checked);
+		});
 		panel.querySelector('#kw-c-load').addEventListener('click', function () { loadCastles(true); });
 		panel.querySelector('#kw-cycle-once').addEventListener('click', function () { cycleOnce(); });
 
 		/* البناء الآلي */
-		el.abBtn.addEventListener('click', function () { autoBuildSet(!state.autoBuild); });
+		el.abBtn.addEventListener('click', function () {
+			if (!state.autoBuild) takeLeadership();
+			autoBuildSet(!state.autoBuild);
+		});
 		el.abAll.checked = state.autoBuildAll;
 		el.abAll.addEventListener('change', function () {
 			state.autoBuildAll = el.abAll.checked;
@@ -1312,6 +1598,7 @@
 		el.pvAuto.checked = state.pvAuto;
 		el.pvAuto.addEventListener('change', function () {
 			state.pvAuto = !!el.pvAuto.checked;
+			if (state.pvAuto) takeLeadership();
 			lsSet(LS.provinceAuto, state.pvAuto ? '1' : '0');
 			renderProvince();
 			syncProvinceAutoTimer();
@@ -1325,6 +1612,7 @@
 		el.cycleInterval.value = String(state.cycleInterval);
 		el.cycle.addEventListener('change', function () {
 			state.cycle = el.cycle.checked;
+			if (state.cycle) takeLeadership();
 			lsSet(LS.cycle, state.cycle ? '1' : '0');
 			if (state.cycle) startCycle(); else stopCycle();
 		});
@@ -1465,6 +1753,7 @@
 	var SMITHY_SYNC_TTL = 60000;
 	var SMITHY_MAX_TIMER_CHECK_MS = 10 * 60 * 1000;
 	var SMITHY_QUEUE_KEY = 'smithUpgradeQueue';
+	var SMITHY_PENDING_MAX_MS = 10 * 60 * 1000; /* أقصى انتظار لتأكيد طلب قبل فك تعليقه */
 
 	function smithyDataKey(castleId) { return 'kw.smithy.data.' + String(castleId); }
 
@@ -1493,7 +1782,7 @@
 	function fetchSmithyQueueInfo() {
 		return new Promise(function (resolve, reject) {
 			if (!hasAjax()) { reject(new Error('no-ajax')); return; }
-			new window.Ajax.Request('ajax_bottomBar.php', {
+			ajaxRequest('ajax_bottomBar.php', {
 				evalJS: false,
 				method: 'post',
 				parameters: { type: 'load', bar_type: 3 },
@@ -1585,7 +1874,7 @@
 	}
 
 	function smithyFetchLevel(pending) {
-		return fetch('/upgrades.php?u_type=' + encodeURIComponent(pending.category), {
+		return kwFetch('/upgrades.php?u_type=' + encodeURIComponent(pending.category), {
 			credentials: 'same-origin', cache: 'no-store'
 		}).then(function (response) {
 			if (!response.ok) throw new Error('HTTP ' + response.status);
@@ -1615,13 +1904,20 @@
 		state.smithyBusy = true;
 		return new Promise(function (resolve) {
 			withVerifiedCastle(castle.id, function (release) {
+				var conclusive = false;
 				fetchSmithyQueueInfo().then(function (info) {
 					var data = smithyReadData(castle.id);
 					data.queueCount = info.count; data.queueItems = info.items; data.queueAt = info.at;
 					data.at = 0;
 					localStorage.setItem(smithyDataKey(castle.id), JSON.stringify(data));
-					if (pending.accepted || info.items.some(function (item) { return pending.processIds.indexOf(String(item.id)) < 0; })) return true;
-					return smithyFetchLevel(pending).then(function (level) { return level != null && level > pending.before; });
+					var knownIds = Array.isArray(pending.processIds) ? pending.processIds : null;
+					if (pending.accepted || (knownIds && info.items.some(function (item) { return knownIds.indexOf(String(item.id)) < 0; }))) return true;
+					return smithyFetchLevel(pending).then(function (level) {
+						/* دليل قاطع على عدم التسجيل = قراءة ناجحة للخانات (بلا عملية جديدة)
+						 * + قراءة ناجحة للمستوى دون ارتفاع. غير ذلك «مجهول» لا «مرفوض». */
+						conclusive = !!knownIds && Number.isFinite(level);
+						return Number.isFinite(level) && level > pending.before;
+					});
 				}).then(function (accepted) {
 					if (accepted) {
 						pending.accepted = true;
@@ -1632,11 +1928,30 @@
 						state.smithyRetryAt = Date.now() + 120000;
 						state.smithyStatus = 'لم يُقبل التطوير؛ الأمر بقي مكانه وسأعيد المحاولة بعد دقيقتين: ' + pending.rejection;
 					} else {
-						pending.nextCheck = Date.now() + 30000;
-						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
-						state.smithyStatus = 'بانتظار تأكيد قبول التطوير؛ لم أحذف الأمر ولم أعد إرساله';
+						if (!pending.at) pending.at = Date.now();
+						var expired = Date.now() - pending.at > SMITHY_PENDING_MAX_MS;
+						if (expired && conclusive) {
+							/* بعد المهلة ومع دليل قاطع (الخانات مقروءة بلا عملية جديدة والمستوى
+							 * مقروء ولم يرتفع): الطلب لم يُسجَّل. نفك التعليق فقط؛ الأمر يبقى
+							 * في الطابور ويُرسل من جديد. */
+							localStorage.removeItem(smithyPendingKey(castle.id));
+							state.smithyRetryAt = Date.now() + 120000;
+							state.smithyStatus = 'تأكد أن التطوير لم يُسجَّل (لا عملية جديدة والمستوى لم يرتفع)؛ فككت التعليق وسأعيد إرسال الأمر نفسه';
+						} else if (expired) {
+							/* مجهول لا مرفوض: لا إعادة إرسال آلية قد تكرر تطويراً مقبولاً. */
+							pending.nextCheck = Date.now() + 5 * 60 * 1000;
+							localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
+							state.smithyStatus = 'تعذّر حسم قبول التطوير (المستوى غير مقروء)؛ لن أعيد الإرسال آلياً — تحقق يدوياً ثم نفّذ KW.smithy.clearPending()';
+						} else {
+							pending.nextCheck = Date.now() + 30000;
+							localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
+							state.smithyStatus = 'بانتظار تأكيد قبول التطوير؛ لم أحذف الأمر ولم أعد إرساله';
+						}
 					}
 				}).catch(function (error) {
+					/* فشل التحقق نفسه: أعد المحاولة بعد 30 ثانية لا مع كل نبضة. */
+					pending.nextCheck = Date.now() + 30000;
+					try { localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending)); } catch (_) { /* ignore */ }
 					state.smithyStatus = 'تعذّر تأكيد التطوير؛ الأمر محفوظ دون تكرار: ' + error.message;
 				}).finally(function () { release(); state.smithyBusy = false; renderSmithy(); resolve(); });
 			}, function () {
@@ -1769,6 +2084,7 @@
 				}
 				lsSet(LS.smithyCastleCount, String(state.castles.length));
 				state.castlesAt = Date.now();
+				state.castlesLiveAt = state.castlesAt;
 				var current = currentCastle();
 				if (current) state.currentCastleId = String(current.id);
 				saveCastlesCache();
@@ -1789,6 +2105,7 @@
 				lsSet(LS.smithyCastleCount, String(state.castles.length));
 				state.smithyCastleCheckedAt = Date.now();
 				state.castlesAt = state.smithyCastleCheckedAt;
+				state.castlesLiveAt = state.castlesAt;
 				var active = null;
 				state.castles.forEach(function (c) { if (c.isCurrent) active = c; });
 				if (active) state.currentCastleId = String(active.id);
@@ -1825,7 +2142,7 @@
 				return;
 			}
 			Promise.all(SMITHY_TYPES.map(function (type) {
-				return fetch('/upgrades.php?u_type=' + type, { credentials: 'same-origin', cache: 'no-store' })
+				return kwFetch('/upgrades.php?u_type=' + type, { credentials: 'same-origin', cache: 'no-store' })
 					.then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
 					.then(function (html) {
 						var doc = new DOMParser().parseFromString(html, 'text/html');
@@ -1869,6 +2186,9 @@
 				if (callback) callback(data);
 			}).catch(function (error) {
 				state.smithyLoading = false;
+				/* فشل المزامنة لا يحدّث data.at؛ بلا مهلة يعيد التشغيل الآلي
+				   جلب الصفحات الخمس كل 5 ثوانٍ. */
+				state.smithyRetryAt = Date.now() + 60000;
 				state.smithyStatus = 'تعذّر تحديث المستويات: ' + error.message;
 				renderSmithy();
 				if (showToast) toast(state.smithyStatus, 'err');
@@ -1877,12 +2197,50 @@
 		});
 	}
 
+	/* فحص محلي بلا شبكة: لماذا لا يوجد عمل للحداد الآن؟ (null = يوجد عمل)
+	 * يُستدعى قبل ensureSmithyCastle حتى لا تُبدَّل القلعة النشطة بلا سبب. */
+	function smithyIdleReason(castleId) {
+		var pending = readJsonLS(smithyPendingKey(castleId), null);
+		if (pending) return (pending.accepted || !pending.nextCheck || Date.now() >= pending.nextCheck) ? null : 'pending';
+		if (!smithyReadQueue().length) return 'empty';
+		var data = smithyReadData(castleId);
+		if (data.queueCount == null || (toInt(data.queueCount, 0) || 0) < SMITHY_MAX_QUEUE) return null;
+		var remain = smithyFirstRemain(data);
+		var timerAge = data.queueAt ? Date.now() - data.queueAt : Infinity;
+		return (remain != null && remain > 5 && timerAge < SMITHY_MAX_TIMER_CHECK_MS) ? 'full' : null;
+	}
+
 	function smithyAutoTick() {
-		if (!state.smithyAuto || state.smithyBusy || state.smithyLoading) return;
+		if (!state.smithyAuto) return;
+		if (!automationLeader()) { state.smithyStatus = 'تبويب آخر يدير الأتمتة'; renderSmithy(); return; }
+		if (state.smithyBusy || state.smithyLoading) {
+			/* طلب معلّق بلا رد لا يوقف الحداد للأبد: فك الانشغال بعد 150 ثانية. */
+			if (!state.smithyBusySince) state.smithyBusySince = Date.now();
+			if (Date.now() - state.smithyBusySince < 150000) return;
+			state.smithyBusy = false;
+			state.smithyLoading = false;
+		}
+		state.smithyBusySince = 0;
 		if (state.smithyRetryAt && Date.now() < state.smithyRetryAt) return;
+		var selectedId = String(state.smithyCastleId || '');
+		if (selectedId) {
+			var idle = smithyIdleReason(selectedId);
+			if (idle) {
+				if (idle !== 'pending') {
+					state.smithyStatus = (idle === 'empty' ? 'الطابور فارغ — ' : 'بانتظار خانة شاغرة — ') +
+						smithyQueueSummary(smithyReadData(selectedId));
+				}
+				renderSmithy();
+				return;
+			}
+		}
 		ensureSmithyCastle(function (castle, err) {
 			if (!state.smithyAuto) return;
-			if (!castle) { state.smithyStatus = err; renderSmithy(); return; }
+			if (!castle) {
+				/* لا نعيد طلب القلاع/التبديل كل 5 ثوانٍ عند الفشل. */
+				state.smithyRetryAt = Date.now() + 30000;
+				state.smithyStatus = err; renderSmithy(); return;
+			}
 			var pending = readJsonLS(smithyPendingKey(castle.id), null);
 			if (pending) {
 				if (!pending.nextCheck || Date.now() >= pending.nextCheck) smithyVerifyPending(castle, pending);
@@ -1982,7 +2340,7 @@
 						/* Save before sending: reloads and network errors must not resend blindly. */
 						localStorage.setItem(smithyPendingKey(castle.id), JSON.stringify(pending));
 						submitted = true;
-						return fetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' });
+						return kwFetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' });
 					})
 					.then(function (response) {
 						if (!response.ok) throw new Error('HTTP ' + response.status);
@@ -2042,19 +2400,23 @@
 		el.dot.className = 'kw-dot' + (kind ? ' ' + kind : '');
 	}
 
+	function marchStatusLine() {
+		var marches = Array.isArray(state.marches) ? state.marches : [];
+		var secs = Math.max(0, Math.round((Date.now() - state.fetchedAt) / 1000));
+		var src = state.source === 'loadContent' ? 'loadContent' : 'ajax';
+		return 'آخر تحديث: ' + formatSeconds(secs) + ' مضت • ' +
+			marches.length + ' إرسالية' +
+			(state.pending.length ? ' • ' + state.pending.length + ' معلّقة' : '') +
+			' • ' + src;
+	}
+
 	function renderMeta() {
 		if (!el.meta) return;
 		if (state.loading) { el.meta.textContent = 'جارٍ التحميل…'; return; }
 		if (state.error) { el.meta.textContent = 'خطأ: ' + state.error; return; }
 		if (!state.fetchedAt) { el.meta.textContent = '—'; return; }
 		var marches = Array.isArray(state.marches) ? state.marches : [];
-		var secs = Math.max(0, Math.round((Date.now() - state.fetchedAt) / 1000));
-		var src = state.source === 'loadContent' ? 'loadContent' : 'ajax';
-		var statusLine =
-			'آخر تحديث: ' + formatSeconds(secs) + ' مضت • ' +
-			marches.length + ' إرسالية' +
-			(state.pending.length ? ' • ' + state.pending.length + ' معلّقة' : '') +
-			' • ' + src;
+		var statusLine = marchStatusLine();
 		var detailCards = marches.map(function (m) { return renderMarchCard(m); }).join('');
 		el.meta.innerHTML = '<div class="kw-march-status">' + esc(statusLine) + '</div>' +
 			(detailCards ? '<div class="kw-march-status-list" role="list">' + detailCards + '</div>' : '');
@@ -2075,7 +2437,14 @@
 	}
 
 	function renderMarchCard(m) {
-		var progress = (m.progress != null) ? m.progress : computeProgress(m.timeRemaining, m.marchTime);
+		/* المتبقي الحي: القيمة المجلوبة ناقص ما مضى منذ الجلب، حتى لا تعيد أي
+		   إعادة رسم العدّاد إلى قيمة لحظة الجلب. */
+		var liveLeft = m.timeRemaining;
+		if (state.fetchedAt && m.timeRemaining != null) {
+			liveLeft = Math.max(0, m.timeRemaining - Math.floor((Date.now() - state.fetchedAt) / 1000));
+		}
+		var progress = computeProgress(liveLeft, m.marchTime);
+		if (progress == null) progress = m.progress;
 		var pct = progress == null ? 0 : progress;
 		var direction = m.direction === 'incoming' ? 'وارد' : (m.direction === 'outgoing' ? 'صادر' : 'اتجاه غير محدد');
 		var directionClass = m.direction === 'incoming' ? 'attack' : 'other';
@@ -2087,7 +2456,7 @@
 			'<div class="kw-march-route"><span>المسار</span><span class="kw-march-route-value">' + esc(m.from || '—') + ' → ' + esc(m.to || '—') + '</span></div>' +
 			'<div class="kw-march-grid">' +
 			'<div class="kw-march-field"><span class="kw-march-label">القلعة المستهدفة</span><span class="kw-march-value" dir="ltr">' + esc(m.targetCastle || m.to || '—') + '</span></div>' +
-			'<div class="kw-march-field"><span class="kw-march-label">المتبقي</span><span class="kw-march-value" dir="ltr" data-kw-left="' + esc(m.id) + '" data-kw-base="' + esc(m.timeRemaining) + '" data-kw-total="' + esc(m.marchTime) + '">' + esc(m.timeFormatted || formatSeconds(m.timeRemaining)) + '</span></div>' +
+			'<div class="kw-march-field"><span class="kw-march-label">المتبقي</span><span class="kw-march-value" dir="ltr" data-kw-left="' + esc(m.id) + '" data-kw-base="' + esc(m.timeRemaining) + '" data-kw-total="' + esc(m.marchTime) + '">' + esc(liveLeft != null ? formatSeconds(liveLeft) : (m.timeFormatted || '—')) + '</span></div>' +
 			'<div class="kw-march-field"><span class="kw-march-label">الوصول</span><span class="kw-march-value" dir="ltr">' + esc(m.marchTimeFormatted || (m.marchTime != null ? formatSeconds(m.marchTime) : '—')) + '</span></div>' +
 			'<div class="kw-march-field"><span class="kw-march-label">العودة</span><span class="kw-march-value" dir="ltr">' + fmtReturn(m.returnTime) + '</span></div>' +
 			'<div class="kw-march-extra"><span>الجيش: ' + (m.population != null ? fmtNum(m.population) : '—') + '</span><span>الحمولة: ' + (m.cargo != null ? fmtNum(m.cargo) : '—') + '</span></div>' +
@@ -2179,26 +2548,25 @@
 		var allDone = true;
 		state.marches.forEach(function (m) {
 			var left = Math.max(0, (m.timeRemaining || 0) - elapsed);
-			var cell = document.querySelector('#kw-panel [data-kw-left="' + m.id + '"]');
-			var bar = document.querySelector('#kw-panel [data-kw-bar="' + m.id + '"]');
-			if (cell) {
+			/* البطاقة تُرسم في أكثر من موضع (سطر الحالة والقائمة) — حدّث كل النسخ. */
+			var each = function (attr, fn) {
+				Array.prototype.forEach.call(document.querySelectorAll('#kw-panel [' + attr + '="' + m.id + '"]'), fn);
+			};
+			each('data-kw-left', function (cell) {
 				cell.textContent = left > 0 ? formatSeconds(left) : 'انتهت';
-			}
+			});
 			var total = m.marchTime;
-			if (bar && total) {
-				var pct = 0;
-				if (left > 0) {
-					pct = computeProgress(left, total);
-				} else {
-					pct = 100;
-				}
-				bar.style.width = pct + '%';
+			if (total) {
+				var pct = left > 0 ? computeProgress(Math.floor(left), total) : 100;
+				each('data-kw-bar', function (bar) { bar.style.width = pct + '%'; });
 			}
 			if (left > 0) allDone = false;
-			var row = document.querySelector('#kw-panel [data-kw-row="' + m.id + '"]');
-			if (row) row.classList.toggle('kw-done', left <= 0);
+			each('data-kw-row', function (row) { row.classList.toggle('kw-done', left <= 0); });
 		});
-		renderMeta();
+		/* حدّث نص «آخر تحديث» فقط؛ إعادة رسم البطاقات كل ثانية كانت تجمّد العدّاد. */
+		var statusEl = el.meta ? el.meta.querySelector('.kw-march-status') : null;
+		if (statusEl && !state.loading && !state.error) statusEl.textContent = marchStatusLine();
+		else renderMeta();
 		if (state.autoBuild && state.open && state.tab === 'buildings') renderAbStatus();
 		if (allDone && !state.loading && Date.now() - state.doneRefreshAt > 8000) {
 			state.doneRefreshAt = Date.now();
@@ -2890,7 +3258,7 @@
 
 	function getBuildQueue(cb) {
 		if (!hasAjax()) { cb({ error: 'no-ajax', items: [] }); return; }
-		new window.Ajax.Request('ajax_bottomBar.php', {
+		ajaxRequest('ajax_bottomBar.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: { type: 'load', bar_type: 1 },
@@ -2926,7 +3294,7 @@
 
 	function instantFinishProcess(id, cb) {
 		if (!hasAjax()) { cb({ error: 'no-ajax' }); return; }
-		new window.Ajax.Request('ajax_instantProcess.php', {
+		ajaxRequest('ajax_instantProcess.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: {
@@ -2962,7 +3330,7 @@
 	   getPopupStatus + instantFinishTimeReached=true (بدون process_id). */
 	function requestFreeFinish(cb) {
 		if (!hasAjax()) { cb({ error: 'no-ajax' }); return; }
-		new window.Ajax.Request('ajax_instantProcess.php', {
+		ajaxRequest('ajax_instantProcess.php', {
 			evalJS: false,
 			method: 'post',
 			parameters: {
@@ -3019,7 +3387,7 @@
 
 		for (var i = 0; i < QUEST_TYPES.length; i++) {
 			(function (type) {
-				new window.Ajax.Request(questEndpoint(), {
+				ajaxRequest(questEndpoint(), {
 					evalJS: false,
 					method: 'post',
 					parameters: { type: type, action: 'loadContent', pageCont: questPageCont() },
@@ -3046,7 +3414,7 @@
 
 	function questClaim(questId, cb) {
 		if (!hasAjax()) { cb({ ok: false, error: 'no-ajax' }); return; }
-		new window.Ajax.Request(questEndpoint(), {
+		ajaxRequest(questEndpoint(), {
 			evalJS: false,
 			method: 'post',
 			parameters: {
@@ -3275,7 +3643,20 @@
 	}
 
 	function autoBuildTick() {
-		if (!state.autoBuild || state.autoBuildBusy || state.confirmBusy) return;
+		if (!state.autoBuild) return;
+		if (state.autoBuildBusy || state.confirmBusy) {
+			/* طلب معلّق بلا رد لا يوقف البناء الآلي للأبد: فك الانشغال بعد 150 ثانية. */
+			if (!state.abBusySince) state.abBusySince = Date.now();
+			if (Date.now() - state.abBusySince < 150000) return;
+			state.autoBuildBusy = false;
+			state.confirmBusy = false;
+			abLog('… انتهت مهلة عملية معلّقة — استئناف البناء الآلي', 'warn');
+		}
+		state.abBusySince = 0;
+		if (!automationLeader()) {
+			setAbStatus('waiting', 'تبويب آخر يدير الأتمتة');
+			return;
+		}
 		wakeOnLocalBuildCommands();
 		if (Date.now() < state.autoBuildNextAt) { renderAbStatus(); return; }
 		/* حماية: طلب جدول البناء لا يعلّق التشغيل للأبد */
@@ -3613,8 +3994,8 @@
 	/* ---------- مهارة الموارد (#7) — عنصر الطابور 150 ----------
 	 * نفس فكرة s7 في build2023 القديم، لكن بدون فتح نافذة/تنقّل:
 	 *   GET skills.php?skill_id=7   (الرابط نفسه الموجود في صفحة المهارات)
-	 * نقرأ المستوى قبل/بعد، ولا نحذف 150 إلا إذا ارتفع المستوى فعلياً.
-	 * إن كان الردّ غير واضحاً نُبقي pendingSkill ونحسم في الدورة التالية.
+	 * بقرار المستخدم: أرسل الطلب واحذف 150 دائماً، دون فحص مستوى ودون انتظار —
+	 * عدم تنفيذ المهارة مقبول، أما تعليق الطابور عليها فلا.
 	 */
 	function skillLevelFromHtml(html, skillId) {
 		var out = { level: null, text: '', href: '', maxed: false };
@@ -3654,7 +4035,7 @@
 	function skillGetPage(skillId, cb) {
 		var url = 'skills.php' + (skillId ? ('?skill_id=' + encodeURIComponent(skillId)) : '');
 		try {
-			fetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' })
+			kwFetch(url, { method: 'GET', credentials: 'same-origin', cache: 'no-store' })
 				.then(function (r) {
 					return r.text().then(function (t) {
 						cb({ ok: r.ok, status: r.status, url: r.url || url, html: t });
@@ -3685,23 +4066,18 @@
 
 		withVerifiedCastle(expectedCastleId, function (releaseCastleLock) {
 			skillGetPage(skillId, function (act) {
-			if (!state.autoBuild) { releaseCastleLock(); state.autoBuildBusy = false; return; }
-			if (!act.ok) {
+				/* أرسل واحذف دائماً: نجح الطلب أو لم ينجح، العنصر لا يعلّق الطابور. */
 				releaseCastleLock();
+				consumeQueueItem(itemId, info.key);
 				state.autoBuildBusy = false;
-				state.abSkillBlockedAt = Date.now() + SKILL_RETRY_MS;
-				setAbStatus('waiting', 'تعذّر إرسال طلب المهارة');
-				abLog('✕ فشل طلب المهارة (HTTP ' + (act.status || 'شبكة') + ')', 'error');
+				state.abSkillBlockedAt = 0;
+				if (act.ok) {
+					abLog('✓ أُرسل طلب مهارة ' + skillName + ' وحُذف العنصر (دون فحص المستوى)', 'ok');
+				} else {
+					abLog('… طلب مهارة ' + skillName + ' لم يتأكد (HTTP ' + (act.status || 'شبكة') + ') — حُذف العنصر ومتابعة الطابور', 'warn');
+				}
+				setAbStatus('running', 'تم إرسال طلب المهارة');
 				state.autoBuildNextAt = Date.now() + 1500;
-				return;
-			}
-			releaseCastleLock();
-			consumeQueueItem(itemId, info.key);
-			state.autoBuildBusy = false;
-			state.abSkillBlockedAt = 0;
-			abLog('✓ أُرسل طلب مهارة ' + skillName + ' دون فحص المستوى', 'ok');
-			setAbStatus('running', 'تم إرسال طلب المهارة');
-			state.autoBuildNextAt = Date.now() + 1500;
 			});
 		}, function () {
 			state.autoBuildBusy = false;
@@ -3716,7 +4092,7 @@
 		if (!SKILL_NAMES[skillId]) skillId = SKILL_ID;
 		var skillName = SKILL_NAMES[skillId] || ('#' + skillId);
 		state.autoBuildBusy = true;
-		setAbStatus('running', 'قراءة مهارة ' + skillName + '…');
+		setAbStatus('running', 'إرسال مهارة ' + skillName + '…');
 
 		savePendingSkill(null);
 		sendSkillAction(itemId, info, skillId, skillName);
@@ -3827,7 +4203,8 @@
 		}
 
 		/* وصل لأعلى مستوى: «تم الوصول لاعلى مستوى!» → احذفه من الطابور */
-		if (/اعلى مستوى|أعلى مستوى|على مستوى|الوصول لاعلى/.test(raw)) {
+		/* «على مستوى» وحدها كانت تطابق أي رسالة تذكر مستوى فتحذف المبنى خطأً. */
+		if (/[اأإآ]على مستوى|الوصول ل[اأإآ]على/.test(raw)) {
 			consumeQueueItem(id, pending ? pending.key : null);
 			abLog('⛔ ' + name + ' بأعلى مستوى — حُذف من الطابور', 'warn');
 			setAbStatus('running', 'تخطّي مبنى مكتمل');
@@ -3991,6 +4368,7 @@
 				lsSet(LS.smithyCastleCount, String(state.castles.length));
 				state.castlesError = null;
 				state.castlesAt = Date.now();
+				state.castlesLiveAt = state.castlesAt;
 				state.smithyCastleCheckedAt = state.castlesAt;
 				var cur = currentCastle();
 				if (cur) state.currentCastleId = cur.id;
@@ -4034,6 +4412,9 @@
 				var msg = (res && (res.error || 'لم يتم التبديل')) || 'فشل';
 				toast('تبديل القلعة: ' + msg, 'err');
 				setDot('err');
+				/* طلب ملغى/فاشل ربما وصل السيرفر: القلعة النشطة مجهولة الآن،
+				   فالتحقق التالي يجب أن يقرأها حيّاً لا من الكاش. */
+				state.castlesLiveAt = 0;
 				releaseCastleLock();
 				if (opts.onDone) opts.onDone(false, res);
 				return;
@@ -4041,6 +4422,7 @@
 			state.castles = res.castles || state.castles;
 			state.currentCastleId = String(id);
 			state.castlesAt = Date.now();
+			state.castlesLiveAt = state.castlesAt;
 			state.smithyCastleCheckedAt = state.castlesAt;
 			saveCastlesCache();
 			/* المباني خاصة بالقلعة → أبطِلها */
@@ -4111,6 +4493,7 @@
 		var fails = 0;
 		state.cycleTimer = setInterval(function () {
 			if (!hasAjax()) return;
+			if (!automationLeader()) return;
 			if (!state.castles.length) { loadCastles(true); return; }
 			var n = nextCastle();
 			if (!n) return;
@@ -4438,7 +4821,7 @@
 			}
 		};
 		if (params) opts.parameters = params;
-		new window.Ajax.Request('province.php', opts);
+		ajaxRequest('province.php', opts);
 	}
 
 	function provinceText(html) {
@@ -4497,7 +4880,8 @@
 			if (opts.cb) opts.cb(out);
 		}
 
-		if (state.pvBusy) { finish({ ok: false, reason: 'busy' }); return; }
+		/* لا نمر عبر finish هنا: هي تصفّر pvBusy الخاص بالإرسال الجاري فعلاً. */
+		if (state.pvBusy) { if (opts.cb) opts.cb({ ok: false, reason: 'busy' }); return; }
 		if (!hasAjax()) {
 			setPvStatus('error', 'لا اتصال باللعبة');
 			finish({ ok: false, error: 'no-ajax' });
@@ -4646,6 +5030,7 @@
 	function autoProvinceTry() {
 		if (!state.pvAuto) return;
 		if (!provinceIsEnabled()) return;
+		if (!automationLeader()) return;
 		/* نوم per-castle */
 		var sleepUntil = provinceSleepUntil(state.currentCastleId);
 		if (sleepUntil && Date.now() < sleepUntil) return;
@@ -4702,7 +5087,8 @@
 			} else {
 				state.marches = res.marches || [];
 				state.pending = res.pending || [];
-				state.fetchedAt = Date.now();
+				/* المؤقتات تخص لحظة رد ajax_marches، لا لحظة انتهاء طلبات التفاصيل. */
+				state.fetchedAt = res.at || Date.now();
 				state.source = res.source || 'ajax';
 				setDot('ok');
 			}
@@ -4801,6 +5187,11 @@
 		loadPendingBuilds();
 		/* مهارة أُرسلت قبل إعادة التحميل وتنتظر تأكيد ارتفاع المستوى */
 		state.pendingSkill = loadPendingSkill();
+		/* مطالبة مبكرة بالقيادة قبل أول نبضة أتمتة، ثم تجديد دوري لعقد الإيجار. */
+		automationLeader();
+		setInterval(automationLeader, 5000);
+		window.addEventListener('storage', onSharedSettingChange);
+		window.addEventListener('pagehide', releaseLeadershipOnLeave);
 		buildUI();
 		setInterval(tickMarches, 1000);
 
@@ -4856,7 +5247,7 @@
 			state.ifBusy = false;
 			checkBuildQueue(cb);
 		},
-		autoBuildStart: function () { autoBuildSet(true); },
+		autoBuildStart: function () { takeLeadership(); autoBuildSet(true); },
 		autoBuildStop: function () { autoBuildSet(false); },
 		autoBuildStatus: function () {
 			return {
@@ -4930,6 +5321,17 @@
 				return state.smithyCastleId;
 			},
 			setAuto: setSmithyAuto,
+			/* قرار يدوي: يحذف سجل الطلب غير المحسوم فيُعاد إرسال الأمر. استخدمه فقط
+			   بعد التأكد من اللعبة أن التطوير لم يبدأ. يعيد السجل المحذوف أو null. */
+			clearPending: function () {
+				var castle = smithySelectedCastle();
+				if (!castle) return null;
+				var pending = readJsonLS(smithyPendingKey(castle.id), null);
+				try { localStorage.removeItem(smithyPendingKey(castle.id)); } catch (e) { /* ignore */ }
+				state.smithyStatus = pending ? 'حُذف سجل الطلب غير المحسوم يدوياً' : state.smithyStatus;
+				renderSmithy();
+				return pending;
+			},
 			status: function () {
 				var castle = smithySelectedCastle();
 				return {

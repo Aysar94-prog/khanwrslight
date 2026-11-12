@@ -14,15 +14,16 @@ Object.defineProperties(storage, {
   removeItem: { value(key) { delete storage[key]; } }
 });
 const state = {};
-let info, level, sends, failCheck, failSend, released;
+let info, level, sends, failCheck, failSend, released, leader = true, castleSwitches = 0;
 const ctx = vm.createContext({
   state, localStorage: storage, Date, JSON, Promise, String, Number, Math,
   SMITHY_QUEUE_KEY: 'smithUpgradeQueue', SMITHY_MAX_QUEUE: 2, SMITHY_MAX_LEVEL: 10,
-  SMITHY_SYNC_TTL: 60000,
+  SMITHY_SYNC_TTL: 60000, SMITHY_PENDING_MAX_MS: 600000, SMITHY_MAX_TIMER_CHECK_MS: 600000,
+  automationLeader: () => leader,
   toInt: value => parseInt(value, 10) || 0,
   readJsonLS: (key, fallback) => storage[key] ? JSON.parse(storage[key]) : fallback,
   renderSmithy() {}, smithyQueueSummary: () => '',
-  ensureSmithyCastle: cb => cb({ id: '251' }),
+  ensureSmithyCastle: cb => { castleSwitches++; cb({ id: '251' }); },
   withVerifiedCastle: (id, run) => run(() => { released++; }),
   fetchSmithyQueueInfo: async () => { if (failCheck) throw new Error('offline'); return info; },
   fetch: async () => {
@@ -40,9 +41,11 @@ const ctx = vm.createContext({
 vm.runInContext([
   'smithyDataKey', 'smithyReadData', 'smithyReadQueue', 'smithySentKey',
   'smithyPendingKey', 'smithyConsumeAccepted', 'smithyFinishAccepted', 'smithyItemKey', 'smithyReadSent',
-  'smithyPruneSent', 'smithyResponseError', 'smithyVerifyPending', 'smithyAutoTick'
+  'smithyPruneSent', 'smithyResponseError', 'smithyVerifyPending', 'smithyFirstRemain',
+  'smithyIdleReason', 'smithyAutoTick'
 ].map(extract).join('\n'), ctx);
 ctx.smithyFetchLevel = async () => level;
+ctx.kwFetch = ctx.fetch; // the userscript sends through its timeout-bounded fetch wrapper
 const queue = () => JSON.parse(storage.smithUpgradeQueue);
 function reset(items = [[4, 0], [4, 0], [1, 1]]) {
   Object.keys(storage).forEach(key => delete storage[key]);
@@ -162,6 +165,49 @@ async function settle() {
   storage['kw.smithy.sent.999'] = JSON.stringify({ '4:0:0': { old: 1 }, '4:0:1': { old: 2 }, '1:1:0': { old: 3 } });
   assert.equal(ctx.smithyConsumeAccepted(pending()), 'removed');
   assert.deepEqual(JSON.parse(storage['kw.smithy.sent.999']), { '4:0:0': { old: 2 }, '1:1:0': { old: 3 } });
+
+  // v1.7.27: with nothing to do, the tick must not touch the active castle.
+  reset([]); state.smithyCastleId = '251'; castleSwitches = 0;
+  ctx.smithyAutoTick(); await settle();
+  assert.equal(castleSwitches, 0, 'empty queue must not switch castles');
+  reset(); state.smithyCastleId = '251'; castleSwitches = 0;
+  storage['kw.smithy.data.251'] = JSON.stringify({ levels: {}, types: {}, at: Date.now(), queueCount: 2,
+    queueItems: [{ id: 'a', remain: 600 }, { id: 'b', remain: 900 }], queueAt: Date.now() });
+  ctx.smithyAutoTick(); await settle();
+  assert.equal(castleSwitches, 0, 'full smithy slots must not switch castles');
+  assert.equal(sends, 0);
+
+  // Only the leader tab runs automation.
+  reset(); state.smithyCastleId = '251'; castleSwitches = 0; leader = false;
+  ctx.smithyAutoTick(); await settle();
+  assert.equal(castleSwitches, 0); assert.equal(sends, 0);
+  leader = true;
+
+  // An unconfirmed request without a rejection is released after the deadline
+  // instead of blocking the queue forever; the command itself stays queued.
+  reset();
+  await ctx.smithyVerifyPending({ id: '251' }, { ...pending(), at: Date.now() - 600001 });
+  assert.equal(storage['kw.smithy.pending.251'], undefined);
+  assert.equal(queue().length, 3);
+  assert.ok(state.smithyRetryAt > Date.now());
+
+  // v1.7.28: an unreadable level is "unknown", not "rejected" — never resend on it.
+  reset(); level = null;
+  await ctx.smithyVerifyPending({ id: '251' }, { ...pending(), at: Date.now() - 600001 });
+  assert.ok(storage['kw.smithy.pending.251'], 'unknown level must keep the journal');
+  assert.equal(queue().length, 3);
+  ctx.smithyAutoTick(); await settle();
+  assert.equal(sends, 0, 'unknown acceptance must never be resent automatically');
+  // Same for a legacy journal without a process-ID baseline.
+  reset(); const legacy = { ...pending(), at: Date.now() - 600001 }; delete legacy.processIds;
+  await ctx.smithyVerifyPending({ id: '251' }, legacy);
+  assert.ok(storage['kw.smithy.pending.251'], 'no baseline means no conclusive rejection');
+
+  // A hung request cannot keep the executor busy forever.
+  reset(); state.smithyCastleId = ''; state.smithyBusy = true; state.smithyBusySince = Date.now() - 150001;
+  ctx.smithyAutoTick(); await settle();
+  assert.equal(sends, 1, 'stale busy flag is released');
+  state.smithyBusySince = 0;
 
   console.log('Smithy queue acceptance and consumption checks passed.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -194,6 +194,7 @@ context.getBuildingUpgradePreview = previousPreviewReader;
 let requests = [];
 Object.assign(context, {
  hasAjax: () => true,
+ ajaxRequest: (url, options) => new context.window.Ajax.Request(url, options),
  window: { Ajax: { Request: function (url, options) {
   requests.push({ url, options });
   options.onSuccess({ responseText: '<preview>' });
@@ -290,9 +291,11 @@ assert.equal(state.pendingBuilds.length, 1, 'free finish does not consume the lo
 // including after a reload when buildRunning starts false.
 let realQueueChecks = 0;
 let emptyQueueWaits = 0;
+let leaderTab = true;
 items = [];
 Object.assign(context, {
  CASTLES_TTL: 300000,
+ automationLeader: () => leaderTab,
  autoBuildSleepUntil: () => 0,
  checkBuildQueue: cb => { realQueueChecks++; cb(false); },
  sendNextBuild: () => { emptyQueueWaits++; }
@@ -456,4 +459,202 @@ const checksBeforeFallback = resourceChecks;
 testNow += 2000;
 context.autoBuildTick();
 assert.equal(resourceChecks, checksBeforeFallback);
+
+// v1.7.27: a non-leader tab never polls or sends; a hung busy flag is released.
+testNow += 600000;
+Object.assign(state, { autoBuildNextAt: 0, ifCheckAt: 0, castlesAt: testNow, autoBuildBusy: false, confirmBusy: false });
+leaderTab = false;
+let checksBeforeLeader = resourceChecks;
+context.autoBuildTick();
+assert.equal(resourceChecks, checksBeforeLeader, 'non-leader tab must not touch the server');
+leaderTab = true;
+state.autoBuildBusy = true;
+state.abBusySince = 0;
+context.autoBuildTick();
+assert.equal(state.autoBuildBusy, true, 'a fresh busy flag is respected');
+testNow += 150001;
+state.castlesAt = testNow;
+checksBeforeLeader = resourceChecks;
+context.autoBuildTick();
+assert.equal(state.abBusySince, 0, 'stale busy flag is cleared');
+assert.ok(resourceChecks > checksBeforeLeader, 'the executor resumes after the busy timeout');
+
+// The max-level pattern must not match unrelated messages that mention a level.
+context.failAutoBuild = () => {};
+for (const [text, deleted] of [['تم الوصول لاعلى مستوى!', true], ['تحتاج الحصول على مستوى 5 من الثكنات', false]]) {
+	items = [7, 5];
+	state.pendingBuilds = [];
+	state.abErrorCount = 0;
+	context.handleBuildResult(7, null, { error: 1, error_txt: text }, null);
+	assert.deepEqual(items, deleted ? [5] : [7, 5], text);
+}
+// v1.7.28: every request settles exactly once — by its response, by a timeout
+// reported as onFailure('timeout'), or silently when its castle lock expires.
+{
+	const timers = [];
+	const transports = [];
+	const net = vm.createContext({
+		Object, liveRequests: [], castleLockEpoch: 7, AJAX_TIMEOUT_MS: 30000,
+		setTimeout: fn => { timers.push(fn); return timers.length; },
+		clearTimeout: id => { timers[id - 1] = null; },
+		window: { Ajax: { Request: function (url, options) {
+			this.options = options;
+			this.transport = { abort: () => { this.aborted = true; options.onSuccess({ status: 0, responseText: '' }); } };
+			transports.push(this);
+		} } }
+	});
+	vm.runInContext(['untrackLive', 'cancelLockRequests', 'ajaxRequest'].map(extract).join('\n'), net);
+	const calls = [];
+	const opts = tag => ({
+		onSuccess: r => calls.push(tag + ':ok:' + r.responseText),
+		onFailure: r => calls.push(tag + ':fail:' + r.status)
+	});
+	// Timeout: one onFailure('timeout'); the abort's empty "success" and any late reply are dropped.
+	net.ajaxRequest('a.php', opts('a'));
+	timers[0]();
+	transports[0].options.onSuccess({ status: 200, responseText: 'late' });
+	assert.deepEqual(calls, ['a:fail:timeout']);
+	assert.equal(transports[0].aborted, true);
+	// Normal reply: delivered once, the timer is cleared, nothing stays tracked.
+	net.ajaxRequest('b.php', opts('b'));
+	transports[1].options.onSuccess({ status: 200, responseText: 'x' });
+	transports[1].options.onFailure({ status: 500 });
+	assert.deepEqual(calls, ['a:fail:timeout', 'b:ok:x']);
+	assert.equal(timers[1], null);
+	// Lock expiry: its requests are aborted with no callback at all; others are untouched.
+	net.ajaxRequest('c.php', opts('c'));
+	net.castleLockEpoch = 8;
+	net.ajaxRequest('d.php', opts('d'));
+	net.cancelLockRequests(7);
+	transports[2].options.onSuccess({ status: 200, responseText: 'late' });
+	assert.equal(transports[2].aborted, true);
+	assert.equal(calls.length, 2, 'a cancelled request never calls back');
+	transports[3].options.onSuccess({ status: 200, responseText: 'd' });
+	assert.equal(calls[2], 'd:ok:d');
+	assert.equal(net.liveRequests.length, 0);
+}
+
+// v1.7.28: a duplicated tab copies sessionStorage (same tab id) but must not share leadership.
+{
+	const shared = new Map();
+	const localStorage = {
+		getItem: k => (shared.has(k) ? shared.get(k) : null),
+		setItem: (k, v) => shared.set(k, String(v)),
+		removeItem: k => shared.delete(k)
+	};
+	let clock = 1000;
+	const page = (tabId, inst) => {
+		const session = new Map([['kw.tabId', tabId]]);
+		const c = vm.createContext({
+			JSON, parseInt, localStorage, Date: { now: () => clock },
+			sessionStorage: { getItem: k => session.get(k) || null, setItem: (k, v) => session.set(k, v) },
+			LEADER_KEY: 'kw.leader', LEADER_TTL_MS: 15000, LEADER_BUSY_TTL_MS: 150000,
+			LEADER_REQUEST_KEY: 'kw.leader.request', LEADER_REQUEST_TTL_MS: 60000,
+			TAB_ID: tabId, INSTANCE_ID: inst, busy: false,
+			leaderActive: false, loadPendingBuilds() {}, newLeaderId: () => 'fresh-' + inst
+		});
+		vm.runInContext('function automationBusy() { return busy; }\n' +
+			['readLeaderLease', 'leaseIsFresh', 'writeLeaderLease', 'readLeaderRequest', 'automationLeader',
+				'takeLeadership', 'releaseLeadershipOnLeave'].map(extract).join('\n'), c);
+		return c;
+	};
+	const original = page('T', 'p1');
+	assert.equal(original.automationLeader(), false, 'a fresh claim waits one beat');
+	assert.equal(original.automationLeader(), true);
+	const duplicate = page('T', 'p2');
+	assert.equal(duplicate.automationLeader(), false, 'duplicate tab is not the leader');
+	assert.equal(duplicate.TAB_ID, 'fresh-p2', 'duplicate tab takes a new id');
+	clock += 5000;
+	assert.equal(original.automationLeader(), true);
+	assert.equal(duplicate.automationLeader(), false);
+	// Navigation inside the leader tab hands the lease to the next page at once.
+	original.releaseLeadershipOnLeave();
+	assert.equal(duplicate.automationLeader(), false, 'a released lease still belongs to its tab');
+	const reloaded = page('T', 'p3');
+	assert.equal(reloaded.automationLeader(), true, 'same tab continues without waiting');
+	assert.equal(reloaded.TAB_ID, 'T');
+	// When the leader stops beating, another tab takes over after the lease expires.
+	clock += 15001;
+	assert.equal(duplicate.automationLeader(), false);
+	assert.equal(duplicate.automationLeader(), true);
+	assert.equal(reloaded.automationLeader(), false);
+
+	// v1.7.29: enabling automation in another tab requests leadership instead of
+	// seizing it; a busy leader finishes its operation first.
+	const leaderTabPage = duplicate, requester = reloaded;
+	leaderTabPage.busy = true;
+	requester.takeLeadership();
+	assert.equal(requester.automationLeader(), false, 'a request alone does not make a leader');
+	assert.equal(leaderTabPage.automationLeader(), true, 'busy leader keeps the lease');
+	assert.equal(requester.automationLeader(), false);
+	// A busy leader that stops beating (throttled tab) is not replaced at 15s.
+	clock += 20000;
+	assert.equal(requester.automationLeader(), false, 'busy lease outlives the short TTL');
+	// Once idle it hands over, and only then does the requester run.
+	leaderTabPage.busy = false;
+	assert.equal(leaderTabPage.automationLeader(), false, 'idle leader hands the lease over');
+	assert.equal(shared.has('kw.leader.request'), false);
+	assert.equal(requester.automationLeader(), true);
+	assert.equal(leaderTabPage.automationLeader(), false);
+	// With no live leader the request path is skipped and the lease is taken directly.
+	clock += 15001;
+	leaderTabPage.takeLeadership();
+	assert.equal(shared.has('kw.leader.request'), false);
+	assert.equal(leaderTabPage.automationLeader(), true);
+	// A busy lease does expire eventually, so a crashed leader cannot block forever.
+	leaderTabPage.busy = true;
+	assert.equal(leaderTabPage.automationLeader(), true);
+	clock += 150001;
+	assert.equal(requester.automationLeader(), false);
+	assert.equal(requester.automationLeader(), true);
+}
+
+// v1.7.29: the castle-switch timeout is the request's own timeout. Failure is
+// reported only after the request was aborted, and no late path runs afterwards.
+(async () => {
+	const timers = [];
+	let aborted = 0, castleReads = 0, rejectFetch, resolveFetch;
+	const net = vm.createContext({
+		Object, Promise, Error, String, encodeURIComponent, liveRequests: [], castleLockEpoch: 0,
+		AJAX_TIMEOUT_MS: 30000, CASTLE_SWITCH_TIMEOUT_MS: 12000,
+		location: { href: 'https://game.test/overview.php' },
+		toInt: v => parseInt(v, 10) || 0,
+		setTimeout: (fn, ms) => { timers.push({ fn, ms }); return timers.length; },
+		AbortController: function () {
+			this.signal = {};
+			this.abort = () => { aborted++; const e = new Error('aborted'); e.name = 'AbortError'; rejectFetch(e); };
+		},
+		getCastles: cb => { castleReads++; cb({ castles: [{ id: '5', isCurrent: true }] }); }
+	});
+	net.window = { fetch: () => new Promise((resolve, reject) => { resolveFetch = resolve; rejectFetch = reject; }) };
+	vm.runInContext(['untrackLive', 'kwFetch', 'setCastle'].map(extract).join('\n'), net);
+	const tick = () => new Promise(resolve => setImmediate(resolve));
+
+	let result = null;
+	net.setCastle(5, r => { result = r; });
+	assert.equal(timers.length, 1);
+	assert.equal(timers[0].ms, 12000, 'the switch request carries the 12s limit itself');
+	await tick();
+	assert.equal(result, null, 'nothing is reported while the request is still running');
+	timers[0].fn();
+	await tick();
+	assert.equal(aborted, 1, 'timeout aborts the request');
+	assert.deepEqual({ ...result }, { error: 'timeout', ok: false });
+	resolveFetch({});
+	await tick();
+	assert.equal(castleReads, 0, 'no late path after a reported failure');
+	assert.equal(timers.length, 1);
+	assert.equal(net.liveRequests.length, 0);
+
+	// Normal completion still verifies the active castle from the server.
+	timers.length = 0; result = null;
+	net.setCastle(5, r => { result = r; });
+	resolveFetch({});
+	await tick();
+	timers.filter(t => t.ms === 300).forEach(t => t.fn());
+	assert.equal(castleReads, 1);
+	assert.equal(result.ok, true);
+	console.log('Castle-switch timeout checks passed.');
+})().catch(error => { console.error(error); process.exitCode = 1; });
+
 console.log('Build queue, preview, startup, free-finish, idle-wakeup, and resource-wait regression checks passed.');
